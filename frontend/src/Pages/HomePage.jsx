@@ -11,7 +11,7 @@ const Home = () => {
         <Box
           d="flex"
           justifyContent="center"
-          p={3}
+          p={5}
           bg="white"
           w="100%"
           // m="40px 0 15px 0"
