@@ -12,7 +12,7 @@ const Home = () => {
           d="flex"
           justifyContent="center"
           p={5}
-          bg="red"
+          bg="white"
           w="100%"
           // m="40px 0 15px 0"
           m="40px 0 20px 0"

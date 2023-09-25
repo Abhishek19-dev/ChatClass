@@ -1,4 +1,7 @@
+
 const app = require('./app')
+ const cloudinary = require('cloudinary').v2
+
 // const dotenv = require('dotenv')
 
 
@@ -19,10 +22,17 @@ async function main() {
 }
 
 
+//CLOUDINARY SETUP:-
+const CLOUDINARY_NAME = "dvjfrujbp"
+const CLOUDINARY_API_KEY = "329414564435998"
+const CLOUDINARY_API_SECRET = "x6RJZKQdi5t1PuRS8nC-bTDhEMo"
 
-app.get("/",(req,res)=>{
-    res.send("api is running")
+cloudinary.config({
+  cloud_name : CLOUDINARY_NAME,
+  api_key : CLOUDINARY_API_KEY,
+  api_secret : CLOUDINARY_API_SECRET
 })
+
 
 const port = 8050
 // const port = process.env.PORT || 5000

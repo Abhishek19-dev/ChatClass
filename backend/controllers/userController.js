@@ -1,45 +1,66 @@
 const express = require('express')
-const asyncHandler = require('express-async-handler')
-const User = require('../models/userModel');
-const generateToken = require('../middleware/generateToken');
-const ErrorHandler = require('../utils/ErrorHandler');
-const catchAsyncError = require('../middleware/catchAsyncError');
-
+const User = require('../models/userModel')
+const bcrypt = require('bcryptjs')
+const getDataUri = require('../utils/datauri')
+const sendToken = require('../utils/jwtToken')
+const catchAsyncError = require('../middleware/catchAsyncError')
+const ErrorHandler = require('../utils/ErrorHandler')
 
 //register a user
-exports.registerUser = catchAsyncError(async(req,res,next) =>{
-    const {name , email , password , confirmPassword , pic} = req.body;
+exports.registerUser =  catchAsyncError(async(req,res,next)=>{
 
-    if(!name || !email || !password || !confirmPassword)
-    {
-        res.status(400);
-        // throw new Error("Please enter all the fields")
-        return(next(new ErrorHandler("Please enter all the fields")))
-    }
+    const {name , email , password , confirmPassword , avatar} = req.body;
+    // const {file} = req.body;
+    // console.log("file",file)
+    // console.log("name",name)
+    // console.log("password",password)
+    // console.log("confirm",confirmPassword)
+    // console.log("email",email)
 
-    const userExits = await User.findOne({email})
-    if(userExits)
-    {
-        res.status(400);
-       return (next(new ErrorHandler("User Email already Exits",400)))
-    }
+    // const fileUri = getDataUri(file)
+    // const myCloud = await cloudinary.uploader.upload(fileUri.content,{
+    //     folder:"ChatClassImagesAvatar",
+    //     width:150,
+    //     crop:"scale"
+    // })
+
+   
+   if(password !== confirmPassword){
+    return (next(new ErrorHandler("password and Confirm Password does not match",400)))
+   }
 
     const user = await User.create({
-        name,
-        email,
-        password,
-        pic,
+        name,email,password,confirmPassword,
+        avatar :{
+            // public_id : myCloud.public_id,
+            // url : myCloud.secure_url,
+            public_id : avatar.public_id,
+            url : avatar.url
+        }
     })
-    if(user)
+    
+    sendToken(user , 200 ,res)
+})
+
+
+//Login a User :-
+exports.LoginUser = catchAsyncError(async(req,res,next)=>{
+    const {email,password} = req.body
+   
+
+    if(!email && !password)
     {
-        res.status(200).json({
-            success:true,
-            user,
-            token : generateToken(user._id),
-        })
+        return (next(new ErrorHandler("Enter email and Password")))
     }
-    else{
-        res.status(400)
-        throw new Error("Failed to register Your account")
+    const user = await User.findOne({"email":email}).select("+password")
+   
+    const isPasswordMatched = await user.comparePassword(password)
+    if(!user){
+        return(next(new ErrorHandler("User Is not registered")))
     }
+    if(!isPasswordMatched)
+    {
+        return(next(new ErrorHandler("Invalid Email And Password",400)))
+    }
+    sendToken(user,200,res)
 })
