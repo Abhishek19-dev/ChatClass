@@ -1,5 +1,8 @@
- import React, { useState } from 'react'; 
+ import React, { useEffect, useState } from 'react'; 
  import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../../redux/actions/userAction';
+import { useNavigate } from 'react-router-dom';
  
  const SignUp = () =>{
     const [show , setShow] = useState(false)
@@ -8,7 +11,10 @@
     const [email , setEmail] = useState("")
     const [confirmPassword , setConfirmPassword] = useState("")
     const [password , setPassword] = useState("")
-    const [pic , setPic] = useState("")
+    const [avatar , setAvatar] = useState("")
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
  
     const handlePasswordShow = ()=>{
         setShow(!show)
@@ -17,13 +23,66 @@
         setShowConfirm(!showConfirm)
     }
 
-    const postDetails = (pics) =>{
+   const handleAvatarUpload = (e) =>{
+    const selectedAvatar = e.target.files[0]
+    const file = selectedAvatar
+    const reader = new FileReader()
+    reader.onload = (e)=>{
+        const arrayBuffer = e.target.result
+        const uint8Array = new Uint8Array(arrayBuffer)
+    
+    const selectedFiles = {
+        file:{
+            name : file.name,
+            type : file.type,
+            size : file.size
+        },
+      buffer : uint8Array,
+    }
+    setAvatar(selectedFiles)
+      }
+      reader.readAsArrayBuffer(file)
+   }
 
+    const submitSignUpForm = async(e)=>{
+         e.preventDefault()
+
+         const convertedPic = {
+            fieldname: 'file',
+          originalname: avatar.file.name,
+          encoding: '7bit',
+          mimetype: avatar.file.type,
+          buffer: avatar.buffer,
+          size: avatar.file.size,
+         }
+
+         const formData = new FormData();
+
+         formData.append("name",name)
+         formData.append("email",email)
+         formData.append("password",password)
+         formData.append("confirmPassword",confirmPassword)
+         formData.append('file', new Blob([avatar.buffer]), avatar.file.name);
+         
+         console.log("name",name)
+         console.log("email",email)
+         console.log("password",password)
+         console.log("confirmPassword",confirmPassword)
+         console.log("avatar",avatar)
+         
+       dispatch(registerUser(formData))
+    
     }
 
-    const submitSignUpForm = ()=>{
 
-    }
+    const {user,isRegistered} = useSelector((state)=> state.registerUser)
+
+    useEffect(()=>{
+        if(isRegistered){
+            navigate("/login")
+        }
+    },[isRegistered,navigate])
+   
 
     return (
         <>
@@ -64,7 +123,7 @@
 
             <FormControl id='pic' isRequired>
              <FormLabel>Upload Your Picture</FormLabel>
-                <Input mb='1rem' type='file' p={1.5} accept='image/*' placeholder='Enter Your Email' onChange={(e)=> postDetails(e.target.files[0])}/>
+                <Input mb='1rem' type='file' p={1.5} accept='image/*' placeholder='Enter Your Email' onChange= {handleAvatarUpload}/>
             </FormControl>
 
             <Button colorScheme='blue'

@@ -4,14 +4,15 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import Login from '../components/Authentication/Login'
 import SignUp from '../components/Authentication/SignUp'
 
-const Home = () => {
+const LoginSignUp = () => {
   return (
     <>
       <Container maxW="xl" centerContent>
         <Box
           d="flex"
           justifyContent="center"
-          p={5}
+          alignItems="center"
+          pl={5}
           bg="white"
           w="100%"
           // m="40px 0 15px 0"
@@ -19,7 +20,7 @@ const Home = () => {
           borderRadius="lg"
           borderWidth="1px"
         >
-          <Text fontSize="4xl" fontFamily="work sans" color="black">
+          <Text margin= "0.5rem 10rem" fontSize="4xl" fontWeight="semibold" fontFamily="work sans" color="black">
             Chat Class
           </Text>
         </Box>
@@ -47,4 +48,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default LoginSignUp

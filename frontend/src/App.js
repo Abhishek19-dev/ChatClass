@@ -1,7 +1,8 @@
 import {BrowserRouter as Router , Routes , Route } from 'react-router-dom'
 import './App.css';
-import Home from './Pages/HomePage';
+
 import ChatPage from './Pages/ChatPage';
+import LoginSignUp from './Pages/LoginSignUp';
 
 
 
@@ -10,7 +11,7 @@ function App() {
     <div className='App'>
 
    <Routes>
-    <Route path = "/" element = {<Home />} />
+    <Route path = "/login" element = {<LoginSignUp />} />
     <Route path = "/chats" element = {<ChatPage />} />
    </Routes>
 

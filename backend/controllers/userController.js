@@ -5,24 +5,23 @@ const getDataUri = require('../utils/datauri')
 const sendToken = require('../utils/jwtToken')
 const catchAsyncError = require('../middleware/catchAsyncError')
 const ErrorHandler = require('../utils/ErrorHandler')
+const cloudinary = require('cloudinary').v2
 
 //register a user
 exports.registerUser =  catchAsyncError(async(req,res,next)=>{
 
-    const {name , email , password , confirmPassword , avatar} = req.body;
-    // const {file} = req.body;
-    // console.log("file",file)
-    // console.log("name",name)
-    // console.log("password",password)
-    // console.log("confirm",confirmPassword)
-    // console.log("email",email)
+    // const {name , email , password , confirmPassword , avatar} = req.body;
+    const {name , email , password , confirmPassword} = req.body;
+    const file = req.file
+     
+    
 
-    // const fileUri = getDataUri(file)
-    // const myCloud = await cloudinary.uploader.upload(fileUri.content,{
-    //     folder:"ChatClassImagesAvatar",
-    //     width:150,
-    //     crop:"scale"
-    // })
+    const fileUri = getDataUri(file)
+    const myCloud = await cloudinary.uploader.upload(fileUri.content,{
+        folder:"ChatClassImagesAvatar",
+        width:150,
+        crop:"scale"
+    })
 
    
    if(password !== confirmPassword){
@@ -32,10 +31,10 @@ exports.registerUser =  catchAsyncError(async(req,res,next)=>{
     const user = await User.create({
         name,email,password,confirmPassword,
         avatar :{
-            // public_id : myCloud.public_id,
-            // url : myCloud.secure_url,
-            public_id : avatar.public_id,
-            url : avatar.url
+            public_id : myCloud.public_id,
+            url : myCloud.secure_url,
+            // public_id : avatar.public_id,
+            // url : avatar.url
         }
     })
     
@@ -47,7 +46,6 @@ exports.registerUser =  catchAsyncError(async(req,res,next)=>{
 exports.LoginUser = catchAsyncError(async(req,res,next)=>{
     const {email,password} = req.body
    
-
     if(!email && !password)
     {
         return (next(new ErrorHandler("Enter email and Password")))

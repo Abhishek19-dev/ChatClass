@@ -1,5 +1,8 @@
 import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react';
-import React, { useState } from 'react'; 
+import React, { useEffect, useState } from 'react'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from '../../redux/actions/userAction';
  
  const Login = () =>{
      const [show , setShow] = useState(false)
@@ -9,9 +12,16 @@ import React, { useState } from 'react';
     const handlePasswordShow = ()=>{
         setShow(!show)
     }
-    
-    const submitLoginUpForm = ()=>{
+     const dispatch = useDispatch()
+     const navigate = useNavigate()
 
+    const submitLoginUpForm = ()=>{
+        dispatch(loginUser(email,password))
+    }
+    const {user , isLoggedIn} = useSelector((state)=> state.loginUser)
+    if(isLoggedIn)
+    {
+        navigate("/chats")
     }
   
 return (
