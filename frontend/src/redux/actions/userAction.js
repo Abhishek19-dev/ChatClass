@@ -8,6 +8,7 @@ export const registerUser = (formData) =>async(dispatch)=>{
      })
      const config = {headers:{"Content-type":"multipart/form-data"}}
      const {data} = await axios.post("/api/v1/user/register",formData,config)
+     console.log(data)
      dispatch({
          type : REGISTER_SUCCESS,
          payload : data.user

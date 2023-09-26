@@ -3,6 +3,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../redux/actions/userAction';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '@chakra-ui/react'
  
  const SignUp = () =>{
     const [show , setShow] = useState(false)
@@ -11,10 +12,13 @@ import { useNavigate } from 'react-router-dom';
     const [email , setEmail] = useState("")
     const [confirmPassword , setConfirmPassword] = useState("")
     const [password , setPassword] = useState("")
+
+
     const [avatar , setAvatar] = useState("")
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const toast = useToast()
  
     const handlePasswordShow = ()=>{
         setShow(!show)
@@ -23,6 +27,8 @@ import { useNavigate } from 'react-router-dom';
         setShowConfirm(!showConfirm)
     }
 
+    
+   
    const handleAvatarUpload = (e) =>{
     const selectedAvatar = e.target.files[0]
     const file = selectedAvatar
@@ -46,7 +52,27 @@ import { useNavigate } from 'react-router-dom';
 
     const submitSignUpForm = async(e)=>{
          e.preventDefault()
+         
+         if(!name || !email || !password || !confirmPassword)
+         {
+            toast({
+                title:"Please Fill All the fields",
+                status:"warning",
+                duration:5000,
+                isClosable:true,
+                position:"bottom"
+            })
+         }
 
+         if(password != confirmPassword){
+            toast({
+                title:"Password and Confirm Password Do Not Match",
+                status:"warning",
+                duration:5000,
+                isClosable:true,
+                position:"bottom"
+            })
+         }
          const convertedPic = {
             fieldname: 'file',
           originalname: avatar.file.name,
@@ -75,13 +101,23 @@ import { useNavigate } from 'react-router-dom';
     }
 
 
-    const {user,isRegistered} = useSelector((state)=> state.registerUser)
+    const {loading,user,isRegistered} = useSelector((state)=> state.registerUser)
 
     useEffect(()=>{
         if(isRegistered){
-            navigate("/login")
+            navigate("/chats")
+        }
+        if(isRegistered){
+            toast({
+                title:"Account Created SuccessFully!",
+                status:"success",
+                duration:3000,
+                isClosable:true,
+                position:"bottom"
+            })
         }
     },[isRegistered,navigate])
+   
    
 
     return (
@@ -128,6 +164,7 @@ import { useNavigate } from 'react-router-dom';
 
             <Button colorScheme='blue'
             width='100%'
+            isLoading = {loading}
             style={{marginTop:15}}
                 onClick = {submitSignUpForm}>
                     Sign Up

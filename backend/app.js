@@ -9,6 +9,10 @@ const app = express()
 //conver json to raw
 app.use(express.json())
 
+
+//middleware:-
+
+
 app.use(cors());
 
 //middleware should be used above routes inports
@@ -20,13 +24,14 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 //route imports
 const user = require('./routes/userRoute')
+const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 
 
 app.use("/api/v1",user.router)
 
 //middle ware to pass json data
-app.use(express.json())
-app.use(cors())
+app.use(notFound)
+app.use(errorHandler)
 
 
 module.exports = app;

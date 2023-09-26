@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from '../../redux/actions/userAction';
+import { useToast } from '@chakra-ui/react'
+ 
  
  const Login = () =>{
      const [show , setShow] = useState(false)
     const [email , setEmail] = useState("")
     const [password , setPassword] = useState("")
+    const toast = useToast()
 
     const handlePasswordShow = ()=>{
         setShow(!show)
@@ -16,14 +19,35 @@ import { loginUser } from '../../redux/actions/userAction';
      const navigate = useNavigate()
 
     const submitLoginUpForm = ()=>{
+        if(!email || !password){
+            toast({
+                title:"Please Fill All the fields",
+                status:"warning",
+                duration:5000,
+                isClosable:true,
+                position:"bottom"
+            })
+        }
         dispatch(loginUser(email,password))
     }
-    const {user , isLoggedIn} = useSelector((state)=> state.loginUser)
-    if(isLoggedIn)
+    const {loading , user , isLoggedIn} = useSelector((state)=> state.loginUser)
+    
+    useEffect(()=>{
+        if(isLoggedIn)
     {
         navigate("/chats")
     }
-  
+        if(isLoggedIn){
+            toast({
+                title:"Logged In  SuccessFully !",
+                status:"success",
+                duration:3000,
+                isClosable:true,
+                position:"bottom"
+            })
+        }
+    },[user,isLoggedIn,navigate])
+    
 return (
 
 <>
@@ -31,13 +55,13 @@ return (
             
             <FormControl id='email' isRequired>
              <FormLabel>Email</FormLabel>
-                <Input mb='1rem' placeholder='Enter Your Email' onChange={(e)=> setEmail(e.target.value)}/>
+                <Input mb='1rem' value={email} placeholder='Enter Your Email' onChange={(e)=> setEmail(e.target.value)}/>
             </FormControl>
 
             <FormControl id='password' isRequired>
              <FormLabel>Password</FormLabel>
              <InputGroup>
-             <Input mb='1rem' type={show ? 'text':'password'} placeholder='Enter Your Password' onChange={(e)=> setPassword(e.target.value)}/>
+             <Input value={password} mb='1rem' type={show ? 'text':'password'} placeholder='Enter Your Password' onChange={(e)=> setPassword(e.target.value)}/>
              <InputRightElement width="4.5rem">
                 <Button h = "1.75rem" size='sm' onClick={handlePasswordShow}>
                     {show ? "Hide" : "show"}
@@ -54,6 +78,7 @@ return (
             </Button>
 
             <Button colorScheme='red'
+            isLoading = {loading}
             width='100%'
             style={{marginTop:15}}
                 onClick = {()=>{
