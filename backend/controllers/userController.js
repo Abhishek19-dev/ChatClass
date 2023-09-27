@@ -62,3 +62,42 @@ exports.LoginUser = catchAsyncError(async(req,res,next)=>{
     }
     sendToken(user,200,res)
 })
+
+//Logout a User:-
+exports.LogoutUser = catchAsyncError(async(req,res,next)=>{
+   await res.cookie("token",null,{
+        expires: new Date(Date.now()),
+        httpOnly : true
+    })
+    res.status(200).json({
+        success:true,
+        message:"LOGGED OUT SUCCESSFULLY !"
+    })
+})
+
+
+//Get All Users:-
+exports.getAllUsers = catchAsyncError(async(req,res,next)=>{
+    const users = await User.find()
+    res.status(200).json({
+        success:true,
+        users : users
+    })
+})
+
+//Search one user:-
+exports.getSingleUser = catchAsyncError(async(req,res,next)=>{
+    const keyword = req.query.search ? { //uske name and email mei dhundenge
+     $or : [
+        {name : {$regex : req.query.search , $options: "i"}}, // i means case sensitive
+        {email : {$regex : req.query.search , $options: "i"}},
+     ]
+    }:{}
+   const users = await User.find(keyword).find({_id : {$ne : req.user._id}})
+   res.status(200).json({
+    success:true,
+    users : users
+   })
+    // console.log(keyword)
+
+})
