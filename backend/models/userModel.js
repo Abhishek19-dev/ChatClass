@@ -53,9 +53,9 @@ userSchema.pre("save",async function(next){
 const JWT_SECRET = "KJGFSDJKGJFDLKGJHFOIAHJSFKAJHKAJ"
 const JWT_EXPIRE = "5d"
 
-userSchema.methods.getJWTToken = function() {
-    return jwt.sign({id : this._id},JWT_SECRET,{
-        expiresIn : JWT_EXPIRE,
+userSchema.methods.getJWTToken = function() { //jwt.sign => it is used to create a token 
+    return jwt.sign({id : this._id},JWT_SECRET,{ // id => kispe token lagana hai , in this case it is id a\
+        expiresIn : JWT_EXPIRE,  //kab expore hoga
     })
 }
 

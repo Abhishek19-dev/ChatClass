@@ -19,19 +19,25 @@ app.use(cors());
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended:true}))
 // app.use(fileUpload())
+//middle ware to pass json data
+
 
 
 
 //route imports
 const user = require('./routes/userRoute')
-const { notFound, errorHandler } = require('./middleware/errorMiddleware')
+const chat = require('./routes/chatRoute')
+
 
 
 app.use("/api/v1",user.router)
+app.use("/api/v1",chat.router)
 
-//middle ware to pass json data
+const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 app.use(notFound)
 app.use(errorHandler)
+
+
 
 
 module.exports = app;

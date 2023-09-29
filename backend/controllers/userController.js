@@ -14,8 +14,6 @@ exports.registerUser =  catchAsyncError(async(req,res,next)=>{
     const {name , email , password , confirmPassword} = req.body;
     const file = req.file
      
-    
-
     const fileUri = getDataUri(file)
     const myCloud = await cloudinary.uploader.upload(fileUri.content,{
         folder:"ChatClassImagesAvatar",
@@ -45,17 +43,18 @@ exports.registerUser =  catchAsyncError(async(req,res,next)=>{
 //Login a User :-
 exports.LoginUser = catchAsyncError(async(req,res,next)=>{
     const {email,password} = req.body
-   
+
     if(!email && !password)
     {
         return (next(new ErrorHandler("Enter email and Password")))
     }
     const user = await User.findOne({"email":email}).select("+password")
-   
-    const isPasswordMatched = await user.comparePassword(password)
+    
+
     if(!user){
         return(next(new ErrorHandler("User Is not registered")))
     }
+    const isPasswordMatched = await user.comparePassword(password)
     if(!isPasswordMatched)
     {
         return(next(new ErrorHandler("Invalid Email And Password",400)))
