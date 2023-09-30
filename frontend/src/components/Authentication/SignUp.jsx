@@ -102,12 +102,14 @@ import { useToast } from '@chakra-ui/react'
 
 
     const {loading,user,isRegistered} = useSelector((state)=> state.registerUser)
+    const {isLoggedIn} = useSelector((state)=> state.loginUser)
+    const {isLoggedOut} = useSelector((state)=> state.logoutUser)
 
     useEffect(()=>{
-        if(isRegistered){
-            navigate("/chats")
+        if(isRegistered && !isLoggedOut){
+            navigate("/")
         }
-        if(isRegistered){
+        if(isRegistered && !isLoggedIn && !isLoggedOut){
             toast({
                 title:"Account Created SuccessFully!",
                 status:"success",
@@ -116,7 +118,7 @@ import { useToast } from '@chakra-ui/react'
                 position:"bottom"
             })
         }
-    },[isRegistered,navigate])
+    },[isRegistered,navigate,isLoggedIn])
    
    
 

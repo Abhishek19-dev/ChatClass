@@ -1,7 +1,8 @@
 import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'; 
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from "react-router-dom";
+import {  useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+
 import { loginUser } from '../../redux/actions/userAction';
 import { useToast } from '@chakra-ui/react'
  
@@ -18,6 +19,8 @@ import { useToast } from '@chakra-ui/react'
      const dispatch = useDispatch()
      const navigate = useNavigate()
 
+     
+
     const submitLoginUpForm = ()=>{
         if(!email || !password){
             toast({
@@ -31,23 +34,20 @@ import { useToast } from '@chakra-ui/react'
         dispatch(loginUser(email,password))
     }
     const {loading , user , isLoggedIn} = useSelector((state)=> state.loginUser)
-    
+
     useEffect(()=>{
-        if(isLoggedIn)
-    {
-        navigate("/chats")
-    }
+        console.log("log",isLoggedIn)
         if(isLoggedIn){
+            navigate("/")
             toast({
-                title:"Logged In  SuccessFully !",
+                title:"Login Successfully",
                 status:"success",
-                duration:3000,
+                duration:5000,
                 isClosable:true,
                 position:"bottom"
             })
         }
-    },[user,isLoggedIn,navigate])
-    
+      },[isLoggedIn,navigate])
 return (
 
 <>
@@ -71,6 +71,7 @@ return (
             </FormControl>
 
             <Button colorScheme='blue'
+             isLoading = {loading}
             width='100%'
             style={{marginTop:15}}
                 onClick = {submitLoginUpForm}>
@@ -78,7 +79,6 @@ return (
             </Button>
 
             <Button colorScheme='red'
-            isLoading = {loading}
             width='100%'
             style={{marginTop:15}}
                 onClick = {()=>{

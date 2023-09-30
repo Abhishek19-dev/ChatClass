@@ -28,7 +28,10 @@ exports.accessChats = catchAsyncError(async(req,res,next)=>{
     })
     //chat check
     if(isChat.length > 0){
-        res.send(isChat[0])
+        res.status(200).json({
+            success : true,
+            fullChat : isChat[0]
+        })
     }
     else{
         var charData = {
@@ -70,11 +73,14 @@ exports.fetchAllChats = catchAsyncError(async(req,res,next)=>{
 
 //create group chats:-
 exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
-    const {users,chatName} = req.body
+    var {users,chatName} = req.body
+    console.log("users",users)
+    console.log("chatName",chatName)
     if(!req.body.users || !req.body.chatName)
     {
         return (next(new ErrorHandler("Please fill all the Fields !",400)))
     }
+    var users = JSON.parse(users)
     if(users.length < 2){
         return (next(new ErrorHandler("More than two people are required to form a group chat ",400)))
     }
@@ -85,7 +91,7 @@ exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
         isGroupChat : true,
         groupAdmin : req.user
     })
-    //group Chat banne ke baad usse bhejeneg:-
+    //group Chat banne ke baad usse bhejenge:-
     const fullGroupChat = await Chat.findOne({_id : groupChat._id}).populate("users","-password").populate("groupAdmin","-password")
     res.status(200).json({
         success:true,
@@ -93,4 +99,55 @@ exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
         fullGroupChat
     })
     
+})
+
+//Rename a group:-
+exports.renameGroup = catchAsyncError(async(req,res,next)=>{
+    const {chatId , newChatName} = req.body
+    if(!chatId || !newChatName){
+        return(next(new ErrorHandler("Please Enter All fields",200)))
+    }
+    var updatedGroupChat = await Chat.findByIdAndUpdate(chatId,{
+        chatName:newChatName
+    },{
+        new : true //isko isiliye krte hai taaki humei new valure dikhe
+    }).populate("users","-password").populate("groupAdmin","-password")
+
+    res.status(200).json({
+        success:true,
+        updatedGroupChat
+    })
+
+})
+
+//Add Users To group :-
+exports.addToGroup = catchAsyncError(async(req,res,next)=>{
+    const {chatId , userId} = req.body
+
+    const newMember = await Chat.findByIdAndUpdate(chatId , {
+        $push :{users : userId}
+    },{
+        new : true
+    }).populate("users","-password").populate("groupAdmin","-password")
+    res.status(200).json({
+        success : true,
+        message : "User Added Successfully",
+        newMember
+    })
+})
+
+//Remove From Group :-
+exports.removeFromGroup = catchAsyncError(async(req,res,next)=>{
+    const {chatId , userId} = req.body
+
+    const removedMember = await Chat.findByIdAndUpdate(chatId , {
+        $pull :{users : userId}
+    },{
+        new : true
+    }).populate("users","-password").populate("groupAdmin","-password")
+    res.status(200).json({
+        success : true,
+        message : "User Removed Successfully",
+        removedMember
+    })
 })

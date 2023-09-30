@@ -92,7 +92,8 @@ exports.getSingleUser = catchAsyncError(async(req,res,next)=>{
         {email : {$regex : req.query.search , $options: "i"}},
      ]
     }:{}
-   const users = await User.find(keyword).find({_id : {$ne : req.user._id}})
+
+   const users = await User.find(keyword).find({_id : {$ne : req.user.id}})
    res.status(200).json({
     success:true,
     users : users

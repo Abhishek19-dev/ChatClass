@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, REGISTER_FAIL, REGISTER_REQUEST, REGISTER_SUCCESS } from '../actionType'
+import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_RESET, LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_REQUEST, LOGOUT_RESET, LOGOUT_SUCCESS, REGISTER_FAIL, REGISTER_LOGIN, REGISTER_REQUEST, REGISTER_SUCCESS } from '../actionType'
 
 export const registerUser = (formData) =>async(dispatch)=>{
    try {
@@ -8,7 +8,7 @@ export const registerUser = (formData) =>async(dispatch)=>{
      })
      const config = {headers:{"Content-type":"multipart/form-data"}}
      const {data} = await axios.post("/api/v1/user/register",formData,config)
-     console.log(data)
+
      dispatch({
          type : REGISTER_SUCCESS,
          payload : data.user
@@ -23,6 +23,9 @@ export const registerUser = (formData) =>async(dispatch)=>{
 
 export const loginUser = (email,password) =>async(dispatch)=>{
     try {
+        dispatch({
+            type : LOGOUT_RESET
+        })
      dispatch({
          type: LOGIN_REQUEST
       })
@@ -32,9 +35,34 @@ export const loginUser = (email,password) =>async(dispatch)=>{
           type : LOGIN_SUCCESS,
           payload : data.user
       })
+      dispatch({
+        type : REGISTER_LOGIN
+      })
     } catch (error) {
         dispatch({
          type : LOGIN_FAIL,
+         payload:error.response.message.data
+        })
+    }
+ }
+
+ export const logoutUser = () =>async(dispatch)=>{
+    try {
+     dispatch({
+         type: LOGOUT_REQUEST
+      })
+      
+      const {data} = await axios.get("/api/v1/user/logout")
+      dispatch({
+          type : LOGOUT_SUCCESS,
+          payload : data.message
+      })
+      dispatch({
+        type:LOGIN_RESET
+      })
+    } catch (error) {
+        dispatch({
+         type : LOGOUT_FAIL,
          payload:error.response.message.data
         })
     }
