@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ChatLoading from '../../Features/ChatLoading';
 import { getSender } from '../../ config/ChatLogics';
+import GroupChatModal from './GroupChatModal';
  
  const MyChat = ({users,selectedChat , allChats , setSelectedChat , user:loggedUser}) =>{
     const toast = useToast()
@@ -31,12 +32,14 @@ return (
         fontFamily='Work sans'
         >
          My Chats
+         <GroupChatModal>
          <Button display='flex' 
         fontSize={{base : "17px", md:"10px" ,lg:"17px"}}
         rightIcon={<AddIcon />}
         >
             New Group Chat
         </Button>
+         </GroupChatModal>
         </Box>
 
         <Box display='flex' flexDir='column' p={3} bg='#F8F8F8' w='100%' h='100%' borderRadius='lg' overflowY='hidden'>

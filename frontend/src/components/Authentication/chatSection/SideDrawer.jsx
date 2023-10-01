@@ -58,17 +58,26 @@ const SideDrawer = () => {
       })
     }
     dispatch(searchUser(search))
-    dispatch(getAllChat())
   }
 
   const accessChats = (userId)=>{
         //  const user_Id = JSON.stringify(userId)
          dispatch(accessChat(userId))
   }
+  useEffect(()=>{
+    dispatch(getAllChat())
+  },[dispatch,getAllChat])
+
+  
 
   const { isLoggedOut } = useSelector((state) => state.logoutUser)
   const { user, isLoggedIn } = useSelector((state) => state.loginUser)
   const { users:searchedUsers } = useSelector((state) => state.searchUser)
+  useEffect(()=>{
+    if(!isLoggedIn){
+      navigate('/login')
+    }
+  },[isLoggedIn,navigate])
   // setSearchResult(...searchedUsers)
   console.log(searchResult)
   useEffect(() => {
@@ -87,6 +96,9 @@ const SideDrawer = () => {
 
   const {loading , users} = useSelector((state)=> state.searchUser)
   const {loading:loadingCreateChat} = useSelector((state)=> state.accessChat)
+
+  
+  
   return (
     <>
       <Box
@@ -122,7 +134,7 @@ const SideDrawer = () => {
                 size="sm"
                 cursor="pointer"
                 name={user.name}
-                src={user ? user.avatar.url : ""}
+                src={user.avatar.url}
               />
             </MenuButton>
             <MenuList>

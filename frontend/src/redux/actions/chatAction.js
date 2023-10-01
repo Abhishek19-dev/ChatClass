@@ -35,6 +35,7 @@ export const searchUser = (search) =>async(dispatch)=>{
           type : ACCESS_CHAT_SUCCESS,
           payload : data.fullChat
       })
+      dispatch(getAllChat())
     } catch (error) {
         dispatch({
          type : ACCESS_CHAT_FAIL,
