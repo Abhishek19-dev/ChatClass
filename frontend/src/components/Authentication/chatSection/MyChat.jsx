@@ -1,14 +1,15 @@
  import { AddIcon } from '@chakra-ui/icons';
-import { Box, Button, Stack, Text, useToast } from '@chakra-ui/react';
+import { Box, Button, Stack, Text, useDisclosure, useToast } from '@chakra-ui/react';
 import React, { useState } from 'react'; 
 import { useSelector } from 'react-redux';
 import ChatLoading from '../../Features/ChatLoading';
 import { getSender } from '../../ config/ChatLogics';
 import GroupChatModal from './GroupChatModal';
- 
+
  const MyChat = ({users,selectedChat , allChats , setSelectedChat , user:loggedUser}) =>{
+
     const toast = useToast()
-    console.log("allchats",allChats)
+    // console.log("allchats",allChats)
     
     // console.log("selected Chat",selectedChat)
 return (

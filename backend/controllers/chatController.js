@@ -74,8 +74,8 @@ exports.fetchAllChats = catchAsyncError(async(req,res,next)=>{
 //create group chats:-
 exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
     var {users,chatName} = req.body
-    console.log("users",users)
-    console.log("chatName",chatName)
+    // console.log("users",users)
+    // console.log("chatName",chatName)
     if(!req.body.users || !req.body.chatName)
     {
         return (next(new ErrorHandler("Please fill all the Fields !",400)))

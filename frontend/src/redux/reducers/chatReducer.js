@@ -1,4 +1,4 @@
-import { ACCESS_CHAT_FAIL, ACCESS_CHAT_REQUEST, ACCESS_CHAT_SUCCESS, ALL_CHATS_OF_USER_FAIL, ALL_CHATS_OF_USER_REQUEST, ALL_CHATS_OF_USER_SUCCESS, SEARCH_USER_FAIL, SEARCH_USER_REQUEST, SEARCH_USER_SUCCESS } from "../actionType"
+import { ACCESS_CHAT_FAIL, ACCESS_CHAT_REQUEST, ACCESS_CHAT_SUCCESS, ALL_CHATS_OF_USER_FAIL, ALL_CHATS_OF_USER_REQUEST, ALL_CHATS_OF_USER_SUCCESS, CREATE_A_GROUP_CHAT_FAIL, CREATE_A_GROUP_CHAT_REQUEST, CREATE_A_GROUP_CHAT_RESET, CREATE_A_GROUP_CHAT_SUCCESS, SEARCH_USER_FAIL, SEARCH_USER_REQUEST, SEARCH_USER_RESET, SEARCH_USER_SUCCESS } from "../actionType"
 
 
 
@@ -29,6 +29,12 @@ export const searchUserReducer = (state={
                     loading:false,
                     error:payload
                 }
+              case SEARCH_USER_RESET:
+                return{
+                   loading:false,
+                   users:[],
+                   success : false
+                }  
                 default:
                     return {...state}
     }
@@ -90,6 +96,47 @@ export const allChatUserReducer = (state={
                     loading:false,
                     error:payload
                 }
+                default:
+                    return {...state}
+    }
+}
+
+
+export const createAGroupChatReducer = (state={
+    loading:false,
+    fullGroupChat :{},
+    message : "",
+    groupChatCreated : false
+
+},action) =>{
+    const {type,payload} = action
+
+    switch(type){
+        case CREATE_A_GROUP_CHAT_REQUEST:
+            return{
+                ...state,
+                loading:true
+            }
+        case CREATE_A_GROUP_CHAT_SUCCESS:
+            return{
+               loading : false,
+               message : payload.message,
+               fullGroupChat : payload.fullGroupChat,
+               groupChatCreated : true
+            }
+            case CREATE_A_GROUP_CHAT_FAIL:
+                return{
+                    ...state,
+                    loading : false,
+                    error:payload
+                }
+              case CREATE_A_GROUP_CHAT_RESET:
+                return{
+                    loading:true,
+                    fullGroupChat:{},
+                    message :"",
+                    groupChatCreated:false
+                }  
                 default:
                     return {...state}
     }

@@ -30,6 +30,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { accessChat, getAllChat, searchUser } from '../../../redux/actions/chatAction'
 import ChatLoading from '../../Features/ChatLoading'
 import UserListItem from '../../UserAvatar/UserListItem'
+import { LOGOUT_RESET } from '../../../redux/actionType'
 
 const SideDrawer = () => {
   const [search, setSearch] = useState('')
@@ -44,6 +45,7 @@ const SideDrawer = () => {
   //logout
   const handleLogout = () => {
     dispatch(logoutUser())
+    dispatch({type:LOGOUT_RESET})
   }
 
   const handleSearch = ()=>{

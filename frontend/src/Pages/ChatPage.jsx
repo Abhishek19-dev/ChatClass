@@ -16,7 +16,7 @@ import { getAllChat } from '../redux/actions/chatAction';
    //get all chats of a user
     useEffect(()=>{
         dispatch(getAllChat())
-    },[dispatch])
+    },[dispatch,getAllChat])
 
 
     const {user , isLoggedIn} = useSelector((state)=> state.loginUser)

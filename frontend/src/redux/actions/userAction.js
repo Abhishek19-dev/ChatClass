@@ -23,9 +23,6 @@ export const registerUser = (formData) =>async(dispatch)=>{
 
 export const loginUser = (email,password) =>async(dispatch)=>{
     try {
-        dispatch({
-            type : LOGOUT_RESET
-        })
      dispatch({
          type: LOGIN_REQUEST
       })
@@ -38,6 +35,9 @@ export const loginUser = (email,password) =>async(dispatch)=>{
       dispatch({
         type : REGISTER_LOGIN
       })
+    //   dispatch({
+    //     type : LOGOUT_RESET
+    // })
     } catch (error) {
         dispatch({
          type : LOGIN_FAIL,

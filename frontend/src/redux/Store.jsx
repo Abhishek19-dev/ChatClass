@@ -2,7 +2,7 @@ import {legacy_createStore as createStore , combineReducers , applyMiddleware} f
 import thunk from "redux-thunk"
 import {composeWithDevTools} from "redux-devtools-extension" 
 import { loginReducer, logoutReducer, registerReducer } from "./reducers/userReducer"
-import { accessChatReducer, allChatUserReducer, searchUserReducer } from "./reducers/chatReducer"
+import { accessChatReducer, allChatUserReducer, createAGroupChatReducer, searchUserReducer } from "./reducers/chatReducer"
 
 const reducer = combineReducers({
   loginUser : loginReducer,
@@ -10,7 +10,8 @@ const reducer = combineReducers({
   logoutUser : logoutReducer,
   searchUser : searchUserReducer,
   accessChat : accessChatReducer,
-  allChats : allChatUserReducer
+  allChats : allChatUserReducer,
+  createGroupChat : createAGroupChatReducer
 })
 
 let intitalState = {}
