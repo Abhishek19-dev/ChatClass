@@ -11,4 +11,5 @@ router.post("/groupChats",isAuthenticatedUser,createGroupChat)
 router.put("/renameGroup",isAuthenticatedUser,renameGroup)
 router.put("/addToGroup",isAuthenticatedUser,addToGroup)
 router.put("/removeFromGroup",isAuthenticatedUser,removeFromGroup)
+
 exports.router = router 

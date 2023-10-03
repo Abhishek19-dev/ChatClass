@@ -27,11 +27,13 @@ app.use(bodyParser.urlencoded({extended:true}))
 //route imports
 const user = require('./routes/userRoute')
 const chat = require('./routes/chatRoute')
+const message = require('./routes/messageRoute')
 
 
 
 app.use("/api/v1",user.router)
 app.use("/api/v1",chat.router)
+app.use("/api/v1",message.router)
 
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 app.use(notFound)

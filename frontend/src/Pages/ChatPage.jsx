@@ -49,7 +49,7 @@ return (
         p="10px"
         >
         {user && <MyChat allChats = {allChats} users={users} user = {user} selectedChat = {selectedChat} setSelectedChat = {setSelectedChat} />}
-        {user && <ChatBox />}
+        {user && <ChatBox selectedChat={selectedChat} setSelectedChat={setSelectedChat}  />}
         </Box>
 
    </div>

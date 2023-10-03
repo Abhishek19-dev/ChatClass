@@ -18,7 +18,6 @@ import UserBadgeItem from '../../UserAvatar/UserBadgeItem';
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [chatName , setChatName] = useState("")
     const [selectedUserArray , setSelectedUserArray] = useState([])
-    const [selectedUserArrayId , setSelectedUserArrayId] = useState([])
     const [search , setSearch] = useState("")
     const [modalCloseButton , setModalCloseButton] = useState(false)
     const dispatch = useDispatch()

@@ -1,3 +1,4 @@
+
 import { ViewIcon } from '@chakra-ui/icons'
 import { Button, IconButton, Image, Text, useDisclosure } from '@chakra-ui/react'
 import {
@@ -22,7 +23,7 @@ const ProfileModal = ({ user, children }) => {
       ) : (
         <IconButton
           display={{ base: 'flex' }}
-          icon={<ViewIcon />}
+          icon = {<ViewIcon />}
           onClick={onOpen}
         />
       )}
@@ -42,7 +43,7 @@ const ProfileModal = ({ user, children }) => {
             <Image
               borderRadius="full"
               boxSize="150px"
-            //   src={user.avatar.url}
+              src={user.avatar.url}
               alt={user.name}
             />
             <Text fontSize={{base:"28px",md:"30px"}} fontFamily="Work sans">{user.email}</Text>
