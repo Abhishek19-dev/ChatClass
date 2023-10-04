@@ -44,7 +44,7 @@ exports.sendMessage = catchAsyncError(async(req,res,next)=>{
 
     //get all messages of user:-
     exports.allMessages = catchAsyncError(async(req,res,next)=>{
-        const messages = await Message.findById(req.params.id).populate("sender", "name avatar email").populate("chat")
+        const messages = await Message.find({chat : req.params.chatId}).populate("sender", "name avatar email").populate("chat")
         if(!messages){
             return(next(new ErrorHandler("Messges not Found",400)))
         }

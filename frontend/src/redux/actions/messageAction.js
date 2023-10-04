@@ -14,6 +14,7 @@ export const sendMessageAction = (newMessage , selectedChat) =>async(dispatch)=>
           type : SEND_MESSAGE_SUCCESS,
           payload : data
       })
+      dispatch(allMessagesAction(selectedChat))
     } catch (error) {
         dispatch({
          type : SEND_MESSAGE_FAIL,
@@ -31,7 +32,7 @@ export const sendMessageAction = (newMessage , selectedChat) =>async(dispatch)=>
          type: ALL_MESSAGES_REQUEST
       })
       const {data} = await axios.get(`/api/v1/message/${selectedchat._id}`)
-      console.log("messages data",data)
+      console.log("messages data hehe",data)
       dispatch({
           type : ALL_MESSAGES_SUCCESS,
           payload : data

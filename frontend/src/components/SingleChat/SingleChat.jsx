@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import ProfileModal from '../Authentication/chatSection/ProfileModal';
 import UpdateGroupChatModal from '../Authentication/chatSection/UpdateGroupChatModal';
 import { allMessagesAction, sendMessageAction } from '../../redux/actions/messageAction';
+import "./singleChat.css"
+import ScrollableChat from './ScrollableChat';
  
  const SingleChat = ({selectedChat , setSelectedChat}) =>{
  
-    const [loading , setLoading] = useState(false)
+    // const [loading , setLoading] = useState(false)
     const [message , setMessage] = useState([])
     const [newMessage , setNewMessage] = useState('')
     const {user} = useSelector((state)=> state.loginUser)
@@ -49,6 +51,8 @@ import { allMessagesAction, sendMessageAction } from '../../redux/actions/messag
         return
        }
     },[selectedChat])
+
+    const {isReceived , loading:messageLoading , messages} = useSelector((state)=> state.allMessages)
 
 return (
     <>
@@ -94,7 +98,8 @@ return (
         overflowY='hidden'
         >
             {/* Messages here */}
-            {loading ? (<>
+
+            {messageLoading ? (<>
             <Spinner
              size='xl'
              w={20}
@@ -104,8 +109,9 @@ return (
             >
             </Spinner>
             </>):(
-               <div>
+               <div className='messages'>
                 {/* {messges hre} */}
+                <ScrollableChat messages={messages}/>
                </div>
             )}
             <FormControl  isRequired mt={3}>

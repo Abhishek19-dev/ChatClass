@@ -1,5 +1,6 @@
 import { ACCESS_CHAT_FAIL, ACCESS_CHAT_REQUEST, ACCESS_CHAT_SUCCESS, ADD_USER_TO_GROUP_FAIL, ADD_USER_TO_GROUP_REQUEST, ADD_USER_TO_GROUP_SUCCESS, ALL_CHATS_OF_USER_FAIL, ALL_CHATS_OF_USER_REQUEST, ALL_CHATS_OF_USER_SUCCESS, CREATE_A_GROUP_CHAT_FAIL, CREATE_A_GROUP_CHAT_REQUEST, CREATE_A_GROUP_CHAT_SUCCESS, DELETE_FROM_GROUP_FAIL, DELETE_FROM_GROUP_REQUEST, DELETE_FROM_GROUP_SUCCESS, RENAME_CHAT_FAIL, RENAME_CHAT_REQUEST, RENAME_CHAT_SUCCESS, SEARCH_USER_FAIL, SEARCH_USER_REQUEST, SEARCH_USER_SUCCESS } from "../actionType"
 import axios from 'axios'
+import { allMessagesAction } from "./messageAction"
 
 //SEARCH A USER:-
 export const searchUser = (search) =>async(dispatch)=>{
@@ -143,6 +144,7 @@ export const deleteUserGroup = (selectedChat , usernew) =>async(dispatch)=>{
           type : DELETE_FROM_GROUP_SUCCESS,
           payload : data.removedMember
       })
+      dispatch(allMessagesAction(selectedChat))
     } catch (error) {
         console.log("error",error)
         dispatch({
