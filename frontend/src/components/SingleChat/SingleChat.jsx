@@ -9,15 +9,26 @@ import UpdateGroupChatModal from '../Authentication/chatSection/UpdateGroupChatM
 import { allMessagesAction, sendMessageAction } from '../../redux/actions/messageAction';
 import "./singleChat.css"
 import ScrollableChat from './ScrollableChat';
+
+import io from "socket.io-client"
+
+
+//socket.io
+const ENDPOINT = "http://localhost:8050"
+var socket , selectedChatCompare;
  
  const SingleChat = ({selectedChat , setSelectedChat}) =>{
  
     // const [loading , setLoading] = useState(false)
     const [message , setMessage] = useState([])
     const [newMessage , setNewMessage] = useState('')
-    const {user} = useSelector((state)=> state.loginUser)
-    const dispatch = useDispatch()
+    const [socketConnected , setSocketConnected] = useState(false)
 
+
+    const {user} = useSelector((state)=> state.loginUser)
+    // const {message:newSendMessage} = useSelector((state)=> state.sendMessage)
+    // console.log("new message",newSendMessage)
+    const dispatch = useDispatch()
 
     const sendMessage = async(event)=>{
     //     event.preventDefault()
@@ -25,8 +36,32 @@ import ScrollableChat from './ScrollableChat';
     //     if(event.key === "Enter" && newMessage)
     //     {
             dispatch(sendMessageAction(newMessage , selectedChat))
+            //sending message socket
         // }
+
     }
+
+    
+    //socket.io
+    useEffect(()=>{
+      socket = io(ENDPOINT)
+      socket.emit("setup",user)
+      socket.on("connection",()=> setSocketConnected(true))
+    },[])
+
+    // recieivng a  message using socket io
+    useEffect(()=>{
+        socket.on("message received",(newMessageReceived)=>{
+            if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id){
+                //Give notification
+            }
+            else{
+                setMessage([...message,newMessageReceived])
+            }
+        })
+    })
+
+    
 
     //send messages:-
     const typingHandler = (e)=>{
@@ -37,6 +72,7 @@ import ScrollableChat from './ScrollableChat';
     useEffect(()=>{
         if(isSent)
         {
+            socket.emit("new message",sentMessage)
             setMessage([...message,sentMessage])
             setNewMessage("")
         }
@@ -50,8 +86,10 @@ import ScrollableChat from './ScrollableChat';
        else{
         return
        }
+       socket.emit("join chat",selectedChat._id)
+       selectedChatCompare = selectedChat //to implement whether the user is saying or not means to give notification or not (to keep backup)
     },[selectedChat])
-
+    
     const {isReceived , loading:messageLoading , messages} = useSelector((state)=> state.allMessages)
 
 return (

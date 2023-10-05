@@ -132,8 +132,7 @@ export const searchUser = (search) =>async(dispatch)=>{
 }
 
 export const deleteUserGroup = (selectedChat , usernew) =>async(dispatch)=>{
-    console.log("selectedChat",selectedChat)
-    console.log("user",usernew)
+
     try {
      dispatch({
          type: DELETE_FROM_GROUP_REQUEST
@@ -146,7 +145,7 @@ export const deleteUserGroup = (selectedChat , usernew) =>async(dispatch)=>{
       })
       dispatch(allMessagesAction(selectedChat))
     } catch (error) {
-        console.log("error",error)
+
         dispatch({
          type : DELETE_FROM_GROUP_FAIL,
         //  payload:error.response.message.data
