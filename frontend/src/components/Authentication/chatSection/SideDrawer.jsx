@@ -81,7 +81,7 @@ const SideDrawer = () => {
     }
   },[isLoggedIn,navigate])
   // setSearchResult(...searchedUsers)
-  console.log(searchResult)
+  // console.log(searchResult)
   useEffect(() => {
     if (isLoggedOut) {
       navigate('/login')

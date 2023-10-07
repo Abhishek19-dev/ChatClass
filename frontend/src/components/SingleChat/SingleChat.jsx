@@ -9,6 +9,9 @@ import UpdateGroupChatModal from '../Authentication/chatSection/UpdateGroupChatM
 import { allMessagesAction, sendMessageAction } from '../../redux/actions/messageAction';
 import "./singleChat.css"
 import ScrollableChat from './ScrollableChat';
+import Lottie from 'react-lottie'
+import animationData from '../../animations/animation1.json'
+
 
 import io from "socket.io-client"
 
@@ -19,44 +22,78 @@ var socket , selectedChatCompare;
  
  const SingleChat = ({selectedChat , setSelectedChat}) =>{
  
-    // const [loading , setLoading] = useState(false)
-    const [message , setMessage] = useState([])
+    const {isReceived , loading:messageLoading , messages:receivedMessages} = useSelector((state)=> state.allMessages)
+    const [messages , setMessages] = useState([])
     const [newMessage , setNewMessage] = useState('')
     const [socketConnected , setSocketConnected] = useState(false)
+    const [typing, setTyping] = useState('');
+    const [isTyping, setIsTyping] = useState(false);
 
+    const defaultOptions = {
+        loop : true,
+        autoplay : true,
+        animationData : animationData,
+        // rendererSettings : {
+        //     preserveAspectRatio : "xMidYMid Slice"
+        // },
+    }
+
+    useEffect(()=>{
+        if(selectedChat && socket)
+        {
+            dispatch(allMessagesAction(selectedChat))
+            socket.emit("join chat",selectedChat._id)
+            selectedChatCompare = selectedChat //to implement whether the user is saying or not means to give notification or not (to keep backup)
+        }
+       else{
+        return
+       }
+    },[selectedChat])
+
+    useEffect(() => {
+        if (receivedMessages.length > 0) {
+            // Update the messages state with receivedMessages when it changes.
+            setMessages(receivedMessages);
+        }
+    }, [receivedMessages]);
 
     const {user} = useSelector((state)=> state.loginUser)
-    // const {message:newSendMessage} = useSelector((state)=> state.sendMessage)
-    // console.log("new message",newSendMessage)
     const dispatch = useDispatch()
 
     const sendMessage = async(event)=>{
-    //     event.preventDefault()
-    //    console.log("enter key",event.key)
-    //     if(event.key === "Enter" && newMessage)
-    //     {
-            dispatch(sendMessageAction(newMessage , selectedChat))
-            //sending message socket
-        // }
-
+           if(socket){
+            socket.emit('stop typing',selectedChat._id)
+            dispatch(sendMessageAction(newMessage , selectedChat,socket , setNewMessage))
+            setNewMessage('');
+           }
+           else {
+            console.error('Socket is not initialized yet.'); // Add an error message or handle it as needed
+        }
     }
 
     
     //socket.io
     useEffect(()=>{
       socket = io(ENDPOINT)
+      socket.on("connected",()=> setSocketConnected(true))
       socket.emit("setup",user)
-      socket.on("connection",()=> setSocketConnected(true))
+      socket.on('typing',()=>setIsTyping(true))
+      socket.on('stop typing',()=>setIsTyping(false))
+
     },[])
 
     // recieivng a  message using socket io
     useEffect(()=>{
         socket.on("message received",(newMessageReceived)=>{
-            if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id){
+            // console.log("old messages",messages)
+            // console.log("newMessageReceived abhishek",newMessageReceived.message)
+            // console.log("selected chat compate",selectedChatCompare._id)
+            if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.message.chat._id){
                 //Give notification
             }
             else{
-                setMessage([...message,newMessageReceived])
+                setMessages([...messages,newMessageReceived.message])
+                // console.log("new message final message",messages)
             }
         })
     })
@@ -66,32 +103,32 @@ var socket , selectedChatCompare;
     //send messages:-
     const typingHandler = (e)=>{
        setNewMessage(e.target.value)
-        //Typindg Indicator Login
+        //Typing Indicator Login
+        if(!socketConnected) return;
+        
+        if(!typing){
+            setTyping(true)
+            socket.emit('typing',selectedChat._id)
+        }
+        let lastTypingTime = new Date().getTime();
+        var timerLength = 3000
+        setTimeout(()=>{
+            var timeNow = new Date().getTime()
+            var timeDiff = timeNow - lastTypingTime
+            if(timeDiff >= timerLength && typing){
+                socket.emit('stop typing',selectedChat._id)
+                setTyping(false)
+            }
+        },timerLength)
+
     }
     const {isSent , message:sentMessage} = useSelector((state)=> state.sendMessage)
     useEffect(()=>{
         if(isSent)
         {
-            socket.emit("new message",sentMessage)
-            setMessage([...message,sentMessage])
-            setNewMessage("")
+            setMessages([...messages,sentMessage])       
         }
     },[isSent])
- 
-    useEffect(()=>{
-        if(selectedChat)
-        {
-            dispatch(allMessagesAction(selectedChat))
-        }
-       else{
-        return
-       }
-       socket.emit("join chat",selectedChat._id)
-       selectedChatCompare = selectedChat //to implement whether the user is saying or not means to give notification or not (to keep backup)
-    },[selectedChat])
-    
-    const {isReceived , loading:messageLoading , messages} = useSelector((state)=> state.allMessages)
-
 return (
     <>
     {selectedChat ? (
@@ -137,7 +174,7 @@ return (
         >
             {/* Messages here */}
 
-            {messageLoading ? (<>
+            {/* {messageLoading ? (<>
             <Spinner
              size='xl'
              w={20}
@@ -146,17 +183,29 @@ return (
              margin='auto'
             >
             </Spinner>
-            </>):(
+            </>):( */}
                <div className='messages'>
                 {/* {messges hre} */}
                 <ScrollableChat messages={messages}/>
                </div>
-            )}
+            {/* )} */}
             <FormControl  isRequired mt={3}>
+            {isTyping ? (
+                <div>
+                  <Lottie
+                    options={defaultOptions}
+                    // height={50}
+                    width={70}
+                    style={{ marginBottom: 15, marginLeft: 0 }}
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
                 <Input 
                 variant='filled'
                 bg='#E0E0E0'
-                placeholder='Enter a message'
+                placeholder= {newMessage == '' ? '':'Enter a message'}
                 value={newMessage}
                 onChange={typingHandler}
                 >

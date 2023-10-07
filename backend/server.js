@@ -63,17 +63,29 @@ io.on("connection",(socket)=>{
     socket.join(room)
     console.log("user Joined Room ",room)
   })
+
+  socket.on("typing",(room)=> socket.in(room).emit("typing"))
+  socket.on("stop typing",(room)=> socket.in(room).emit("stop typing"))
   
   socket.on("new message",(newMessageReceived)=>{
-    var chat = newMessageReceived.chat
-    console.log("chat lkdsglkjadsg",chat)
-    // if(chat.users.length == 0)
-    // return console.log("Chat.users not defined")
+    // console.log("newMessageReceived",newMessageReceived.message.chat)
+    // var chat = newMessageReceived.chat
+    var chat = newMessageReceived.message.chat
+      // console.log("chat lkdsglkjadsg",chat)
+    if(chat.users.length == 0)
+    return console.log("Chat.users not defined")
 
     chat.users.forEach((user)=>{
-      if(user._id == newMessageReceived.sender._id) return;
+      if(user._id == newMessageReceived.message.sender._id) return;
+      // console.log("new message inside chat",newMessageReceived)
+      console.log("user_id",user._id)
       socket.in(user._id).emit("message received",newMessageReceived)
     })
   })
 
+
+  socket.off("setup",()=>{
+    console.log("User Disconnected")
+    socket.leave(userData._id)
+  })
 })

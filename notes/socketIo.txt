@@ -1,0 +1,81 @@
+1:-  sabse pehle socket.io ki website mei jaake insallatiion dekho (server ka)
+2:-   fhir backend/root  mei npm i socket.io 
+
+3:-   fhir backend ke server.js mei ye likho
+const io = require('socket.io')(server , {
+  pingTimeout : 60000,  //amount of time it will wait before off in ms
+  cors :{ //it stands for cross origin errror
+       origin : "http://localhost:3000"
+  }
+})
+io.on("connection",(socket)=>{
+  console.log("connected to socket.io")
+})
+
+
+4:-   fhir frontend mei jaake install kro client version of socket.io
+       npm i socket.io-client
+
+5:-    uske baad uss jsx file mei jaao jha chat exist krti hai 
+
+6:-      aur outside file name likho ye sab :-
+
+        const ENDPOINT = "http://localhost:8050"
+        var socket , selectedChatCompare;
+
+        const SingleChat = ({selectedChat , setSelectedChat}) =>{}
+
+7:-     uske baaad single chat ke andr use :-
+
+         import io from "socket.io-client"
+         useEffect(()=>{
+        socket = io
+        },[])
+
+8:- backend ke server mei waapis se jaake agr connected likha aagys useke baad
+    socket.on('setup',(userData)=>{  //socket.io setup kiya aur uske baad frontend se koi data aaega servaer mei aur ek naya room mei join ho jaaega
+       socket.join(userData._id)
+       socket.emit("connected")
+  })
+
+
+9:- uske baad frontend ke chats mei jaake :-
+     a:-   const [socketConnected , setSocketConnected] = useState(false)
+     useEffect of socket ye add kro :-
+      useEffect(()=>{
+      socket = io(ENDPOINT)
+      socket.emit("setup",user)
+      socket.on("connection",()=> setSocketConnected(true))
+    },[])
+
+10:- uske badd server.js mei jaake create a chat room
+      socket.on("join Chat",(room)=>{
+    socket.join(room)
+    console.log("user Joined Room ",room)
+  })
+
+11:- usek add this to server.js to send message
+      socket.on("new message",(newMessageReceived)=>{
+    var chat = newMessageReceived.chat
+    if(!chat.users)
+    return console.log("Chat.users not defined")
+
+    socket.in(user_id).emit("message received",newMessageReceived)
+  })
+
+12:- uske badd frontend mei receive a message ka banao:-
+         useEffect(()=>{
+        socket.on("message received",(newMessageReceived)=>{
+            if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id){
+                //Give notification
+            }
+            else{
+                setMessage([...message,newMessageReceived])
+            }
+        })
+    })  
+     
+Important kya hai:-
+socket.emit se bhejte hai 
+socket.on se receive krte hai
+socket.broadcast.emit('userJoined',{user:"Admin",message:"user has joined"}) //ye message user ko chhodke baaki sab pe jaaega     

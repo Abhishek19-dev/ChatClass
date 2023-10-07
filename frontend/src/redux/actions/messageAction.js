@@ -1,7 +1,7 @@
 import { ALL_MESSAGES_FAIL, ALL_MESSAGES_REQUEST, ALL_MESSAGES_SUCCESS, SEND_MESSAGE_FAIL, SEND_MESSAGE_REQUEST, SEND_MESSAGE_SUCCESS } from "../actionType"
 import axios from 'axios'
 
-export const sendMessageAction = (newMessage , selectedChat) =>async(dispatch)=>{
+export const sendMessageAction = (newMessage , selectedChat,socket,setNewMessage) =>async(dispatch)=>{
     console.log("selected message",selectedChat._id)
     console.log("selenewMessage",newMessage)
     try {
@@ -14,6 +14,7 @@ export const sendMessageAction = (newMessage , selectedChat) =>async(dispatch)=>
           type : SEND_MESSAGE_SUCCESS,
           payload : data
       })
+      socket.emit("new message",data)
       dispatch(allMessagesAction(selectedChat))
     } catch (error) {
         dispatch({
@@ -26,13 +27,13 @@ export const sendMessageAction = (newMessage , selectedChat) =>async(dispatch)=>
 
  //get all chats
  export const allMessagesAction = (selectedchat) =>async(dispatch)=>{
-    console.log("selectedChatId",selectedchat._id)
+    // console.log("selectedChatId",selectedchat._id)
     try {
      dispatch({
          type: ALL_MESSAGES_REQUEST
       })
       const {data} = await axios.get(`/api/v1/message/${selectedchat._id}`)
-      console.log("messages data hehe",data)
+    //   console.log("messages data hehe",data)
       dispatch({
           type : ALL_MESSAGES_SUCCESS,
           payload : data

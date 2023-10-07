@@ -6,14 +6,14 @@ import { Avatar, Tooltip } from '@chakra-ui/react';
  
 const ScrollableChat = ({ messages }) => {
   const { user } = useSelector((state) => state.loginUser);
+  // console.log("messages inside scrobble chat",messages)
 
   return (
     <>
       <ScrollableFeed>
-        {messages.length > 0 && messages.map((m, i) => {
+        {messages.length > 1 && messages.map((m, i) => {
           const isCurrentUser = m.sender._id === user._id;
         //   const legalMessage = messages[i+1].sender._id === user._id
-
           return (
             <div style={{ display: 'flex' }} key={m._id}>
               {!isCurrentUser && !isLastMessage(messages , i , user._id) && (
