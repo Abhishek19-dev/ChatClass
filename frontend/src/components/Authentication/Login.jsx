@@ -1,5 +1,5 @@
 import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useRef, useState } from 'react'; 
 import {  useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,7 @@ import { useToast } from '@chakra-ui/react'
     const [email , setEmail] = useState("")
     const [password , setPassword] = useState("")
     const toast = useToast()
+    // const isLoggedInRef = useRef(false)
 
     const handlePasswordShow = ()=>{
         setShow(!show)
@@ -37,7 +38,10 @@ import { useToast } from '@chakra-ui/react'
 
     useEffect(()=>{
         console.log("log",isLoggedIn)
+        // if(isLoggedIn && !isLoggedInRef.current){
         if(isLoggedIn){
+            // isLoggedInRef.current = true
+            // isLoggedInRef.current = true
             navigate("/")
             toast({
                 title:"Login Successfully",
@@ -47,7 +51,7 @@ import { useToast } from '@chakra-ui/react'
                 position:"bottom"
             })
         }
-      },[isLoggedIn,navigate])
+      },[isLoggedIn])
 return (
 
 <>

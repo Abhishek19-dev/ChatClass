@@ -66,14 +66,15 @@ const SideDrawer = () => {
         //  const user_Id = JSON.stringify(userId)
          dispatch(accessChat(userId))
   }
-  useEffect(()=>{
-    dispatch(getAllChat())
-  },[dispatch,getAllChat])
+  const { user, isLoggedIn } = useSelector((state) => state.loginUser)
+  // useEffect(()=>{
+  //   dispatch(getAllChat())
+  // },[])
 
   
 
   const { isLoggedOut } = useSelector((state) => state.logoutUser)
-  const { user, isLoggedIn } = useSelector((state) => state.loginUser)
+ 
   const { users:searchedUsers } = useSelector((state) => state.searchUser)
   useEffect(()=>{
     if(!isLoggedIn){

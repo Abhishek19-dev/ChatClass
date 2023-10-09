@@ -12,6 +12,7 @@ import GroupChatModal from './GroupChatModal';
     // console.log("allchats",allChats)
     
     // console.log("selected Chat",selectedChat)
+    
 return (
     <>
      <Box display={{base : selectedChat ? "none" : "flex",md:'flex'}} 
