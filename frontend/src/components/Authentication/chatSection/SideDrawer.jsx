@@ -137,7 +137,7 @@ const SideDrawer = () => {
                 size="sm"
                 cursor="pointer"
                 name={user.name}
-                src={user.avatar.url}
+                // src={user.avatar.url}
               />
             </MenuButton>
             <MenuList>

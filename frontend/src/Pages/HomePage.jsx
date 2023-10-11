@@ -5,6 +5,9 @@ import NavBar from '../components/HomePageUtils/Navbar';
 import FirstSection from '../components/HomePageUtils/FirstSection';
 import { getAllChat } from '../redux/actions/chatAction';
 import { useDispatch } from 'react-redux';
+import GroupSection from '../components/HomePageUtils/GroupSection';
+import WhyChatClass from '../components/HomePageUtils/WhyChatClass';
+
  
  const HomePage = () =>{
    
@@ -18,6 +21,8 @@ return (
     <Box w='100%' display='flex' flexDir='column'>
     <NavBar />
   <FirstSection />
+  <GroupSection />
+  <WhyChatClass />
     </Box>
     </>
 )
