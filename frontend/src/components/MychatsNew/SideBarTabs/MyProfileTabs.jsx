@@ -9,7 +9,10 @@ import {
     AccordionIcon,
   } from '@chakra-ui/react'
   import { UilUser } from '@iconscout/react-unicons'
- const MyProfileTabs = () =>{
+import { useSelector } from 'react-redux';
+ const MyProfileTabs = ({user}) =>{
+
+
 return (
     <>
     <Box bgColor='#F4F7FB' display='flex'  w='50vh' h='100vh' flexDir='column'>
@@ -19,8 +22,8 @@ return (
            <Icon color='grey' boxSize={7} mr={6} mt={1}><HiDotsVertical /></Icon>
         </Box>
         <Box display='flex' flexDir='column' alignItems='center' mt={9}>
-            <Avatar p='1px' borderRadius='full' borderWidth='4px' borderColor='grey.200'  size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-        <Text mt={7} fontSize='1rem' fontFamily='Public Sans' fontWeight='bold'>Abhishek Padiyar</Text>
+            <Avatar p='1px' borderRadius='full' borderWidth='4px' borderColor='grey.200'  size='2xl' name= {user.name} src= {user.avatar.url} />
+        <Text mt={7} fontSize='1rem' fontFamily='Public Sans' fontWeight='bold'>{user.name}</Text>
         <Box
         mt={2}
     ml={2} 
@@ -74,9 +77,9 @@ return (
           <AccordionPanel bgColor='white' pb={4}>
             <Box  display='flex' flexDirection='column' justifyContent='space-between'>
             <Text fontFamily='Public Sans' mt={3} mb={1} textColor='#74788D'>Name</Text>
-         <Text fontFamily='Public Sans' fontWeight='semibold' textColor='#3F414D'>Abhishek Padiyar</Text>
+         <Text fontFamily='Public Sans' fontWeight='semibold' textColor='#3F414D'>{user.name}</Text>
          <Text fontFamily='Public Sans' mt={5} mb={1} textColor='#74788D'>Email</Text>
-         <Text fontFamily='Public Sans' fontWeight='semibold' textColor='#3F414D'>abhishekpadiyar6395@gmail.com</Text>
+         <Text fontFamily='Public Sans' fontWeight='semibold' textColor='#3F414D'>{user.email}</Text>
          <Text fontFamily='Public Sans' mt={5} mb={1} textColor='#74788D'>Location</Text>
          <Text fontFamily='Public Sans' fontWeight='semibold' textColor='#3F414D'>Tehri Garhwal ,Uk</Text>
             </Box>

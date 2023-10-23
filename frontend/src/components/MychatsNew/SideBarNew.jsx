@@ -1,5 +1,5 @@
  import { Avatar, Box, Button, Divider, Icon, IconButton, Image, TabIndicator, Text, Tooltip } from '@chakra-ui/react';
-import React from 'react'; 
+import React, { useState } from 'react'; 
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import Logo2 from "../../animations/Logo2.png"
 import { UilUser } from '@iconscout/react-unicons'
@@ -23,16 +23,22 @@ import {
 import { UilFileInfoAlt } from '@iconscout/react-unicons'
 import { UilCog } from '@iconscout/react-unicons'
 import { UilSignout } from '@iconscout/react-unicons'
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 
 
- const SideBarNew = () =>{
+ const SideBarNew = ({selectedChat , setSelectedChat}) =>{
+  
+  const {user , isActive} = useSelector((state)=> state.loginUser)
       
 return (
     <>
     <Box  position= 'relative' display='flex' h='100vh' w='fit-content' flexDirection='column' justifyContent='space-between'>
-    <Image ml={5} mr={3} mt={6} w='8vh' h='6vh' src={Logo2} />
+      <Link to = '/'>
+      <Image ml={5} mr={3} mt={6} w='8vh' h='6vh' src={Logo2} />
+      </Link>
   
     <Tabs  display='flex'>
   <TabList display='flex' flexDirection='column'>
@@ -104,11 +110,11 @@ return (
   </TabList>
   <TabPanels  position='absolute' top='-31vh' left='10vh'>
     <TabPanel >
-      <MyProfileTabs />
+      <MyProfileTabs user={user} />
     </TabPanel>
 
     <TabPanel>
-      <MyChatsTabs />
+      <MyChatsTabs selectedChat={selectedChat} setSelectedChat={setSelectedChat} user={user} isActive = {isActive} />
     </TabPanel>
 
     <TabPanel>

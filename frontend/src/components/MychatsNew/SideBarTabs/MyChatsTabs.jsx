@@ -1,10 +1,21 @@
  import { Avatar, AvatarBadge, Box, Icon, Input, InputGroup, InputLeftElement, Stack, Text } from '@chakra-ui/react';
-import React, { useState } from 'react'; 
+import React, { useEffect, useState } from 'react'; 
 import { HiPhoneIncoming } from 'react-icons/hi';
 import { UilSearch } from '@iconscout/react-unicons'
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllChat } from '../../../redux/actions/chatAction';
+import { RecentChats, returnSender } from './RecentChatsUtils';
+
 
  
- const MyChatsTabs = () =>{
+ const MyChatsTabs = ({user , isActive , selectedChat , setSelectedChat}) =>{
+      const dispatch = useDispatch()
+      useEffect(()=>{
+         dispatch(getAllChat())
+      },[user._id])
+
+      const {allChats} = useSelector((state)=> state.allChats)
+      
 
 return (
     <>
@@ -57,84 +68,12 @@ return (
      <Box>
      <Text fontFamily='Public Sans' textColor='black' ml={5}  fontWeight={600} fontSize='18px'>Recent</Text>
 
-     <Stack mt={5} maxH='54vh'  overflowY='auto'>
-       <Box pl={0}  p={4} _hover={{bg:'#E6EBF5'}} display='flex' justifyContent='space-between'>
-        <Box display='flex'>
-        <Avatar  size='md' name='Kent Dodds' src='https://bit.ly/kent-c-dodds'>
-       <AvatarBadge boxSize='0.8em' bg='#2BB47D' />
-        </Avatar>{' '}
-        <Box display='flex' flexDirection='column'>
-              <Text textColor='black' fontFamily='Public Sans' fontWeight={600} ml={5}>Abhishek Padiyar</Text>
-              <Text ml={5} fontSize='0.9rem' mt={1} fontFamily='Public Sans' fontWeight={400} textColor='#74788D'>Hey , This is new message</Text>
-        </Box>
-        </Box>
-        <Text mr={6} fontFamily='Public Sans' fontSize='0.8rem' textColor='#74788D'>10:12 AM</Text>
-       </Box>
+     <Stack mt={5} bg='#F4F7FB' h='53vh'  overflowY='auto'>
+       
+       {allChats ? allChats.filter((c)=> !c.isGroupChat).map((chat)=> (
+            <RecentChats selectedChat = {selectedChat} setSelectedChat = {setSelectedChat}  user = {user} isActive={isActive} chat = {chat}  key = {chat._id} />
+       )) : "No Chats to Show"}
 
-       <Box pl={0}  p={4} _hover={{bg:'#E6EBF5'}} display='flex' justifyContent='space-between'>
-        <Box display='flex'>
-        <Avatar  size='md' name='Kent Dodds' src='https://bit.ly/kent-c-dodds'>
-       <AvatarBadge boxSize='0.8em' bg='#2BB47D' />
-        </Avatar>{' '}
-        <Box display='flex' flexDirection='column'>
-              <Text textColor='black' fontFamily='Public Sans' fontWeight={600} ml={5}>Abhishek Padiyar</Text>
-              <Text ml={5} fontSize='0.9rem' mt={1} fontFamily='Public Sans' fontWeight={400} textColor='#74788D'>Hey , This is new message</Text>
-        </Box>
-        </Box>
-        <Text mr={6} fontFamily='Public Sans' fontSize='0.8rem' textColor='#74788D'>10:12 AM</Text>
-       </Box>
-
-       <Box pl={0}  p={4} _hover={{bg:'#E6EBF5'}} display='flex' justifyContent='space-between'>
-        <Box display='flex'>
-        <Avatar  size='md' name='Kent Dodds' src='https://bit.ly/kent-c-dodds'>
-       <AvatarBadge boxSize='0.8em' bg='#2BB47D' />
-        </Avatar>{' '}
-        <Box display='flex' flexDirection='column'>
-              <Text textColor='black' fontFamily='Public Sans' fontWeight={600} ml={5}>Abhishek Padiyar</Text>
-              <Text ml={5} fontSize='0.9rem' mt={1} fontFamily='Public Sans' fontWeight={400} textColor='#74788D'>Hey , This is new message</Text>
-        </Box>
-        </Box>
-        <Text mr={6} fontFamily='Public Sans' fontSize='0.8rem' textColor='#74788D'>10:12 AM</Text>
-       </Box>
-
-       <Box pl={0}  p={4} _hover={{bg:'#E6EBF5'}} display='flex' justifyContent='space-between'>
-        <Box display='flex'>
-        <Avatar  size='md' name='Kent Dodds' src='https://bit.ly/kent-c-dodds'>
-       <AvatarBadge boxSize='0.8em' bg='#2BB47D' />
-        </Avatar>{' '}
-        <Box display='flex' flexDirection='column'>
-              <Text textColor='black' fontFamily='Public Sans' fontWeight={600} ml={5}>Abhishek Padiyar</Text>
-              <Text ml={5} fontSize='0.9rem' mt={1} fontFamily='Public Sans' fontWeight={400} textColor='#74788D'>Hey , This is new message</Text>
-        </Box>
-        </Box>
-        <Text mr={6} fontFamily='Public Sans' fontSize='0.8rem' textColor='#74788D'>10:12 AM</Text>
-       </Box>
-
-       <Box pl={0}  p={4} _hover={{bg:'#E6EBF5'}} display='flex' justifyContent='space-between'>
-        <Box display='flex'>
-        <Avatar  size='md' name='Kent Dodds' src='https://bit.ly/kent-c-dodds'>
-       <AvatarBadge boxSize='0.8em' bg='#2BB47D' />
-        </Avatar>{' '}
-        <Box display='flex' flexDirection='column'>
-              <Text textColor='black' fontFamily='Public Sans' fontWeight={600} ml={5}>Abhishek Padiyar</Text>
-              <Text ml={5} fontSize='0.9rem' mt={1} fontFamily='Public Sans' fontWeight={400} textColor='#74788D'>Hey , This is new message</Text>
-        </Box>
-        </Box>
-        <Text mr={6} fontFamily='Public Sans' fontSize='0.8rem' textColor='#74788D'>10:12 AM</Text>
-       </Box>
-
-       <Box pl={0}  p={4} _hover={{bg:'#E6EBF5'}} display='flex' justifyContent='space-between'>
-        <Box display='flex'>
-        <Avatar  size='md' name='Kent Dodds' src='https://bit.ly/kent-c-dodds'>
-       <AvatarBadge boxSize='0.8em' bg='#2BB47D' />
-        </Avatar>{' '}
-        <Box display='flex' flexDirection='column'>
-              <Text textColor='black' fontFamily='Public Sans' fontWeight={600} ml={5}>Abhishek Padiyar</Text>
-              <Text ml={5} fontSize='0.9rem' mt={1} fontFamily='Public Sans' fontWeight={400} textColor='#74788D'>Hey , This is new message</Text>
-        </Box>
-        </Box>
-        <Text mr={6} fontFamily='Public Sans' fontSize='0.8rem' textColor='#74788D'>10:12 AM</Text>
-       </Box>
      </Stack>
 
      </Box>

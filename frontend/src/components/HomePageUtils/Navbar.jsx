@@ -23,8 +23,15 @@ import studyBook from '../../animations/study-book.png'
 import searchBox from '../../animations/search.svg'
 import notificationBell from '../../animations/notification bell.png'
 import { FaLeanpub } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
+import { NavbarProfileDropDown } from './HomePageUtils/NavbarProfileDropDown'
 
 const NavBar = () => {
+  
+  const {user , isLoggedIn} = useSelector((state)=> state.loginUser)
+  const {isLoggedOut} = useSelector((state)=> state.logoutUser)
   return (
     <>
       <Box
@@ -66,12 +73,12 @@ const NavBar = () => {
             </MenuButton>
             <MenuList>
               <MenuGroup>
-                <MenuItem display='flex' px={4}><Avatar
+              <MenuItem display='flex' px={4}><Avatar
                 size="sm"
                 name="Abhishek Padiyar"
                 src="https://bit.ly/tioluwani-kolawole"
               />
-              <Text ml={4}>1 new messages</Text></MenuItem>
+              <Text ml={4}>2 new messages</Text></MenuItem>
               </MenuGroup>
               <Divider />
               <MenuGroup>
@@ -85,28 +92,22 @@ const NavBar = () => {
             </MenuList>
           </Menu>
 
-          <Menu placement="bottom">
+          <Menu borderRadius='lg' placement="bottom">
             <MenuButton>
               <Avatar
                 size="md"
-                name="Abhishek Padiyar"
-                src="https://bit.ly/tioluwani-kolawole"
+                name= {isLoggedIn ? user.name : ""}
+                src= {isLoggedIn ? user.avatar.url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
               />
             </MenuButton>
-            <MenuList>
-              <MenuGroup>
-                <MenuItem>My Profile</MenuItem>
-                <MenuItem>My groups </MenuItem>
-              </MenuGroup>
-              <MenuDivider />
-              <MenuGroup>
-                <MenuItem>Logout</MenuItem>
-              </MenuGroup>
-            </MenuList>
+
+            <NavbarProfileDropDown user={user} isLoggedOut={isLoggedOut} isLoggedIn={isLoggedIn}/>
           </Menu>
+          <Link to='/chats'>
           <Button mr={12} mt={1} leftIcon={<FaLeanpub />} colorScheme="blue" variant="outline">
             Start Study
           </Button>
+          </Link>
         </Stack>
       </Box>
     </>

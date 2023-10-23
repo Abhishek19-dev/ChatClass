@@ -42,6 +42,7 @@ export const loginReducer = (state={
     loading:false,
     user:{},
     success:false,
+    isActive:false,
     isLoggedIn:false
 },action) =>{
     const {type,payload} = action
@@ -57,6 +58,7 @@ export const loginReducer = (state={
                 ...state,
                 loading:false,
                 user : payload,
+                isActive : true,
                 isLoggedIn:true,
                 success : true,
             }
@@ -70,6 +72,7 @@ export const loginReducer = (state={
                 case LOGIN_RESET:
                     return{
                         isLoggedIn : false,
+                        isActive : false,
                         user : []
                     }
                 default:
