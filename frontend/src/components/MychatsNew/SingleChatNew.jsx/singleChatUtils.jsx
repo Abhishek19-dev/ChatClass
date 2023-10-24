@@ -1,12 +1,6 @@
  import React from 'react'; 
  
- export const upperMessageSame = () =>{
-return (
-    <>
-    
-    </>
-)
-};
+
 
 export const messageSender = ({message , user}) =>{
     console.log("message sender ._id",message.sender._id)

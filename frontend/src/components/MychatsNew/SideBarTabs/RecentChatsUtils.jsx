@@ -43,7 +43,7 @@ export const RecentChats = ({ chat, key, user, isActive , selectedChat , setSele
               fontWeight={400}
               textColor="#74788D"
             >
-              {chat.latestMessage.content}
+              {chat.latestMessage ? chat.latestMessage.content : "No messages yet"}
             </Text>
           </Box>
         </Box>

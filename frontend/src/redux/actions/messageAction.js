@@ -16,6 +16,7 @@ export const sendMessageAction = (newMessage , selectedChat,socket,setNewMessage
       })
       socket.emit("new message",data)
       dispatch(allMessagesAction(selectedChat))
+      
     } catch (error) {
         dispatch({
          type : SEND_MESSAGE_FAIL,

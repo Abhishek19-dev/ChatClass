@@ -1,4 +1,14 @@
 
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
 
 
   .App {
