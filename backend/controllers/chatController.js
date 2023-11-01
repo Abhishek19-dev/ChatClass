@@ -73,7 +73,7 @@ exports.fetchAllChats = catchAsyncError(async(req,res,next)=>{
 
 //create group chats:-
 exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
-    var {users,chatName} = req.body
+    var {users,chatName,groupDescription} = req.body
     // console.log("users",users)
     // console.log("chatName",chatName)
     if(!req.body.users || !req.body.chatName)
@@ -89,6 +89,7 @@ exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
         chatName : chatName,
         users : users,
         isGroupChat : true,
+        groupDescription : groupDescription,
         groupAdmin : req.user
     })
     //group Chat banne ke baad usse bhejenge:-

@@ -180,15 +180,14 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                 mr={3}
                 size="md"
                 name={
-                  selectedChat
-                    ? returnSender(selectedChat, user).name
+                  selectedChat ? (selectedChat.isGroupChat ? selectedChat.chatName :  returnSender(selectedChat, user).name)
                     : 'Guest User'
                 }
-                src={
-                  selectedChat
-                    ? returnSender(selectedChat, user).avatar.url
-                    : ''
-                }
+                // src={
+                //   selectedChat
+                //   ? (selectedChat.isGroupChat ? selectedChat.chatName :  returnSender(selectedChat, user).name)
+                //     : ''
+                // }
               ></Avatar>{' '}
               <Text
                 mr={3}
@@ -197,7 +196,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                 fontWeight={600}
                 textColor="black"
               >
-                {selectedChat && returnSender(selectedChat, user).name}
+                {selectedChat && (selectedChat.isGroupChat ? selectedChat.chatName :  returnSender(selectedChat, user).name)}
               </Text>
               <Box
                 w="10px"

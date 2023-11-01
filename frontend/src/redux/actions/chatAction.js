@@ -69,13 +69,13 @@ export const searchUser = (search) =>async(dispatch)=>{
  }
 
 
- export const createAGroupChat = (selectedUserArray,chatName) =>async(dispatch)=>{
+ export const createAGroupChat = (selectedUserArray,chatName,groupDescription) =>async(dispatch)=>{
     try {
      dispatch({
          type: CREATE_A_GROUP_CHAT_REQUEST
       })
       const config = {headers:{"Content-type":"application/json"}}
-      const {data} = await axios.post("/api/v1/groupChats",{users:JSON.stringify(selectedUserArray.map((u)=> u._id)) , chatName},config)
+      const {data} = await axios.post("/api/v1/groupChats",{users:JSON.stringify(selectedUserArray.map((u)=> u._id)) , chatName,groupDescription},config)
       dispatch({
           type : CREATE_A_GROUP_CHAT_SUCCESS,
           payload : data

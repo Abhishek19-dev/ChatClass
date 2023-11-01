@@ -12,6 +12,10 @@ const chatSchema = new Schema ({
         type : Boolean,
         default : false
     },
+     groupDescription : {
+        type : String,
+        default : ""
+    },
     users : [{
         type : mongoose.Schema.ObjectId,
         ref : "User"

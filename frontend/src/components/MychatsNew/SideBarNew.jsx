@@ -118,7 +118,7 @@ return (
     </TabPanel>
 
     <TabPanel>
-      <GroupChatsTabs />
+      <GroupChatsTabs selectedChat={selectedChat} setSelectedChat={setSelectedChat} user={user} isActive = {isActive} />
     </TabPanel>
 
     <TabPanel>
