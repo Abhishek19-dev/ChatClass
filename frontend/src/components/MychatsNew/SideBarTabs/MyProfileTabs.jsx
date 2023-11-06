@@ -15,7 +15,8 @@ import { useSelector } from 'react-redux';
 
 return (
     <>
-    <Box bgColor='#F4F7FB' display='flex'  w='50vh' h='100vh' flexDir='column'>
+    <Box bgColor='#F4F7FB' display='flex' w='100%' mb={3} h='130vh' flexDir='column'>
+    {/* <Box  display='flex' w='full' mb={3} h='130vh' flexDir='column'> */}
     <Box display='flex' flexDirection='column'>
         <Box justifyContent='space-between' display='flex' mt={10}>
           <Heading fontSize='2xl' fontFamily='Public Sans' fontWeight='medium' ml={6}>My Profile</Heading>
@@ -60,9 +61,9 @@ return (
     </Box>
 
 
-    <Box ml={5} mt={6} mr={5}>
+    <Box h='100%' ml={5} mt={6} mr={5}>
   <Accordion defaultIndex={[0]} allowMultiple>
-    <Box>
+    <Box >
       <AccordionItem>
         <Box border='1px solid' borderColor='lightgray' borderRadius='sm'> {/* Add border here */}
           <AccordionButton>

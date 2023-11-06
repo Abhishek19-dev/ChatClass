@@ -64,9 +64,9 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
   return (
     <>
       <Box
-        bgColor="#F4F7FB"
+        // bgColor="#F4F7FB"
         display="flex"
-        w="50vh"
+        w='full'
         h="fit-content"
         flexDir="column"
       >
@@ -145,10 +145,10 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
           borderRadius="sm"
           p={2}
           bgColor="#E6EBF5"
-          ml={5}
+          ml={2}
           mt={8}
+          w='380px'
           mb={5}
-          width="22rem"
         >
           <InputLeftElement pointerEvents="none">
             <Icon mt={3} w={6} h={6} color="#8C8C8C">
@@ -167,7 +167,7 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
           />
         </InputGroup>
 
-        <Stack mb={8} mt={10} ml={4} direction="row" spacing={5}>
+        <Stack  mb={8} mt={10} ml={4} direction="row" spacing={5}>
           <Box
             position="relative"
             w="5rem"

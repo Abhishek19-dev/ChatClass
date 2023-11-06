@@ -17,7 +17,9 @@ import {
   PopoverTrigger,
   Spinner,
   Text,
+  calc,
   useBoolean,
+  useBreakpointValue,
 } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState } from 'react'
 import { UilSearch } from '@iconscout/react-unicons'
@@ -73,17 +75,12 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
   }, [selectedChat])
 
   useEffect(() => {
-    // if (receivedMessages.length > 0) {
-    // if (receivedMessages.length > 0) {
       if(receivedMessages.length >0){
         setMessages(receivedMessages)
       }
       else{
         setMessages('')
       }
-
-    // }
-  // }, [receivedMessages])
   }, [receivedMessages])
 
   const sendMessage = async (event) => {
@@ -140,9 +137,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
     <>
       {!selectedChat ? (
         <Box
-          mt="15vh"
-          ml="50vh"
-          w="121vh"
+          maxWidth='100%'
           h="100vh"
           display="flex"
           flexDirection="column"
@@ -155,23 +150,26 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
         </Box>
       ) : (
         <Box
-          w="121vh"
-          display="flex"
+        bg='blue'
+        // w='full'
+        w={`calc(100% - 500px)`}
           h="100vh"
+          display="flex"
           flexDirection="column"
-          ml="50vh"
+          p={3}
         >
           <Box
-            w="full"
+          maxW='full'
             display="flex"
-            mt="5vh"
-            ml="3vh"
-            mb={6}
+            // mt="2rem" 
+            // ml="1rem"
+            // mr='1rem'
+            // mb='1rem'
             justifyContent="space-between"
             alignItems="center"
           >
             <Box
-              w="fit-content"
+              // w="fit-content"
               display="flex"
               justifyContent="space-between"
               alignItems="center"
@@ -224,7 +222,8 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                 lazyBehavior="keepMounted"
               >
                 <PopoverTrigger>
-                  <IconButton mr={6}>
+                  {/* <IconButton mr={6}> */}
+                  <IconButton>
                     <UilSearch />
                   </IconButton>
                 </PopoverTrigger>
@@ -234,7 +233,8 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                   </PopoverBody>
                 </PopoverContent>
               </Popover>
-              <IconButton color="#74788D" bg="transparent" mr={10}>
+
+              <IconButton color="#74788D" bg="transparent" mr='1vw'>
                 <UilEye />
               </IconButton>
             </Box>
@@ -242,10 +242,8 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
           <Divider w="full" />
 
           {/* CHAT BOX  */}
-          {/* <Box mt={6} ml={6} h='75vh' overflowY='auto'>  */}
           <Box
             maxW="100%"
-            maxH="75vh"
             overflowY="auto"
             mt={6}
             ml={6}
@@ -253,7 +251,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
             css={{ '::-webkit-scrollbar': { display: 'transparent' } }}
           >{
           <ScrollableFeed>
-            <Box display="flex" w="100%" flexDirection="column">
+            <Box  display="flex"  w="100%" flexDirection="column">
               {isReceived && messages
                 // ? messages?.map((message, index) => {
                 ? messages.map((message, index) => {

@@ -42,7 +42,6 @@ export const GroupChatSelectedUser = ({user,handleFunction}) =>{
     };
      
     export const GroupChatNameUtils = ({chat, key, user, isActive , selectedChat , setSelectedChat }) =>{
-      console.log("selected group chat",selectedChat)
         return (
             <>
             <Box  onClick={() => setSelectedChat(chat)} pl={0}  p={4} _hover={{bg:'#E6EBF5'}} display='flex' justifyContent='space-between'>

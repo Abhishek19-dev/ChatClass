@@ -24,7 +24,6 @@ export const searchUser = (search) =>async(dispatch)=>{
 
  //Create a chat Or Load a chAT:-
  export const accessChat = (userId) =>async(dispatch)=>{
-    console.log("userId",userId)
     try {
      dispatch({
          type: ACCESS_CHAT_REQUEST
@@ -58,12 +57,12 @@ export const searchUser = (search) =>async(dispatch)=>{
           type : ALL_CHATS_OF_USER_SUCCESS,
           payload : data.allChats
       })
-      setSelectedChat(data.allChats[0])
+    //   setSelectedChat(data.allChats[0])
     } catch (error) {
         dispatch({
          type : ALL_CHATS_OF_USER_FAIL,
         //  payload:error.response.message.data
-         payload:error.response
+         payload:error.response      
         })
     }
  }

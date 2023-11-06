@@ -25,26 +25,41 @@ import { UilCog } from '@iconscout/react-unicons'
 import { UilSignout } from '@iconscout/react-unicons'
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import SecondChatBarSection from './SecondChatBarSection';
 
 
 
 
- const SideBarNew = ({selectedChat , setSelectedChat}) =>{
+ const SideBarNew = ({selectedChat , setSelectedChat , myTabs , setMyTabs}) =>{
   
   const {user , isActive} = useSelector((state)=> state.loginUser)
+  
       
+  const handleSetProfileTabs = ()=>{
+    setMyTabs(<MyProfileTabs user={user} />)
+  }
+  const handleSetMyChatsTabs = ()=>{
+    setMyTabs(<MyChatsTabs selectedChat={selectedChat} setSelectedChat={setSelectedChat} user={user} isActive = {isActive} />)
+  }
+  const handleSetGroupChatTabs = ()=>{
+    setMyTabs(<GroupChatsTabs selectedChat={selectedChat} setSelectedChat={setSelectedChat} user={user} isActive = {isActive} />)
+  }
+  const handleSettingsTabs = ()=>{
+    setMyTabs(<SettingsTabs />)
+  }
 return (
     <>
-    <Box  position= 'relative' display='flex' h='100vh' w='fit-content' flexDirection='column' justifyContent='space-between'>
+    {/* <Box bg='blue'   position= 'relative' display='flex' h='100vh' w='fit-content' flexDirection='column' justifyContent='space-between'> */}
+    <Box bg='red'   position= 'relative' display='flex' h='100vh' w='100px' flexDirection='column' justifyContent='space-between'>
       <Link to = '/'>
-      <Image ml={5} mr={3} mt={6} w='8vh' h='6vh' src={Logo2} />
+      <Image ml={3} mr={4} mt={6} w='8vh' h='6vh' src={Logo2} />
       </Link>
   
-    <Tabs  display='flex'>
+    <Tabs display='flex'>
   <TabList display='flex' flexDirection='column'>
   <Divider color='lightblue' />
     <Tooltip hasArrow placement='top' label = 'Profile'> 
-    <Tab _hover={{
+    <Tab onClick={handleSetProfileTabs} _hover={{
     border: '1px',
     borderColor: '#A3ECD2', // Change to the desired shade of blue
     borderRadius: 'md', // You can adjust the border radius
@@ -60,7 +75,7 @@ return (
     </Tooltip>
 
     <Tooltip hasArrow placement='top' label = 'Chats'> 
-    <Tab _hover={{
+    <Tab onClick={handleSetMyChatsTabs} _hover={{
     border: '1px',
     borderColor: '#A3ECD2', // Change to the desired shade of blue
     borderRadius: 'md', // You can adjust the border radius
@@ -76,7 +91,7 @@ return (
     </Tooltip>
 
     <Tooltip hasArrow placement='top' label = 'Groups'> 
-    <Tab _hover={{
+    <Tab onClick={handleSetGroupChatTabs}  _hover={{
     border: '1px',
     borderColor: '#A3ECD2', // Change to the desired shade of blue
     borderRadius: 'md', // You can adjust the border radius
@@ -92,7 +107,7 @@ return (
     </Tooltip>
 
     <Tooltip hasArrow placement='top' label = 'Settings'> 
-    <Tab _hover={{
+    <Tab onClick={handleSettingsTabs} _hover={{
     border: '1px',
     borderColor: '#A3ECD2', // Change to the desired shade of blue
     borderRadius: 'md', // You can adjust the border radius
@@ -108,24 +123,26 @@ return (
     </Tooltip>
     <Divider />
   </TabList>
-  <TabPanels  position='absolute' top='-31vh' left='10vh'>
-    <TabPanel >
-      <MyProfileTabs user={user} />
+  {/* <TabPanels  position='absolute' top='-31vh' left='10vh'>
+  <TabPanels  position='absolute' top='-31vh'>
+    <TabPanel>
+      <SecondChatBarSection><MyProfileTabs user={user} /></SecondChatBarSection>
     </TabPanel>
 
     <TabPanel>
+      <SecondChatBarSection><MyChatsTabs selectedChat={selectedChat} setSelectedChat={setSelectedChat} user={user} isActive = {isActive} /></SecondChatBarSection>
       <MyChatsTabs selectedChat={selectedChat} setSelectedChat={setSelectedChat} user={user} isActive = {isActive} />
     </TabPanel>
 
     <TabPanel>
-      <GroupChatsTabs selectedChat={selectedChat} setSelectedChat={setSelectedChat} user={user} isActive = {isActive} />
+      <SecondChatBarSection><GroupChatsTabs selectedChat={selectedChat} setSelectedChat={setSelectedChat} user={user} isActive = {isActive} /></SecondChatBarSection>
     </TabPanel>
 
     <TabPanel>
-     <SettingsTabs />
+     <SecondChatBarSection><SettingsTabs /></SecondChatBarSection>
     </TabPanel>
 
-  </TabPanels>
+  </TabPanels> */}
 </Tabs>
 
 <Menu>

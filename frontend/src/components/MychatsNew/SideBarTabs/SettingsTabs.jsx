@@ -6,7 +6,7 @@ import { UilEditAlt } from '@iconscout/react-unicons'
  const SettingsTabs = () =>{
 return (
     <>
-     <Box bgColor='#F4F7FB' display='flex'  w='50vh' h='100vh' flexDir='column'>
+     <Box bgColor='#F4F7FB' display='flex'  w="100%" h='100vh' flexDir='column'>
     <Box display='flex' flexDirection='column'>
           <Heading mt={10} fontSize='2xl' fontFamily='Public Sans' fontWeight='medium' ml={6}>Settings</Heading>
 
