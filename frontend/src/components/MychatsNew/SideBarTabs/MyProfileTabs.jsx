@@ -15,7 +15,8 @@ import { useSelector } from 'react-redux';
 
 return (
     <>
-    <Box bgColor='#F4F7FB' display='flex' w='100%' mb={3} h='130vh' flexDir='column'>
+    <Box bgColor='#F4F7FB' display='flex' w='100%' mb={{base:'30vw' , lg:'10vw' }} h='100%' flexDir='column'>
+    {/* <Box bgColor='#F4F7FB' display='flex' w='100%' mb={3} h='100%' flexDir='column'> */}
     {/* <Box  display='flex' w='full' mb={3} h='130vh' flexDir='column'> */}
     <Box display='flex' flexDirection='column'>
         <Box justifyContent='space-between' display='flex' mt={10}>

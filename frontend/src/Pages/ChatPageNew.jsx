@@ -20,9 +20,9 @@ import MyChatsTabs from '../components/MychatsNew/SideBarTabs/MyChatsTabs';
 
 return (
     <>
-    <Box  w='100%'  display='flex'>
+    <Box  w='100%'  display='flex'   flexDirection={{base :'column' , lg:'row'}}>
     <SideBarNew  myTabs = {myTabs} setMyTabs={setMyTabs} selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
-    <SecondChatBarSection>{myTabs}</SecondChatBarSection>
+    <SecondChatBarSection setSelectedChat = {setSelectedChat} selectedChat = {selectedChat}>{myTabs}</SecondChatBarSection>
     <ChatBoxNew  setSelectedChat = {setSelectedChat} selectedChat = {selectedChat} user={user} />
     </Box>
     

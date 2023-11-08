@@ -8,6 +8,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  HStack,
   Icon,
   IconButton,
   Input,
@@ -64,34 +65,50 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
   return (
     <>
       <Box
-        // bgColor="#F4F7FB"
+      bgColor='#F4F7FB'
         display="flex"
-        w='full'
-        h="fit-content"
+        w='100%'
+        h='100%'
         flexDir="column"
       >
         <Box display="flex" justifyContent="space-between">
           <Text
             fontFamily="Public Sans"
             textColor="#3f414D"
-            ml={5}
+            ml={{lg:5 , base : '4vw'}}
             fontWeight={600}
             fontSize="23px"
-            mt={9}
+            w='100%'
+            mt={{lg:9,base:'6vw'}}
           >
             Chats
           </Text>
-          <Button
-            onClick={onOpen}
-            w=""
-            mr={3}
-            mt={9}
-            leftIcon={<UilSearch />}
-            colorScheme="blue"
-            variant="outline"
-          >
-            Search your Friends
-          </Button>
+          <Box
+  display={{ lg: 'block', base: 'none' }}
+  w={{ lg: '33vw' }}
+  // You can adjust padding if necessary
+  // pb={{ lg: '1vw' }}
+  pr='1vw'
+  mr={{ lg: '2vw', base: '5vw' }}
+  mt={{ lg: '2vw', base: '6vw' }}
+  overflow="hidden" // Hide overflow content
+>
+  <Button
+    onClick={onOpen}
+    colorScheme="blue"
+    variant="outline"
+    w="100%" // Set the Button to take up 100% of its container width
+    whiteSpace="nowrap" // Prevent text from wrapping
+  >
+    <HStack>
+      <Icon as={UilSearch} />
+      <Text>Search your Friends</Text>
+    </HStack>
+  </Button>
+</Box>
+
+          <IconButton 
+             mt='6vw' mr='3vw' p='1vw' onClick={onOpen} display={{lg:'none',base:'block'}}><UilSearch /></IconButton>
           <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
             <DrawerOverlay />
             <DrawerContent>
@@ -145,9 +162,9 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
           borderRadius="sm"
           p={2}
           bgColor="#E6EBF5"
-          ml={2}
+          ml={{lg:2,base:'2vw'}}
           mt={8}
-          w='380px'
+          w='95%'
           mb={5}
         >
           <InputLeftElement pointerEvents="none">
@@ -167,17 +184,17 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
           />
         </InputGroup>
 
-        <Stack  mb={8} mt={10} ml={4} direction="row" spacing={5}>
+        <Stack  mb={8} mt={10} ml={4} direction="row" spacing={7}>
           <Box
             position="relative"
-            w="5rem"
+            w={{base:"18vw" , lg:'5rem' , md:'20vw'}}
             h="4rem"
             borderRadius="md"
             bgColor="#E6EBF5"
           >
             <Avatar
               position="absolute"
-              left="18px"
+              left={{base:"3vw",lg:'18px',md:'7vw'}}
               top="-23px"
               size="md"
               name="Kent Dodds"
@@ -187,25 +204,25 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
             </Avatar>{' '}
             <Text
               pt={8}
-              pl={3}
+              pl={{lg:3 , base : '2vw' , md:'5vw'}}
               fontFamily="Public Sans"
-              fontSize="13px"
+              fontSize={{lg:"13px",base:'13px',md:'20px'}}
               fontWeight={700}
             >
               Abhishek
             </Text>
           </Box>
 
-          <Box
+         <Box
             position="relative"
-            w="5rem"
+            w={{base:"18vw" , lg:'5rem' , md:'20vw'}}
             h="4rem"
             borderRadius="md"
             bgColor="#E6EBF5"
           >
             <Avatar
               position="absolute"
-              left="18px"
+              left={{base:"3vw",lg:'18px',md:'7vw'}}
               top="-23px"
               size="md"
               name="Kent Dodds"
@@ -215,25 +232,24 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
             </Avatar>{' '}
             <Text
               pt={8}
-              pl={3}
+              pl={{lg:3 , base : '2vw' , md:'5vw'}}
               fontFamily="Public Sans"
-              fontSize="13px"
+              fontSize={{lg:"13px",base:'13px',md:'20px'}}
               fontWeight={700}
             >
               Abhishek
             </Text>
           </Box>
-
           <Box
             position="relative"
-            w="5rem"
+            w={{base:"18vw" , lg:'5rem' , md:'20vw'}}
             h="4rem"
             borderRadius="md"
             bgColor="#E6EBF5"
           >
             <Avatar
               position="absolute"
-              left="18px"
+              left={{base:"3vw",lg:'18px',md:'7vw'}}
               top="-23px"
               size="md"
               name="Kent Dodds"
@@ -243,25 +259,24 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
             </Avatar>{' '}
             <Text
               pt={8}
-              pl={3}
+              pl={{lg:3 , base : '2vw' , md:'5vw'}}
               fontFamily="Public Sans"
-              fontSize="13px"
+              fontSize={{lg:"13px",base:'13px',md:'20px'}}
               fontWeight={700}
             >
               Abhishek
             </Text>
           </Box>
-
           <Box
             position="relative"
-            w="5rem"
+            w={{base:"18vw" , lg:'5rem' , md:'20vw'}}
             h="4rem"
             borderRadius="md"
             bgColor="#E6EBF5"
           >
             <Avatar
               position="absolute"
-              left="18px"
+              left={{base:"3vw",lg:'18px',md:'7vw'}}
               top="-23px"
               size="md"
               name="Kent Dodds"
@@ -271,9 +286,9 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
             </Avatar>{' '}
             <Text
               pt={8}
-              pl={3}
+              pl={{lg:3 , base : '2vw' , md:'5vw'}}
               fontFamily="Public Sans"
-              fontSize="13px"
+              fontSize={{lg:"13px",base:'13px',md:'20px'}}
               fontWeight={700}
             >
               Abhishek
@@ -292,7 +307,8 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
             Recent
           </Text>
 
-          <Stack mt={5} bg="#F4F7FB" h="53vh" overflowY="auto">
+          {/* <Stack mt={5} bg="#F4F7FB" h="53vh" overflowY="auto"> */}
+          <Stack mt={5} h="53vh" overflowY="auto">
             {allChats
               ? allChats
                   .filter((c) => !c.isGroupChat)

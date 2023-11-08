@@ -22,14 +22,14 @@ import { useSelector } from 'react-redux';
 
 return (
     <>
-    <Box bgColor='#F4F7FB'  display='flex'  w="100%" h='99vh' flexDir='column'>
+    <Box bgColor='#F4F7FB'  display='flex'  w="100%" h='100%' flexDir='column'>
         <Box display='flex' justifyContent='space-between'>
         <Text fontFamily='Public Sans' textColor='#3f414D' ml={5}  fontWeight={600} fontSize='23px'  mt={9}>Groups</Text>
         {/* this is my modal for create group chat */}
          <GroupChatModalNew />
 
         </Box>
-        <InputGroup  borderRadius='sm' p={2} bgColor='#E6EBF5' ml={5} mt={8} mb={5} width='22rem'>
+        <InputGroup  borderRadius='sm' p={2} bgColor='#E6EBF5' mr='1vw' ml='1vw' mt={8} mb={5} width='95%'>
     <InputLeftElement pointerEvents='none'>
       <Icon mt={3} w={6} h={6} color='#8C8C8C'><UilSearch  /></Icon>
     </InputLeftElement>
