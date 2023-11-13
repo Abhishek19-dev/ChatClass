@@ -41,6 +41,7 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
   }, [user._id])
 
   const { allChats } = useSelector((state) => state.allChats)
+  console.log("allChats",allChats)
 
 
   //To create a new chat
@@ -85,19 +86,17 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
           </Text>
           <Box
   display={{ lg: 'block', base: 'none' }}
-  w={{ lg: '33vw' }}
-  // You can adjust padding if necessary
-  // pb={{ lg: '1vw' }}
-  pr='1vw'
-  mr={{ lg: '2vw', base: '5vw' }}
-  mt={{ lg: '2vw', base: '6vw' }}
-  overflow="hidden" // Hide overflow content
+  w={{ lg: '80vh' }}
+  pr='1vh'
+  mr={{ lg: '2vh', base: '5vw' }}
+  mt={{ lg: '5vh', base: '6vw' }}
+  overflow="hidden"
 >
   <Button
     onClick={onOpen}
     colorScheme="blue"
     variant="outline"
-    w="100%" // Set the Button to take up 100% of its container width
+    w="100%" 
     whiteSpace="nowrap" // Prevent text from wrapping
   >
     <HStack>

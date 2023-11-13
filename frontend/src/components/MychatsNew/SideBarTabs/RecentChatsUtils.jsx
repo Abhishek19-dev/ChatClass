@@ -16,7 +16,7 @@ export const RecentChats = ({ chat, key, user, isActive , selectedChat , setSele
         pb={3}
         // p={4}
         pt={3}
-        bg={selectedChat._id === chat._id ? `#E6EBF5` : `transparent`}
+        bg={selectedChat && selectedChat._id === chat._id ? `#E6EBF5` : `transparent`}
         _hover={{ bg: '#E6EBF5' }}
         display="flex"
         justifyContent="space-between"

@@ -38,6 +38,8 @@ import noMessageImg from '../../animations/noMessages.jpg'
 import { UilAngleLeft } from '@iconscout/react-unicons'
 
 import io from 'socket.io-client'
+import ScrollContainer from './SingleChatNew.jsx/ScrollContainer'
+import { getAllChat } from '../../redux/actions/chatAction'
 
 // /Declaratiion for socket.io
 const ENDPOINT = 'http://localhost:8050'
@@ -88,10 +90,20 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
       dispatch(
         sendMessageAction(newMessage, selectedChat, socket, setNewMessage),
       )
-      setNewMessage('')
-    }
+      // if(selectedChat){
+        setSelectedChat((prevSelectedChat) => ({
+          ...prevSelectedChat,
+          latestMessage: {
+            ...prevSelectedChat.latestMessage,
+            content: newMessage,
+          },
+        }));
+         dispatch(getAllChat(selectedChat,setSelectedChat))
+        console.log("new messages",newMessage)
+    // }
+    setNewMessage('')
   }
-
+  }
   //Send Messages:-
   const typingHandler = (e) => {
     setNewMessage(e.target.value)
@@ -101,6 +113,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
     socket.on('message received', (newMessageReceived) => {
       console.log('messages before', messages)
       console.log('new message received', newMessageReceived.message)
+      console.log('new message received contentntntn', newMessageReceived.message.content)
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageReceived.message.chat._id
@@ -108,6 +121,19 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
         //Give notification
       } else {
         setMessages([...messages, newMessageReceived.message])
+        if(newMessageReceived){
+          if(selectedChat){
+            setSelectedChat((prevSelectedChat) => ({
+              ...prevSelectedChat,
+              latestMessage: {
+                ...prevSelectedChat.latestMessage,
+                content: newMessageReceived.message.content,
+              },
+            }));
+            dispatch(getAllChat(selectedChat,setSelectedChat))
+          }
+        }
+        // selectedChat.latestMessage.content = newMessageReceived.content
         // setMessages((prevMessages) => [...prevMessages, newMessageReceived.message]);
         // const newMessagesHereNow = Array.isArray(newMessageReceived.message)
         // ? newMessageReceived.message
@@ -131,7 +157,6 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
     }
   }, [isSent])
 
-  // console.log("ckecking selected chat",selectedChat)
   return (
     <>
       {!selectedChat ? (
@@ -150,21 +175,18 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
       ) : (
         <Box
           w={{ lg: `calc(100% - 500px)`, base: '100%' }}
-          h={{ lg: '100%', base: '100%' }}
+          h="100%"
           order={{ base: 1, lg: 0 }}
           display={{ lg: 'flex', base: selectedChat ? 'block' : 'none' }}
           flexDirection="column"
+          overflowY="hidden"
         >
           <Box
-            bg="blue"
             w={{ lg: 'full', base: '100%' }}
-            h={{ base: '18vw', sm: '10vw', md: '7vw', lg: '2vw' }}
+            // h={{ base: '18vw', sm: '10vw', md: '7vw', lg: '4vw' }}
+            h={{ base: '18vw', sm: '10vw', md: '7vw', lg: '12vh' }}
             display="flex"
-            mt={{ lg: '2rem', base: '0vw' }}
-            ml={{ lg: '1rem', base: '0rem' }}
-            mr={{ lg: '1rem', base: '0rem' }}
-            pl={{ lg: '0vw', base: '3vw' }}
-            mb={{ lg: '1rem', base: '0rem' }}
+            pl={{ lg: '2vw', base: '3vw' }}
             justifyContent="space-between"
             alignItems="center"
           >
@@ -191,11 +213,13 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                       : returnSender(selectedChat, user).name
                     : 'Guest User'
                 }
-                // src={
-                //   selectedChat
-                //   ? (selectedChat.isGroupChat ? selectedChat.chatName :  returnSender(selectedChat, user).name)
-                //     : ''
-                // }
+                src={
+                  selectedChat
+                    ? selectedChat.isGroupChat
+                      ? selectedChat.chatName
+                      : returnSender(selectedChat, user).name
+                    : ''
+                }
               ></Avatar>{' '}
               <Text
                 mr={3}
@@ -253,66 +277,39 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
               </IconButton>
             </Box>
           </Box>
-          <Divider w="full" />
+          <Divider w='100%' mb='1vh' bgColor='#E6E7EA'></Divider>
 
-          {/* CHAT BOX  */}
+          {/* From here chat box begins */}
           <Box
-            bg="pink"
-            // maxW="100%"
+            display="flex"
+            flexDir="column"
+            justifyContent="flex-end"
+            p={3}
+            // bg="#E8E8E8"
             w="100%"
-            overflowY="auto"
-            pt={6}
-            pl={6}
-            // mt={6}
-            // ml={6}
-            // h={{lg:'calc(100% - 7vw)',sm:'calc(100% - 25vw)', base:`calc(100% - 33vw)`}}
-            css={{ '::-webkit-scrollbar': { display: 'transparent' } }}
+            // h="100%"
+            // h={{ lg: `calc(100% - 4vw)`, base: '100%' }}
+            h={{ lg: `calc(100% - 12vh)`, base: '100%' }}
+            maxHeight='90vh'
+            borderRadius="lg"
+            overflowY="hidden"
+            // overflowY="scroll"
           >
-            {
-              <ScrollableFeed>
-                <Box
-                  display="flex"
-                  w="100%"
-                  bg="green"
-                  h="100%"
-                  flexDirection="column"
-                >
-                  {isReceived && messages ? (
-                    // ? messages?.map((message, index) => {
-                    messages.map((message, index) => {
-                      const sameSenderMessage =
-                        index >= 0 &&
-                        index < messages.length - 1 &&
-                        messages[index].sender._id ===
-                          messages[index + 1].sender._id
-                      return (
-                        <SingleChatNew
-                          sameSenderMessage={sameSenderMessage}
-                          user={user}
-                          message={message}
-                          key={message._id}
-                        />
-                      )
-                    })
-                  ) : (
-                    <Center fontFamily="Public Sans" fontSize="3xl" mt="35vh">
-                      No Messages Yet ! Start Chatting
-                    </Center>
-                  )}
-                </Box>
-              </ScrollableFeed>
-            }
-          </Box>
-          <Divider></Divider>
+            <Box   mb='1vh' display='flex' h='100%'   flexDir='column' overflowY='scroll'>
+              <SingleChatNew messages={messages} user={user}/>
 
-          <Box
-            // bg="green"
+            </Box>
+            <Divider w='100%' mb='1vh' bgColor='#E6E7EA'></Divider>
+            <Box
+            // mt='1vw'
             display="flex"
             alignItems="center"
             w="100%"
-            h={{ base: '15vw', lg: '5vw' }}
+            mb='1vw'
+            // mt='-10vw'
+            // h={{ base: '15vw', sm: '10vw', lg: '5vw' }}
             justifyContent="space-between"
-          >
+          > 
             <InputGroup
               borderRadius="sm"
               p={1.5}
@@ -346,6 +343,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
             >
               <UilMessage />
             </IconButton>
+          </Box>
           </Box>
         </Box>
       )}

@@ -2,8 +2,6 @@ import { ALL_MESSAGES_FAIL, ALL_MESSAGES_REQUEST, ALL_MESSAGES_SUCCESS, SEND_MES
 import axios from 'axios'
 
 export const sendMessageAction = (newMessage , selectedChat,socket,setNewMessage) =>async(dispatch)=>{
-    console.log("selected message",selectedChat._id)
-    console.log("selenewMessage",newMessage)
     try {
      dispatch({
          type: SEND_MESSAGE_REQUEST
