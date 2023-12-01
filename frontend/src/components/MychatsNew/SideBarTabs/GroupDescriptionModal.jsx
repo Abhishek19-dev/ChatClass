@@ -329,7 +329,7 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
                     {
                         AddUserSearched.map((u)=>{
                             return(
-                                <GroupChatAddSearchedUsers u={u} selectedChat={selectedChat} />
+                                <GroupChatAddSearchedUsers u={u} setSelectedChat={setSelectedChat} selectedChat={selectedChat} />
                             )
                         })
                     }

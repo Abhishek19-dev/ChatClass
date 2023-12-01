@@ -216,7 +216,7 @@ export const GroupDescriptionModalUtils = ({u , user, selectedChat , setSelected
   )
 }
 
-export const GroupChatAddSearchedUsers = ({u,selectedChat}) => {
+export const GroupChatAddSearchedUsers = ({u,selectedChat , setSelectedChat}) => {
     const dispatch = useDispatch()
     const toast = useToast()
     const alreadyPresent = selectedChat.users.find((us)=> u._id === us._id)
