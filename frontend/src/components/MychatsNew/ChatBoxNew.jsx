@@ -20,10 +20,10 @@ import {
   calc,
   useBoolean,
   useBreakpointValue,
+  useDisclosure,
 } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState } from 'react'
 import { UilSearch } from '@iconscout/react-unicons'
-import { UilEye } from '@iconscout/react-unicons'
 import { UilPaperclip } from '@iconscout/react-unicons'
 import { UilMessage } from '@iconscout/react-unicons'
 import SingleChatNew from './SingleChatNew.jsx/SingleChatNew'
@@ -40,6 +40,7 @@ import { UilAngleLeft } from '@iconscout/react-unicons'
 import io from 'socket.io-client'
 import ScrollContainer from './SingleChatNew.jsx/ScrollContainer'
 import { getAllChat } from '../../redux/actions/chatAction'
+import GroupDescriptionModal from './SideBarTabs/GroupDescriptionModal'
 
 // /Declaratiion for socket.io
 const ENDPOINT = 'http://localhost:8050'
@@ -47,6 +48,8 @@ var socket, selectedChatCompare
 
 const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
   const [socketConnected, setSocketConnected] = useState(false)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
 
   const dispatch = useDispatch()
 
@@ -161,15 +164,17 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
     <>
       {!selectedChat ? (
         <Box
-          maxWidth="100%"
+          // maxWidth="100%"
+          width='100%'
+          pt='4vw'
           h="100vh"
           display={{ lg: 'flex', base: 'none' }}
           flexDirection="column"
           alignItems="center"
         >
-          <Image src={noMessageImg} alt="image" boxSize="50vh"></Image>
-          <Text fontFamily="Public Sans" fontSize="2rem">
-            No Chats yet ! Hurry Up Start Joining Groups
+          <Image src={noMessageImg} alt="image" boxSize="70vh"></Image>
+          <Text mt='1vh' fontFamily="Public Sans" fontSize="2.5vw">
+            No Chats selected yet ! Please select any chat
           </Text>
         </Box>
       ) : (
@@ -184,21 +189,23 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
           <Box
             w={{ lg: 'full', base: '100%' }}
             // h={{ base: '18vw', sm: '10vw', md: '7vw', lg: '4vw' }}
-            h={{ base: '18vw', sm: '10vw', md: '7vw', lg: '12vh' }}
+            h={{ base: '18vw', sm: '10vw', md: '9vw', lg: '12vh' }}
             display="flex"
             pl={{ lg: '2vw', base: '3vw' }}
             justifyContent="space-between"
             alignItems="center"
           >
             <Box
+              maxWidth={{lg:'54vw' , base : '70vw' , md:'60vw'}}
               display="flex"
-              justifyContent="space-between"
+              // justifyContent="space-between"
               alignItems="center"
             >
               <IconButton
                 display={{ lg: 'none', base: 'block' }}
                 onClick={() => setSelectedChat(null)}
                 color="black"
+                _hover={{bgColor:'white'}}
                 bgColor="white"
                 aria-label="Search database"
                 icon={<UilAngleLeft />}
@@ -221,10 +228,11 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                     : ''
                 }
               ></Avatar>{' '}
+              <Box  display='flex' flexDir='column'   maxWidth={{lg:'92%' , base:'50%' ,md:'80%'}}>
               <Text
                 mr={3}
                 fontFamily="Public Sans"
-                fontSize="1rem"
+                fontSize={{lg:"1rem" , md:'2vh'}}
                 fontWeight={600}
                 textColor="black"
               >
@@ -233,7 +241,26 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                     ? selectedChat.chatName
                     : returnSender(selectedChat, user).name)}
               </Text>
-              <Box
+              <Text fontFamily="Public Sans"
+                fontSize={{lg:"2vh" , base : '1.5vh'}}
+                fontWeight={300}
+                textColor="A9A9A9"
+                maxWidth='100%'
+                whiteSpace="nowrap"    // Set white-space to nowrap
+                overflow="hidden"      // Hide overflow
+                textOverflow="ellipsis" // Display ellipsis for overflow
+              >
+             { selectedChat.isGroupChat && 
+              selectedChat && selectedChat.users.map((u , index)=>(
+                index === selectedChat.users.length - 1 ? 
+                user._id !== u._id ? `${u.name}` : `You` :
+                user._id !== u._id ? `${u.name} , ` : `You , `
+              ))
+             }
+              </Text>
+              </Box>
+              {
+                selectedChat && !selectedChat.isGroupChat &&  <Box
                 display={{ lg: 'flex', base: 'none' }}
                 w="10px"
                 h="10px"
@@ -244,9 +271,10 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
               >
                 <Box w="2px" h="2px" bg="white" borderRadius="full" />
               </Box>
+              }
             </Box>
             <Box
-              w="7rem"
+              w={{lg:"7vw" , base : '50vw' , sm:'16vw'}}
               display="flex"
               justifyContent="space-between"
               alignItems="center"
@@ -271,10 +299,8 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                   </PopoverBody>
                 </PopoverContent>
               </Popover>
-
-              <IconButton color="#74788D" bg="transparent" mr="1vw">
-                <UilEye />
-              </IconButton>
+              {/* for displaying group chat */}
+              <GroupDescriptionModal setSelectedChat={setSelectedChat} selectedChat={selectedChat} user={user} />
             </Box>
           </Box>
           <Divider w='100%' mb='1vh' bgColor='#E6E7EA'></Divider>

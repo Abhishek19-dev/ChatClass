@@ -44,6 +44,7 @@ export const searchUser = (search) =>async(dispatch)=>{
     }
  }
 
+ //get all chat of a user
  export const getAllChat = (selectedChat,setSelectedChat) =>async(dispatch)=>{
    
     try {
@@ -112,18 +113,18 @@ export const searchUser = (search) =>async(dispatch)=>{
  }
 
  //ADD A USER:-
- export const addUserToGroup = (selectedChat , user1) =>async(dispatch)=>{
+ export const addUserToGroup = (selectedChat , u) =>async(dispatch)=>{
    try {
     dispatch({
         type: ADD_USER_TO_GROUP_REQUEST
      })
      const config = {headers:{"Content-type":"application/json"}}
-     const {data} = await axios.put("/api/v1/addToGroup",{chatId : selectedChat._id , userId:user1._id},config)
+     const {data} = await axios.put("/api/v1/addToGroup",{chatId : selectedChat._id , userId:u._id},config)
      dispatch({
          type : ADD_USER_TO_GROUP_SUCCESS,
          payload : data
      })
-     dispatch(getAllChat())
+    //  dispatch(getAllChat())
    } catch (error) {
        dispatch({
         type : ADD_USER_TO_GROUP_FAIL,
@@ -132,19 +133,18 @@ export const searchUser = (search) =>async(dispatch)=>{
    }
 }
 
-export const deleteUserGroup = (selectedChat , usernew) =>async(dispatch)=>{
+export const deleteUserGroup = (selectedChat , u) =>async(dispatch)=>{
 
     try {
      dispatch({
          type: DELETE_FROM_GROUP_REQUEST
       })
       const config = {headers:{"Content-type":"application/json"}}
-      const {data} = await axios.put("/api/v1/removeFromGroup",{chatId : usernew._id , userId:selectedChat._id},config)
+      const {data} = await axios.put("/api/v1/removeFromGroup",{chatId : selectedChat._id , userId:u._id},config)
       dispatch({
           type : DELETE_FROM_GROUP_SUCCESS,
           payload : data.removedMember
       })
-      dispatch(allMessagesAction(selectedChat))
     } catch (error) {
 
         dispatch({
