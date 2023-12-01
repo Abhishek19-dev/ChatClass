@@ -9,7 +9,6 @@ import UpdateGroupChatModal from '../Authentication/chatSection/UpdateGroupChatM
 import { allMessagesAction, sendMessageAction } from '../../redux/actions/messageAction';
 import "./singleChat.css"
 import ScrollableChat from './ScrollableChat';
-import Lottie from 'react-lottie'
 import animationData from '../../animations/animation1.json'
 
 
