@@ -15,7 +15,6 @@ function App() {
    <Routes>
    <Route path = "/" element = {<HomePage />} />
     <Route path = "/login" element = {<LoginSignUp />} />
-    {/* <Route path = "/chats" element = {<ChatPage />} /> */}
     <Route path = "/chats" element = {<ChatPageNew />} />
    </Routes>
 
