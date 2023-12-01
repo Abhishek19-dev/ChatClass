@@ -11,7 +11,6 @@ import {
     ModalCloseButton,
   } from '@chakra-ui/react'
   import { UilSearch } from '@iconscout/react-unicons'
-import GroupChatModal from '../../Authentication/chatSection/GroupChatModal';
 import GroupChatModalNew from './GroupChatModalNew';
 import { GroupChatNameUtils } from './GroupChatUtils';
 import { useSelector } from 'react-redux';

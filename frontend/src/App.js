@@ -1,7 +1,5 @@
 import {BrowserRouter as Router , Routes , Route } from 'react-router-dom'
 import './App.css';
-
-import ChatPage from './Pages/ChatPage';
 import LoginSignUp from './Pages/LoginSignUp';
 import HomePage from './Pages/HomePage';
 import ChatPageNew from './Pages/ChatPageNew';
