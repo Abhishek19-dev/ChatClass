@@ -21,11 +21,13 @@ async function main() {
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 
+
+//for vercel.json
 const path = require('path')
 
 app.get('/',(req,res)=>{
-    app.use(express.static(path.resolve(__dirname,'client','build')))
-    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+    app.use(express.static(path.resolve(__dirname,'frontend','build')))
+    res.sendFile(path.resolve(__dirname,'fronten','build','index.html'))
 })
 
 //CLOUDINARY SETUP:-
