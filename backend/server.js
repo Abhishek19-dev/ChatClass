@@ -22,13 +22,6 @@ async function main() {
 }
 
 
-//for vercel.json
-const path = require('path')
-
-app.get('/',(req,res)=>{
-    app.use(express.static(path.resolve(__dirname,'frontend','build')))
-    res.sendFile(path.resolve(__dirname,'fronten','build','index.html'))
-})
 
 //CLOUDINARY SETUP:-
 const CLOUDINARY_NAME = "dvjfrujbp"
