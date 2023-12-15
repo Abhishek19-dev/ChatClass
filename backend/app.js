@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const cookieParser = require("cookie-parser")
 const bodyParser = require('body-parser')
+const path = require('path')
 
 //server banaya
 const app = express()
@@ -34,6 +35,16 @@ const message = require('./routes/messageRoute')
 app.use("/api/v1",user.router)
 app.use("/api/v1",chat.router)
 app.use("/api/v1",message.router)
+
+
+// --------------------- Deployment ----------------------------->
+const __dirname1 = path.resolve()
+app.use(express.static(path.join(__dirname1,"frontend/build")))
+app.get("/",(req,res) =>{
+    res.sendFile(path.resolve(__dirname1,"frontend","build","index.html"))
+})
+
+
 
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 app.use(notFound)
