@@ -19,7 +19,7 @@ import { logoutUser } from '../../../redux/actions/userAction';
     }
 return (
     <>
-       <MenuList>
+       <MenuList display={{base:"none",md:"block"}}>
               <MenuGroup>
                 {isLoggedIn ? <MenuItem>
                  <Box display='flex' >

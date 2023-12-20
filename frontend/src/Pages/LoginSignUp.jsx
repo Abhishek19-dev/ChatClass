@@ -9,18 +9,20 @@ const LoginSignUp = () => {
     <>
       <Container maxW="xl" centerContent>
         <Box
-          d="flex"
-          justifyContent="center"
-          alignItems="center"
-          pl={5}
+          d={{base:"block",lg:"flex"}}
+          justifyContent={{base:"none",lg:"center"}}
+          alignItems={{base:"none",lg:"center"}}
+          pl={{base:"6rem",lg:"5"}}
           bg="white"
+          // bg="red"
           w="100%"
           // m="40px 0 15px 0"
           m="40px 0 20px 0"
           borderRadius="lg"
           borderWidth="1px"
+        
         >
-          <Text margin= "0.5rem 10rem" fontSize="4xl" fontWeight="semibold" fontFamily="work sans" color="black">
+          <Text margin= {{base:"0",lg:"0.5rem 10rem"}}  fontSize= {{base:"3xl", lg:"4xl"}} fontWeight="semibold" fontFamily="work sans" color="black">
             Chat Class
           </Text>
         </Box>
