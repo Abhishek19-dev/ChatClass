@@ -18,9 +18,9 @@ import WhyChatClass from '../components/HomePageUtils/WhyChatClass';
 // return <div><Link to = "/chats"><Button onClick={handleGetAllChats}>Chats</Button></Link></div>
 return (
     <>
-    <Box  w={{base:'100%',md:"100%"}} display='flex' flexDir='column'>
+    <Box  w={{base:'100%',md:"100%"}}>
     <NavBar />
-  {/* <FirstSection /> */}
+  <FirstSection />
   {/* <GroupSection /> */}
   {/* <WhyChatClass /> */}
     </Box>

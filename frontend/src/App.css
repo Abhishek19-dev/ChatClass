@@ -1,4 +1,7 @@
-
+*{
+  margin: 0px;
+  padding: 0px;
+}
 *::-webkit-scrollbar {
   width: 0;
   height: 0;

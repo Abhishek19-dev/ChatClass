@@ -5,19 +5,20 @@ import homePageImg from '../../animations/homepage.gif'
 return (
     <>
     <Box w='100%'
-    h='fit-content'
-    mt='13vh'
+    h='87.5vh'
+    mt={{base:"20vw",sm:"12vw",md:"10vw",lg:"6rem"}}
     display='flex'
-    flexDirection='row'
-    justifyContent='space-between'
-    bgColor='#F2F8FD'
+    flexDirection={{base:'column',md:'row'}}
+    justifyContent={{md:'space-between'}}
+    bg='#F8FAF4'
+  
     >
-        <Box ml='13vh' mt='9vh' w='1/2'>
-        <Text fontSize='7xl' fontFamily='sans-serif'>Learn Together ,<br></br> <span style={{color:'green'}}>Chat Together</span></Text>
-        <Text mt={3} fontSize='4xl' fontWeight='light' fontFamily='sans-serif'>Connecting Students for Shared Learning Journeys......</Text>
+        <Box   ml={{base:'5vh',md:'10vh',lg:'13vh'}}  mt={{md:'6vh',lg:'8vh'}}  w={{base:'100%',md:'1/2'}}>
+        <Text fontSize={{base:'2.8rem',sm:'3rem',md:'8vw',lg:'6vw'}} ml={{base:'5vh',md:'2vh',lg:'5vh'}} fontFamily='Nunito'>Learn Together ,<br></br> <span style={{color:'green'}}>Chat Together</span></Text>
+        <Text mt={3} fontSize={{base:'2xl',md:'3xl',lg:'4xl'}} fontWeight='light' fontFamily='Nunito'>Connecting Students for Shared Learning Journeys......</Text>
         </Box>
-        <Box>
-            <Image w='80vh' h='65vh' src={homePageImg}/>
+        <Box p={5}>
+            <Image mr={{base:'1vh',md:'18vh',lg:'20vh'}} mt={{base:'8vh',md:'8vh',lg:'5vh'}} w={{base:'100%',md:'80vh',lg:'100vh'}} h={{base:'40vh',md:'53vh',lg:'65vh'}} src={homePageImg}/>
         </Box>
     </Box>
     </>

@@ -184,7 +184,7 @@ const NavBar = () => {
       </Box> */}
 
 
-      <Box  bg='blue'  w="100%"  h={{base:"20vw",sm:"12vw",md:"10vw",lg:"6rem"}} py={{base:"1.5vw",md:"0.8vw",lg:"1vw"}} display='flex' justifyContent='space-between' alignItems='center' px={{base:"2vw",lg:"1.5vw"}}>
+      <Box position='fixed' top='0vw' left='0vw' bg='white'  w="100%"  h={{base:"20vw",sm:"12vw",md:"10vw",lg:"6rem"}} py={{base:"1.5vw",md:"0.8vw",lg:"1vw"}} display='flex' justifyContent='space-between' alignItems='center' px={{base:"2vw",lg:"1.5vw"}}>
         {/* Logo */}
         <Box  w={{base:"35%",sm:"30%",lg:"20%"}}  h="100%">
         <Image w={{base:"80%",sm:"60%",md:"50%",lg:"60%"}} mt={{base:"2vw",sm:"0.6vw",md:"1.7vw",lg:"0.5vw"}} h={{lg:"70%"}} src={Logo1}></Image>
@@ -287,39 +287,44 @@ const NavBar = () => {
             <Box >
             <Drawer display={{lg:"none"}} placement={placement} onClose={onClose} isOpen={isOpen}>
               <DrawerOverlay />
-              <DrawerContent  mt={{base:"20vw",sm:"12vw",md:"10vw"}} w='1rem'  h={{base:"33rem",sm:"25rem",md:"30rem"}}  >
+              <DrawerContent  mt={{base:"20vw",sm:"12vw",md:"10vw"}} w='1rem'  h={{base:"33rem",sm:"28rem",md:"30rem"}}  >
                 <DrawerBody pt={{base:'8vw',sm:'0.8vw',md:'1vw'}}>
-                <Stack direction='column' spacing={{base:'7vw',sm:'1vw',md:'2vw'}}  pl={{base:'4vw',sm:'2vw',md:'3vw'}}  pr={{base:'4vw',md:'3vw'}} pt={{base:'3vw',md:'1.5vw'}} w='90%' h='90%'>
+                <Stack direction='column' spacing={{base:'7vw',sm:'2.8vw',md:'2vw'}}  pl={{base:'4vw',sm:'2vw',md:'3vw'}}  pr={{base:'4vw',md:'3vw'}} pt={{base:'3vw',md:'1.5vw'}} w='90%' h='90%'>
                 <Box p={2} border='1px solid transparent' borderRadius='lg' alignItems='center'  display='flex'>
                  {/* <Icon w='7.5vw' h='7.5vw'><UilHome /></Icon> */}
                 <Image w={{base:'5vw',sm:'3vw',md:'3vw'}} h={{base:'5vw',sm:'3vw',md:'3vw'}} src={HomeImg}></Image>
-                 <Text ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw' fontFamily='Nunito Sans' fontWeight={600}>HOME</Text>
+                 <Text ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw' fontFamily='Nunito' fontWeight={600}>HOME</Text>
                 </Box>
                 <Box p={2} border='1px solid transparent' borderRadius='lg' alignItems='center' display='flex'>
                  {/* <Icon w='7.5vw' h='7.5vw'><UilHome /></Icon> */}
                  <Image w={{base:'5vw',sm:'3vw',md:'3vw'}} h={{base:'5vw',sm:'3vw',md:'3vw'}} src={ProjectImg}></Image>
-                 <Text  ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw' fontFamily='Nunito Sans' fontWeight={600}>PROJECTS</Text>
+                 <Text  ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw'  fontFamily='Nunito' fontWeight={600}>PROJECTS</Text>
                 </Box>
                 <Box p={2} border='1px solid transparent' borderRadius='lg' alignItems='center'  display='flex'>
                  {/* <Icon w='7.5vw' h='7.5vw'><UilHome /></Icon> */}
                  <Image w={{base:'5vw',sm:'3vw',md:'3vw'}} h={{base:'5vw',sm:'3vw',md:'3vw'}} src={AboutImg}></Image>
-                 <Text  ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw' fontFamily='Nunito Sans' fontWeight={600}>ABOUT US</Text>
+                 <Text  ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw'  fontFamily='Nunito' fontWeight={600}>ABOUT US</Text>
                 </Box>
                 <Box p={2} border='1px solid transparent' borderRadius='lg' alignItems='center' display='flex'>
                  {/* <Icon w='7.5vw' h='7.5vw'><UilHome /></Icon> */}
                  <Image w={{base:'5vw',sm:'3vw',md:'3vw'}} h={{base:'5vw',sm:'3vw',md:'3vw'}} src={ContactImg}></Image>
-                 <Text  ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw' fontFamily='Nunito Sans' fontWeight={600}>CONTACT</Text>
+                 <Text  ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw'  fontFamily='Nunito' fontWeight={600}>CONTACT</Text>
                 </Box>
                 <Box p={2} border='1px solid transparent' borderRadius='lg' alignItems='center'  display='flex'>
                  {/* <Icon w='7.5vw' h='7.5vw'><UilHome /></Icon> */}
                  <Image w={{base:'5vw',sm:'3vw',md:'3vw'}} h={{base:'5vw',sm:'3vw',md:'3vw'}} src={ProfileImg}></Image>
-                 <Text  ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw' fontFamily='Nunito Sans' fontWeight={600}>MY PROFILE</Text>
+                 <Text  ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw'  fontFamily='Nunito' fontWeight={600}>MY PROFILE</Text>
                 </Box>
                 <Divider bg='black' color='black' />
-                <ButtonGroup bg='blue' p={{base:'2.5vw',sm:'1vw',md:'1vw'}} border='1px solid transparent' borderRadius='lg' w={{base:'40vw',sm:'22vw',md:'20vw'}} display='flex' alignItems='center'>
+                {/* <ButtonGroup bg='blue' p={{base:'2.5vw',sm:'1vw',md:'1vw'}} border='1px solid transparent' borderRadius='lg' w={{base:'40vw',sm:'22vw',md:'20vw'}} display='flex' alignItems='center'>
                   <Image w={{base:'7vw',sm:'4vw',md:'4vw'}} h={{base:'7vw',sm:'4vw',md:'4vw'}} src={LoginImg}></Image>
                  <Text fontFamily='Nunito Sans' fontWeight={600} fontSize={{base:'5vw',sm:'2.5vw',md:'2vw'}}>Login</Text>
-                </ButtonGroup>
+                </ButtonGroup> */}
+                <Box p={2} border='1px solid transparent' borderRadius='lg' alignItems='center'  display='flex'>
+                 {/* <Icon w='7.5vw' h='7.5vw'><UilHome /></Icon> */}
+                 <Image w={{base:'6vw',sm:'3vw',md:'3vw'}} h={{base:'6vw',sm:'3vw',md:'3vw'}} src={LoginImg}></Image>
+                 <Text  ml={{base:'5vw',sm:'3vw',md:'2vw'}} mt='0.5vw' fontSize={{base:'5vw',sm:'3.5vw',md:'2.2vw'}}  fontFamily='Nunito' fontWeight={600}>LOGIN</Text>
+                </Box>
                 </Stack>
                 </DrawerBody>
               </DrawerContent>
