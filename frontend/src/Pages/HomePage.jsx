@@ -7,6 +7,9 @@ import { getAllChat } from '../redux/actions/chatAction';
 import { useDispatch } from 'react-redux';
 import GroupSection from '../components/HomePageUtils/GroupSection';
 import WhyChatClass from '../components/HomePageUtils/WhyChatClass';
+import Footer from '../components/HomePageUtils/Footer';
+import ContactUs from '../components/HomePageUtils/ContacUs';
+
 
  
  const HomePage = () =>{
@@ -21,8 +24,9 @@ return (
     <Box  w={{base:'100%',md:"100%"}}>
     <NavBar />
   <FirstSection />
-  {/* <GroupSection /> */}
-  {/* <WhyChatClass /> */}
+  <WhyChatClass />
+  <ContactUs />
+  <Footer />
     </Box>
     </>
 )

@@ -1,9 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.f258ec21.css",
-    "main.js": "/static/js/main.74c49243.js",
+    "main.js": "/static/js/main.99daf8f0.js",
     "static/media/homepage.gif": "/static/media/homepage.d2c183ba4fca296f1a22.gif",
     "static/media/noMessages.jpg": "/static/media/noMessages.7e1ca706e69ab623fec6.jpg",
+    "static/media/study-literature.png": "/static/media/study-literature.a1ea7af18a941e4bbf54.png",
+    "static/media/developer-team.png": "/static/media/developer-team.9b4115e7d6e0cf7584fc.png",
+    "static/media/focus.png": "/static/media/focus.d4c898a737578f63fe54.png",
     "static/media/project-management.png": "/static/media/project-management.e0da2530164713549545.png",
     "static/media/key.png": "/static/media/key.c36cb4bd8d17924406fd.png",
     "static/media/person.png": "/static/media/person.179c4cc0db4f1bce7820.png",
@@ -15,10 +18,10 @@
     "static/media/notification bell.png": "/static/media/notification bell.9f4c4a8b0fed594c3772.png",
     "index.html": "/index.html",
     "main.f258ec21.css.map": "/static/css/main.f258ec21.css.map",
-    "main.74c49243.js.map": "/static/js/main.74c49243.js.map"
+    "main.99daf8f0.js.map": "/static/js/main.99daf8f0.js.map"
   },
   "entrypoints": [
     "static/css/main.f258ec21.css",
-    "static/js/main.74c49243.js"
+    "static/js/main.99daf8f0.js"
   ]
 }

@@ -184,7 +184,7 @@ const NavBar = () => {
       </Box> */}
 
 
-      <Box position='fixed' top='0vw' left='0vw' bg='white'  w="100%"  h={{base:"20vw",sm:"12vw",md:"10vw",lg:"6rem"}} py={{base:"1.5vw",md:"0.8vw",lg:"1vw"}} display='flex' justifyContent='space-between' alignItems='center' px={{base:"2vw",lg:"1.5vw"}}>
+      <Box zIndex={10} position='fixed' top='0vw' left='0vw' bg='white'  w="100%"  h={{base:"20vw",sm:"12vw",md:"10vw",lg:"6rem"}} py={{base:"1.5vw",md:"0.8vw",lg:"1vw"}} display='flex' justifyContent='space-between' alignItems='center' px={{base:"2vw",lg:"1.5vw"}}>
         {/* Logo */}
         <Box  w={{base:"35%",sm:"30%",lg:"20%"}}  h="100%">
         <Image w={{base:"80%",sm:"60%",md:"50%",lg:"60%"}} mt={{base:"2vw",sm:"0.6vw",md:"1.7vw",lg:"0.5vw"}} h={{lg:"70%"}} src={Logo1}></Image>

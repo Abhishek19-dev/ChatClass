@@ -1,0 +1,103 @@
+
+
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Heading,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Text,
+  Stack,
+  Textarea,
+  Tooltip,
+  useClipboard,
+  useColorModeValue,
+  VStack,
+  ButtonGroup,
+  Image,
+} from "@chakra-ui/react";
+import { BsGithub, BsLinkedin, BsPerson, BsTwitter } from "react-icons/bs";
+import { MdEmail, MdOutlineEmail } from "react-icons/md";
+import { UilUser } from "@iconscout/react-unicons";
+import { UilEnvelopeMinus } from "@iconscout/react-unicons";
+import { UilPhone } from "@iconscout/react-unicons";
+import { UilCommentAltDots } from "@iconscout/react-unicons";
+import { UilMessage } from "@iconscout/react-unicons";
+
+export default function ContactUs() {
+  const { hasCopied, onCopy } = useClipboard("example@example.com");
+
+  return (
+    <>
+      <Box display="flex" mt={{base:'10vw',md:'5vw'}} bg='#F8FAF4' p={2} minH={{base:'120vw',md:"35vw"}}  w="100%">
+        <Box
+          w="100%"
+          p={{base:'0.1rem',md:"1rem"}}
+          alignItems="center"
+          display="flex"
+          flexDirection="column"
+        >
+          <Text mb={{base:'2vw',md:'2vw'}}  fontFamily="Nunito" fontWeight={800} fontSize={{base:'2rem',md:"3rem"}}>
+            Get In Touch
+          </Text>
+          <Box
+            w={{base:'95%',md:"60vw"}}
+            justifyContent="center"
+            h={{base:'120vw',md:"40vw"}}
+            display="flex"
+            flexDirection={{base:'column',md:'row'}}
+            bg='#E7F2E6'
+            alignItems="center"
+          >
+            <Box
+              w={{base:'95%',md:"10vw"}}
+              h={{base:'20vw',md:"38vw"}}
+              order={{base:'2',md:'1'}}
+              display="flex"
+              flexDirection={{base:'row',md:"column"}}
+              alignItems={{base:'center',md:'flex-end'}}
+              pr='1vw'
+              justifyContent='space-around'
+            >
+                <IconButton color='green.500' _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><MdEmail size='sm' /></IconButton>
+                <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsGithub size='sm' /></IconButton>
+                <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsLinkedin size='sm' /></IconButton>
+                <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsTwitter size='sm' /></IconButton>
+               
+            </Box>
+            <Stack   order={{base:'1',md:'2'}} bg='#F7FAF3' border='1px solid transparent' borderRadius='lg' spacing='2vw' p={{base:'3',md:'5'}}  w={{base:'90vw',md:"40vw"}} h={{base:'95vw',md:"38vw"}}>
+              <FormControl isRequired>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Name</FormLabel>
+                <InputGroup>
+                <InputLeftElement><UilUser /></InputLeftElement>
+                <Input fontFamily='Nunito' fontWeight={500}  placeholder="Your Name" />
+                </InputGroup>
+              </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Email</FormLabel>
+                <InputGroup>
+                <InputLeftElement><UilEnvelopeMinus /></InputLeftElement>
+                <Input fontFamily='Nunito' fontWeight={500} type="email"  placeholder="Your Email" />
+                </InputGroup>
+              </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Message</FormLabel>
+                <InputGroup>
+                <Textarea h='15vw'   />
+                </InputGroup>
+              </FormControl>
+             <Button p={4} w='8rem' ml={{base:'44vw',md:'28vw'}}  fontFamily='Nunito' fontWeight={600} leftIcon={<UilMessage />}>Send</Button>
+            </Stack>
+          </Box>
+        </Box>
+      </Box>
+    </>
+  );
+}
