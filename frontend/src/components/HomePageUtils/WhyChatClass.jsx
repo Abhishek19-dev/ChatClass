@@ -77,7 +77,7 @@ const WhyChatClass = () => {
             <Image ml='3vw' w="70%" h="100%" src={learningImg}></Image>
             </Box>
             <Text mt="1vw" fontFamily="Nunito" fontWeight={600} fontSize={{base:'5vw',sm:"2vw"}}>
-              Efficient Learning
+              Efficient Learning hello checking
             </Text>
             <Text fontFamily="Nunito" fontWeight={400} mt="1vw">
               Save time on ChatClass with streamlined features for quick

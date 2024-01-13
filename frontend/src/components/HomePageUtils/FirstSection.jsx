@@ -1,6 +1,6 @@
  import { Box , Center, Image, Text} from '@chakra-ui/react';
 import React from 'react'; 
-import homePageImg from '../../animations/homepage.gif'
+import homePageImg from '../../images/homepage.gif'
  const FirstSection = () =>{
 return (
     <>
