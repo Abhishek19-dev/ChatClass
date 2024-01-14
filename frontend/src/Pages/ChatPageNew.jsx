@@ -9,13 +9,13 @@ import { getAllChat } from '../redux/actions/chatAction';
 import SecondChatBarSection from '../components/MychatsNew/SecondChatBarSection';
 import MyChatsTabs from '../components/MychatsNew/SideBarTabs/MyChatsTabs';
  
- const ChatPageNew = () =>{
-    const [selectedChat, setSelectedChat] = useState('')
+ const ChatPageNew = ({ selectedChat, setSelectedChat, myTabs, setMyTabs  }) =>{
+    // const [selectedChat, setSelectedChat] = useState('')
     const {user} = useSelector((state)=> state.loginUser)
 
-    const [myTabs , setMyTabs] = useState(<MyChatsTabs selectedChat={selectedChat} setSelectedChat={setSelectedChat} user={user} />)
+    // const [myTabs , setMyTabs] = useState(<MyChatsTabs selectedChat={selectedChat} setSelectedChat={setSelectedChat} user={user} />)
 
-    console.log("selected chat",selectedChat)
+    // console.log("selected chat",selectedChat)
 
 
 return (

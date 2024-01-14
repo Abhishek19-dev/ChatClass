@@ -1,11 +1,12 @@
 import { Avatar, AvatarBadge, Box, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export const RecentChats = ({ chat, key, user, isActive , selectedChat , setSelectedChat }) => {
 
-
+const {isOnline} = useSelector((state)=> state.loginUser)
     var sender = returnSender(chat, user)
-   
+   console.log("chat inside",user)
  
   return (
     <>
@@ -23,7 +24,7 @@ export const RecentChats = ({ chat, key, user, isActive , selectedChat , setSele
       >
         <Box maxW='100%' display="flex">
           <Avatar size="md" name={sender ? sender.name : "Guest user"} src={sender ? sender.avatar.url : ""}>
-            {isActive ? <AvatarBadge boxSize="0.8em" bg="#2BB47D" /> : ''}
+            {isOnline ? <AvatarBadge boxSize="0.8em" bg="#2BB47D" /> : ''}
           </Avatar>{' '}
           <Box  maxW='35vh' display="flex" flexDirection="column">
             <Text
@@ -47,14 +48,6 @@ export const RecentChats = ({ chat, key, user, isActive , selectedChat , setSele
             </Text>
           </Box>
         </Box>
-        <Text
-          // mr={3}
-          fontFamily="Public Sans"
-          fontSize="0.8rem"
-          textColor="#74788D"
-        >
-          10:12 AM
-        </Text>
       </Box>
     </>
   )

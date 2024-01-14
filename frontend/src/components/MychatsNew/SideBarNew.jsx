@@ -35,12 +35,21 @@ import { UilFileInfoAlt } from '@iconscout/react-unicons'
 import { UilCog } from '@iconscout/react-unicons'
 import { UilSignout } from '@iconscout/react-unicons'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import SecondChatBarSection from './SecondChatBarSection'
+import homeImg from '../../animations/home.png'
+import { logoutUser } from '../../redux/actions/userAction'
 
 const SideBarNew = ({ selectedChat, setSelectedChat, myTabs, setMyTabs }) => {
   const { user, isActive } = useSelector((state) => state.loginUser)
+  const dispatch = useDispatch()
 
+  const handleLogoutFunction = () => {
+    // console.log("handle logout");
+    dispatch(logoutUser());
+  };
+
+  console.log("")
   const handleSetProfileTabs = () => {
     setMyTabs(<MyProfileTabs user={user} />)
   }
@@ -65,7 +74,10 @@ const SideBarNew = ({ selectedChat, setSelectedChat, myTabs, setMyTabs }) => {
     )
   }
   const handleSettingsTabs = () => {
-    setMyTabs(<SettingsTabs />)
+    setMyTabs(<SettingsTabs selectedChat={selectedChat}
+      setSelectedChat={setSelectedChat}
+      user={user}
+      isActive={isActive}/>)
   }
   return (
     <>
@@ -84,11 +96,11 @@ const SideBarNew = ({ selectedChat, setSelectedChat, myTabs, setMyTabs }) => {
         <Link to="/">
           <Image
             display={{ lg: 'block', base: 'none' }}
-            ml={3}
+            ml={1}
             mr={4}
             mt={6}
-            w="8vh"
-            h="6vh"
+            w="12vh"
+            h="7vh"
             src={Logo2}
           />
         </Link>
@@ -104,6 +116,28 @@ const SideBarNew = ({ selectedChat, setSelectedChat, myTabs, setMyTabs }) => {
               display={{ lg: 'block', base: 'none' }}
               color="lightblue"
             />
+             <Tooltip hasArrow placement="top" label="Chats">
+              <Tab
+                onClick={handleSetMyChatsTabs}
+                _hover={{
+                  border: '1px',
+                  borderColor: '#A3ECD2', // Change to the desired shade of blue
+                  borderRadius: 'md', // You can adjust the border radius
+                  backgroundColor: '#A3ECD2', // Change to the desired shade of blue
+                }}
+                _selected={{
+                  border: '1px',
+                  borderColor: '#A3ECD2', // Change to the desired shade of blue
+                  borderRadius: 'md', // You can adjust the border radius
+                  backgroundColor: '#A3ECD2', // Change to the desired shade of blue
+                }}
+                my={5}
+                ml={4}
+              >
+                <UilHipchat />
+              </Tab>
+            </Tooltip>
+
             <Tooltip hasArrow placement="top" label="Profile">
               <Tab
                 onClick={handleSetProfileTabs}
@@ -127,27 +161,7 @@ const SideBarNew = ({ selectedChat, setSelectedChat, myTabs, setMyTabs }) => {
               </Tab>
             </Tooltip>
 
-            <Tooltip hasArrow placement="top" label="Chats">
-              <Tab
-                onClick={handleSetMyChatsTabs}
-                _hover={{
-                  border: '1px',
-                  borderColor: '#A3ECD2', // Change to the desired shade of blue
-                  borderRadius: 'md', // You can adjust the border radius
-                  backgroundColor: '#A3ECD2', // Change to the desired shade of blue
-                }}
-                _selected={{
-                  border: '1px',
-                  borderColor: '#A3ECD2', // Change to the desired shade of blue
-                  borderRadius: 'md', // You can adjust the border radius
-                  backgroundColor: '#A3ECD2', // Change to the desired shade of blue
-                }}
-                my={5}
-                ml={4}
-              >
-                <UilHipchat />
-              </Tab>
-            </Tooltip>
+           
 
             <Tooltip hasArrow placement="top" label="Groups">
               <Tab
@@ -195,14 +209,63 @@ const SideBarNew = ({ selectedChat, setSelectedChat, myTabs, setMyTabs }) => {
               </Tab>
             </Tooltip>
 
-            <Tab display={{ lg: 'none', base: 'block' }} isFitted>
+            <Tab  display={{ lg: 'none', base: 'block' }} isFitted>
               <Menu>
                 <MenuButton transition="all 0.2s">
                   <Avatar
-                    name="Dan Abrahmov"
-                    src="https://bit.ly/dan-abramov"
+                    name={user && user.name}
+                    src= {user && user.avatar.url}
                   />
                 </MenuButton>
+                <MenuList   ml={16}>
+                  <Link to='/'>
+                  <MenuItem>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                w="full"
+              >
+              <Image src={homeImg} w='5vw' h='5vw' color='blue'></Image>
+                <Button
+                  bg="transparent"
+                  _hover={{ bg: 'transparent' }}
+                  fontFamily="Public Sans"
+                  fontWeight={400}
+                >
+                  Home
+                </Button>
+              </Box>
+            </MenuItem>
+                  </Link>
+          
+            <MenuDivider />
+            <MenuItem>
+            <Link to='/'>
+            <Box
+              onClick={handleLogoutFunction}
+                display="flex"
+                ml='9vw'
+                alignItems="center"
+                justifyContent="center"
+                w="full"
+              >
+                 <Icon  color='black'>
+                  <UilSignout />
+                </Icon>
+                <Button
+                  bg="transparent"
+                  _hover={{ bg: 'transparent' }}
+                  fontFamily="Public Sans"
+                  fontWeight={400}
+                >
+                  Log Out
+                </Button>
+               
+              </Box></Link>
+             
+            </MenuItem>
+          </MenuList>
               </Menu>
             </Tab>
 
@@ -210,18 +273,19 @@ const SideBarNew = ({ selectedChat, setSelectedChat, myTabs, setMyTabs }) => {
           </TabList>
         </Tabs>
 
-        <Menu display={{ lg: 'block', base: 'none' }}>
+
+        <Menu  display={{ lg: 'block', base: 'none' }}>
           <MenuButton
             transition="all 0.2s"
             display={{ lg: 'block', base: 'none' }}
           >
             <Avatar
               mb={6}
-              name="Dan Abrahmov"
-              src="https://bit.ly/dan-abramov"
+              name={user && user.name}
+              src= {user && user.avatar.url}
             />
           </MenuButton>
-          <MenuList ml={16}>
+          {/* <MenuList   ml={16}>
             <MenuItem>
               <Box
                 display="flex"
@@ -235,30 +299,10 @@ const SideBarNew = ({ selectedChat, setSelectedChat, myTabs, setMyTabs }) => {
                   fontFamily="Public Sans"
                   fontWeight={400}
                 >
-                  Profile
+                  Home
                 </Button>
                 <Icon>
                   <UilFileInfoAlt />
-                </Icon>
-              </Box>
-            </MenuItem>
-            <MenuItem>
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-                w="full"
-              >
-                <Button
-                  bg="transparent"
-                  _hover={{ bg: 'transparent' }}
-                  fontFamily="Public Sans"
-                  fontWeight={400}
-                >
-                  Settings
-                </Button>
-                <Icon>
-                  <UilCog />
                 </Icon>
               </Box>
             </MenuItem>
@@ -283,8 +327,10 @@ const SideBarNew = ({ selectedChat, setSelectedChat, myTabs, setMyTabs }) => {
                 </Icon>
               </Box>
             </MenuItem>
-          </MenuList>
+          </MenuList> */}
         </Menu>
+
+        
       </Box>
     </>
   )

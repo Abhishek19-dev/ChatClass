@@ -196,8 +196,9 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
             alignItems="center"
           >
             <Box
-              maxWidth={{lg:'54vw' , base : '70vw' , md:'60vw'}}
+              maxWidth={{lg:'54vw' , base : '90vw' , md:'60vw'}}
               display="flex"
+              // bg='green'
               // justifyContent="space-between"
               alignItems="center"
             >
@@ -228,7 +229,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                     : ''
                 }
               ></Avatar>{' '}
-              <Box  display='flex' flexDir='column'   maxWidth={{lg:'92%' , base:'50%' ,md:'80%'}}>
+              <Box  display='flex' flexDir='column'   maxWidth={{lg:'92%' , base:'80%' ,md:'80%'}}>
               <Text
                 mr={3}
                 fontFamily="Public Sans"
@@ -259,7 +260,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
              }
               </Text>
               </Box>
-              {
+              {/* {
                 selectedChat && !selectedChat.isGroupChat &&  <Box
                 display={{ lg: 'flex', base: 'none' }}
                 w="10px"
@@ -271,15 +272,15 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
               >
                 <Box w="2px" h="2px" bg="white" borderRadius="full" />
               </Box>
-              }
+              } */}
             </Box>
             <Box
-              w={{lg:"7vw" , base : '50vw' , sm:'16vw'}}
+              w={{lg:"7vw" , base : '12vw' , sm:'16vw'}}
               display="flex"
-              justifyContent="space-between"
+              justifyContent="space-around"
               alignItems="center"
             >
-              <Popover
+              {/* <Popover
                 isOpen={isEditing}
                 onOpen={setIsEditing.on}
                 onClose={setIsEditing.off}
@@ -288,7 +289,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                 lazyBehavior="keepMounted"
               >
                 <PopoverTrigger>
-                  {/* <IconButton mr={6}> */}
+                  <IconButton mr={6}>
                   <IconButton mr="1rem">
                     <UilSearch />
                   </IconButton>
@@ -298,7 +299,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                     <Input placeholder="Search your Chat" size="md" />
                   </PopoverBody>
                 </PopoverContent>
-              </Popover>
+              </Popover> */}
               {/* for displaying group chat */}
               <GroupDescriptionModal setSelectedChat={setSelectedChat} selectedChat={selectedChat} user={user} />
             </Box>

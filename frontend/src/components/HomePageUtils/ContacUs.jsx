@@ -21,7 +21,7 @@ import {
   ButtonGroup,
   Image,
 } from "@chakra-ui/react";
-import { BsGithub, BsLinkedin, BsPerson, BsTwitter } from "react-icons/bs";
+import { BsGithub, BsLinkedin, BsPerson, BsTwitter , BsInstagram } from "react-icons/bs";
 import { MdEmail, MdOutlineEmail } from "react-icons/md";
 import { UilUser } from "@iconscout/react-unicons";
 import { UilEnvelopeMinus } from "@iconscout/react-unicons";
@@ -34,7 +34,7 @@ export default function ContactUs() {
 
   return (
     <>
-      <Box display="flex" mt={{base:'10vw',md:'5vw'}} bg='#F8FAF4' p={2} minH={{base:'120vw',md:"35vw"}}  w="100%">
+      <Box id="contact" display="flex" mt={{base:'10vw',md:'5vw'}} bg='#F8FAF4' p={2} minH={{base:'120vw',md:"35vw"}}  w="100%">
         <Box
           w="100%"
           p={{base:'0.1rem',md:"1rem"}}
@@ -56,22 +56,24 @@ export default function ContactUs() {
           >
             <Box
               w={{base:'95%',md:"10vw"}}
+              mt={{base:'3vw',md:"0"}}
               h={{base:'20vw',md:"38vw"}}
               order={{base:'2',md:'1'}}
               display="flex"
+              bg='transparent'
               flexDirection={{base:'row',md:"column"}}
               alignItems={{base:'center',md:'flex-end'}}
               pr='1vw'
               justifyContent='space-around'
             >
-                <IconButton color='green.500' _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><MdEmail size='sm' /></IconButton>
                 <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsGithub size='sm' /></IconButton>
+                <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsInstagram size='sm' /></IconButton>
                 <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsLinkedin size='sm' /></IconButton>
                 <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsTwitter size='sm' /></IconButton>
                
             </Box>
             <Stack   order={{base:'1',md:'2'}} bg='#F7FAF3' border='1px solid transparent' borderRadius='lg' spacing='2vw' p={{base:'3',md:'5'}}  w={{base:'90vw',md:"40vw"}} h={{base:'95vw',md:"38vw"}}>
-              <FormControl isRequired>
+              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
                 <FormLabel fontFamily='Nunito' fontWeight={500}>Name</FormLabel>
                 <InputGroup>
                 <InputLeftElement><UilUser /></InputLeftElement>
@@ -79,7 +81,7 @@ export default function ContactUs() {
                 </InputGroup>
               </FormControl>
 
-              <FormControl isRequired>
+              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
                 <FormLabel fontFamily='Nunito' fontWeight={500}>Email</FormLabel>
                 <InputGroup>
                 <InputLeftElement><UilEnvelopeMinus /></InputLeftElement>
@@ -87,10 +89,10 @@ export default function ContactUs() {
                 </InputGroup>
               </FormControl>
 
-              <FormControl isRequired>
+              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
                 <FormLabel fontFamily='Nunito' fontWeight={500}>Message</FormLabel>
                 <InputGroup>
-                <Textarea h='15vw'   />
+                <Textarea h={{base:'20vw',md:'15vw'}}   />
                 </InputGroup>
               </FormControl>
              <Button p={4} w='8rem' ml={{base:'44vw',md:'28vw'}}  fontFamily='Nunito' fontWeight={600} leftIcon={<UilMessage />}>Send</Button>

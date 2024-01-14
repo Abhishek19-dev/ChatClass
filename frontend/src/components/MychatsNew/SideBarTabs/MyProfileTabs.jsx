@@ -15,12 +15,10 @@ import { useSelector } from 'react-redux';
 
 return (
     <>
-    <Box bgColor='#F4F7FB' display='flex' w='100%' mb={{base:'30vw' , lg:'10vw' }} h='100%' flexDir='column'>
-    {/* <Box bgColor='#F4F7FB' display='flex' w='100%' mb={3} h='100%' flexDir='column'> */}
-    {/* <Box  display='flex' w='full' mb={3} h='130vh' flexDir='column'> */}
+    <Box id='Profile' bgColor='#F4F7FB' display='flex' w='100%' mb={{base:'30vw' , lg:'10vw' }} h='100%' flexDir='column' >
     <Box display='flex' flexDirection='column'>
         <Box justifyContent='space-between' display='flex' mt={10}>
-          <Heading fontSize='2xl' fontFamily='Public Sans' fontWeight='medium' ml={6}>My Profile</Heading>
+          <Heading fontSize='2xl' fontFamily='Nunito Sans' fontWeight={700} ml={6}>My Profile</Heading>
            <Icon color='grey' boxSize={7} mr={6} mt={1}><HiDotsVertical /></Icon>
         </Box>
         <Box display='flex' flexDir='column' alignItems='center' mt={9}>
@@ -32,7 +30,7 @@ return (
     display='flex'
     alignItems='center'
   >
-    <Box
+    {/* <Box
       w='10px' 
       h='10px' 
       bg='green.500' 
@@ -50,7 +48,7 @@ return (
     </Box>
     <Text ml={2} color='grey' fontFamily='Public Sans' fontWeight='bold'>
       Active
-    </Text>
+    </Text> */}
   </Box>
   </Box>
    <Divider mt={6} />

@@ -30,16 +30,20 @@ import ChatLoading from '../../Features/ChatLoading'
 import { SEARCH_USER_RESET } from '../../../redux/actionType'
 
 
-const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
+const MyChatsTabs = ({isActive, selectedChat, setSelectedChat }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [placement, setPlacement] = useState('left')
   const [search , setSearch] = useState("")
 
+  const {user} = useSelector((state)=> state.loginUser)
+  
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getAllChat(selectedChat,setSelectedChat))
   }, [user._id])
 
+ 
+  console.log("user check",user)
   const { allChats } = useSelector((state) => state.allChats)
   console.log("allChats",allChats)
 
@@ -183,7 +187,7 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
           />
         </InputGroup>
 
-        <Stack  mb={8} mt={10} ml={4} direction="row" spacing={7}>
+        {/* <Stack  mb={8} mt={10} ml={4} direction="row" spacing={7}>
           <Box
             position="relative"
             w={{base:"18vw" , lg:'5rem' , md:'20vw'}}
@@ -199,7 +203,7 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
               name="Kent Dodds"
               src="https://bit.ly/kent-c-dodds"
             >
-              <AvatarBadge boxSize="0.8em" bg="#2BB47D" />
+              {<AvatarBadge boxSize="0.8em" bg="#2BB47D" />
             </Avatar>{' '}
             <Text
               pt={8}
@@ -293,7 +297,7 @@ const MyChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
               Abhishek
             </Text>
           </Box>
-        </Stack>
+        </Stack> */}
 
         <Box>
           <Text

@@ -12,7 +12,7 @@ import ContactUs from '../components/HomePageUtils/ContacUs';
 
 
  
- const HomePage = () =>{
+ const HomePage = (selectedChat, setSelectedChat, myTabs, setMyTabs , user) =>{
    
   const dispatch = useDispatch()
   const handleGetAllChats = ()=>{
@@ -22,10 +22,10 @@ import ContactUs from '../components/HomePageUtils/ContacUs';
 return (
     <>
     <Box  w={{base:'100%',md:"100%"}}>
-    <NavBar />
+    <NavBar  myTabs = {myTabs} setMyTabs={setMyTabs} selectedChat={selectedChat} setSelectedChat={setSelectedChat}  />
   <FirstSection />
   <WhyChatClass />
-  <ContactUs />
+  <ContactUs  />
   <Footer />
     </Box>
     </>
