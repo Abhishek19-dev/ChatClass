@@ -18,6 +18,10 @@ const userSchema = new Schema({
         unique:true,
         validate : [validator.isEmail , "Please Enter a valid Email"]
     },
+    isOnline :{
+        type:Boolean,
+        default:false
+    },
     password : {
         type:String,
         required:[true,"Please Enter Your Password"],

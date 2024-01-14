@@ -59,6 +59,9 @@ exports.LoginUser = catchAsyncError(async(req,res,next)=>{
     {
         return(next(new ErrorHandler("Invalid Email And Password",400)))
     }
+    if(user){
+        user.isOnline = true
+    }
     sendToken(user,200,res)
 })
 
@@ -68,6 +71,7 @@ exports.LogoutUser = catchAsyncError(async(req,res,next)=>{
         expires: new Date(Date.now()),
         httpOnly : true
     })
+    req.user.isOnline = false
     res.status(200).json({
         success:true,
         message:"LOGGED OUT SUCCESSFULLY !"
