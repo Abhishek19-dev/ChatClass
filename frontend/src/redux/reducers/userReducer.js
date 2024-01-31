@@ -1,4 +1,4 @@
-import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_RESET, LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_REQUEST, LOGOUT_RESET, LOGOUT_SUCCESS, REGISTER_FAIL, REGISTER_LOGIN, REGISTER_REQUEST, REGISTER_SUCCESS } from "../actionType"
+import { ALL_USERS_FAIL, ALL_USERS_REQUEST, ALL_USERS_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_RESET, LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_REQUEST, LOGOUT_RESET, LOGOUT_SUCCESS, REGISTER_FAIL, REGISTER_LOGIN, REGISTER_REQUEST, REGISTER_SUCCESS } from "../actionType"
 
 export const registerReducer = (state={
     loading:false,
@@ -120,3 +120,31 @@ export const logoutReducer = (state={
 }
 
 
+//Get all users
+export const allUsersReducer = (state={
+    loading:false,
+     users:[]
+},action) =>{
+    const {type,payload} = action
+
+    switch(type){
+        case ALL_USERS_REQUEST :
+            return{
+                ...state,
+                loading:true
+            }
+        case ALL_USERS_SUCCESS:
+            return{
+               loading : false,
+               users : payload
+            }
+            case ALL_USERS_FAIL:
+                return{
+                    ...state,
+                    loading : false,
+                    error:payload
+                }
+                default:
+                    return {...state}
+    }
+}

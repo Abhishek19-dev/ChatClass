@@ -165,7 +165,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
       {!selectedChat ? (
         <Box
           // maxWidth="100%"
-          width='100%'
+          w={{ lg: `calc(100% - 500px)`, base: '100%' }}
           pt='4vw'
           h="100vh"
           display={{ lg: 'flex', base: 'none' }}
@@ -196,7 +196,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
             alignItems="center"
           >
             <Box
-              maxWidth={{lg:'54vw' , base : '90vw' , md:'60vw'}}
+              maxWidth={{lg:'54vw' , base : '85vw' , md:'60vw'}}
               display="flex"
               // bg='green'
               // justifyContent="space-between"
@@ -229,7 +229,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                     : ''
                 }
               ></Avatar>{' '}
-              <Box  display='flex' flexDir='column'   maxWidth={{lg:'92%' , base:'80%' ,md:'80%'}}>
+              <Box  display='flex' flexDir='column'    maxWidth={{lg:'92%' , base:'70%' ,md:'80%'}}>
               <Text
                 mr={3}
                 fontFamily="Public Sans"
@@ -247,6 +247,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                 fontWeight={300}
                 textColor="A9A9A9"
                 maxWidth='100%'
+                // w='100%'
                 whiteSpace="nowrap"    // Set white-space to nowrap
                 overflow="hidden"      // Hide overflow
                 textOverflow="ellipsis" // Display ellipsis for overflow

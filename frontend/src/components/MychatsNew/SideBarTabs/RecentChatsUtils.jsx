@@ -6,7 +6,7 @@ export const RecentChats = ({ chat, key, user, isActive , selectedChat , setSele
 
 const {isOnline} = useSelector((state)=> state.loginUser)
     var sender = returnSender(chat, user)
-   console.log("chat inside",user)
+  //  console.log("chat inside",user)
  
   return (
     <>

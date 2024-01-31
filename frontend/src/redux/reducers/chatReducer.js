@@ -1,4 +1,4 @@
-import { ACCESS_CHAT_FAIL, ACCESS_CHAT_REQUEST, ACCESS_CHAT_SUCCESS, ADD_USER_TO_GROUP_FAIL, ADD_USER_TO_GROUP_REQUEST, ADD_USER_TO_GROUP_RESET, ADD_USER_TO_GROUP_SUCCESS, ALL_CHATS_OF_USER_FAIL, ALL_CHATS_OF_USER_REQUEST, ALL_CHATS_OF_USER_SUCCESS, CREATE_A_GROUP_CHAT_FAIL, CREATE_A_GROUP_CHAT_REQUEST, CREATE_A_GROUP_CHAT_RESET, CREATE_A_GROUP_CHAT_SUCCESS, DELETE_FROM_GROUP_FAIL, DELETE_FROM_GROUP_REQUEST, DELETE_FROM_GROUP_SUCCESS, RENAME_CHAT_FAIL, RENAME_CHAT_REQUEST, RENAME_CHAT_RESET, RENAME_CHAT_SUCCESS, SEARCH_USER_FAIL, SEARCH_USER_REQUEST, SEARCH_USER_RESET, SEARCH_USER_SUCCESS } from "../actionType"
+import { ACCESS_CHAT_FAIL, ACCESS_CHAT_REQUEST, ACCESS_CHAT_SUCCESS, ADD_USER_TO_GROUP_FAIL, ADD_USER_TO_GROUP_REQUEST, ADD_USER_TO_GROUP_RESET, ADD_USER_TO_GROUP_SUCCESS, ALL_CHATS_OF_USER_FAIL, ALL_CHATS_OF_USER_REQUEST, ALL_CHATS_OF_USER_SUCCESS, CREATE_A_GROUP_CHAT_FAIL, CREATE_A_GROUP_CHAT_REQUEST, CREATE_A_GROUP_CHAT_RESET, CREATE_A_GROUP_CHAT_SUCCESS, DELETE_FROM_GROUP_FAIL, DELETE_FROM_GROUP_REQUEST, DELETE_FROM_GROUP_SUCCESS, JOIN_A_GROUP_FAIL, JOIN_A_GROUP_REQUEST, JOIN_A_GROUP_SUCCESS, RENAME_CHAT_FAIL, RENAME_CHAT_REQUEST, RENAME_CHAT_RESET, RENAME_CHAT_SUCCESS, SEARCH_A_GROUP_FAIL, SEARCH_A_GROUP_REQUEST, SEARCH_A_GROUP_RESET, SEARCH_A_GROUP_SUCCESS, SEARCH_USER_FAIL, SEARCH_USER_REQUEST, SEARCH_USER_RESET, SEARCH_USER_SUCCESS } from "../actionType"
 
 
 
@@ -132,7 +132,7 @@ export const createAGroupChatReducer = (state={
                 }
               case CREATE_A_GROUP_CHAT_RESET:
                 return{
-                    loading:true,
+                    loading:false,
                     fullGroupChat:{},
                     message :"",
                     groupChatCreated:false
@@ -249,5 +249,80 @@ export const removeUserGroupReducer = (state={
                 }
                 default:
                     return {...state}
+    }
+}
+
+
+//Search a Group 
+export const searchAGroup = (state = {
+    loading : false,
+    isSearched : false,
+    group : {}
+},action) =>{
+    const {type , payload} = action
+    switch(type){
+        case SEARCH_A_GROUP_REQUEST:
+            return{
+                ...state,
+                isSearched:true,
+                loading:true
+            }
+        case SEARCH_A_GROUP_SUCCESS :
+            return{
+                ...state,
+                isSearched:true,
+                loading:false,
+                group:payload
+            }    
+            case SEARCH_A_GROUP_FAIL :
+                return{
+                    ...state,
+                    isSearched:true,
+                    loading:false,
+                    error:payload
+                }  
+            case SEARCH_A_GROUP_RESET :
+                return{
+                    ...state,
+                    isSearched:false,
+                    group:{},
+                    loading:false
+                }     
+                default:
+                    return {...state} 
+    }
+}
+
+
+//Join A group
+export const joinAGroup = (state = {
+    loading : false,
+    isJoined : false,
+   chat:{}
+},action) =>{
+    const {type , payload} = action
+    switch(type){
+        case JOIN_A_GROUP_REQUEST:
+            return{
+                ...state,
+                loading:true
+            }
+        case JOIN_A_GROUP_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                isJoined : true,
+                chat:payload.newGroup
+            }    
+            case JOIN_A_GROUP_FAIL:
+                return{
+                    ...state,
+                    loading:false,
+                    isJoined : false,
+                    error:payload
+                }  
+
+                default:
+                    return {...state} 
     }
 }

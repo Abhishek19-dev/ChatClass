@@ -22,6 +22,10 @@ const userSchema = new Schema({
         type:Boolean,
         default:false
     },
+    Location : {
+        type:String,
+        default:"none"
+    },
     password : {
         type:String,
         required:[true,"Please Enter Your Password"],

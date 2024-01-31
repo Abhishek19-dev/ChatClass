@@ -102,6 +102,8 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
         setAddUserSearch(" ")
     }
    },[showDialogBox])
+
+  //  console.log("selected Chat inside",selectedChat)
   return (
     <>
       <IconButton
@@ -117,8 +119,9 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
         {!showDialogBox ? (
           <ModalContent
             bg="#E6EBF5"
-            h={{ lg: '40vw', base: '100%' }}
-            maxHeight={{ lg: '50vw', base: '100%' }}
+            w={{base:'90%',md:'100%'}}
+            h={{ md: '80%', base: '85%' }}
+            maxHeight={{ md: '100%', base: '85%' }}
             overflowY="scroll"
           >
             <Box
@@ -267,7 +270,7 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
                       textColor="#144996"
                       my="0.5vw"
                     >
-                      Invite Code : <span  style={{ color: 'grey' , marginLeft:'0.5vw' }}>#24555234</span>
+                      Invite Code : <span  style={{ color: 'grey' , marginLeft:'0.5vw' }}>{selectedChat ? selectedChat.groupChatDetails.groupInviteId : "Private Group"}</span>
                     </Button>
                     <Divider bg="grey" h="0.1vw"></Divider>
                     <Stack

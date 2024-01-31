@@ -54,7 +54,6 @@ export const GroupChatSearchProfile = ({ user, handleFunction }) => {
           name={user && user.name}
           src={user && user.avatar.url}
         >
-          <AvatarBadge boxSize="0.8em" bg="#2BB47D" />
         </Avatar>{' '}
         <Text ml={2}>{user && user.name}</Text>
       </WrapItem>

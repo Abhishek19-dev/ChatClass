@@ -30,6 +30,7 @@
     "nodemon": "^3.0.1",
     "parse-data-uri": "^0.2.0",
     "react-scroll": "^1.9.0",
+    "short-uuid": "^4.2.2",
     "socket.io": "^4.7.2",
     "validator": "^13.11.0"
   }

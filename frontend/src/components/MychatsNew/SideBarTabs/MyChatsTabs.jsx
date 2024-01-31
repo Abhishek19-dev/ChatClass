@@ -11,6 +11,7 @@ import {
   HStack,
   Icon,
   IconButton,
+  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -18,100 +19,137 @@ import {
   Text,
   Tooltip,
   useDisclosure,
-} from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
-import { HiPhoneIncoming } from 'react-icons/hi'
-import { UilSearch } from '@iconscout/react-unicons'
-import { useDispatch, useSelector } from 'react-redux'
-import { accessChat, getAllChat, searchUser } from '../../../redux/actions/chatAction'
-import { RecentChats, returnSender } from './RecentChatsUtils'
-import SearchUserProfile from './SearchUserProfile'
-import ChatLoading from '../../Features/ChatLoading'
-import { SEARCH_USER_RESET } from '../../../redux/actionType'
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { HiPhoneIncoming } from "react-icons/hi";
+import { UilSearch } from "@iconscout/react-unicons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  accessChat,
+  getAllChat,
+  searchUser,
+} from "../../../redux/actions/chatAction";
+import { RecentChats, returnSender } from "./RecentChatsUtils";
+import SearchUserProfile from "./SearchUserProfile";
+import ChatLoading from "../../Features/ChatLoading";
+import { SEARCH_USER_RESET } from "../../../redux/actionType";
+import RecentChatImg from "../../../images/recentChats.png";
+import { allUsers } from "../../../redux/actions/userAction";
 
+const MyChatsTabs = ({ isActive, selectedChat, setSelectedChat }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [placement, setPlacement] = useState("left");
+  const [search, setSearch] = useState("");
+  const [searchResultUsers , setSearchResultUsers] = useState([])
 
-const MyChatsTabs = ({isActive, selectedChat, setSelectedChat }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [placement, setPlacement] = useState('left')
-  const [search , setSearch] = useState("")
+  const { user } = useSelector((state) => state.loginUser);
 
-  const {user} = useSelector((state)=> state.loginUser)
-  
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllChat(selectedChat,setSelectedChat))
-  }, [user._id])
+    dispatch(allUsers())
+    dispatch(getAllChat(selectedChat, setSelectedChat));
+  }, [user._id]);
 
- 
-  console.log("user check",user)
-  const { allChats } = useSelector((state) => state.allChats)
-  console.log("allChats",allChats)
+  const { allChats } = useSelector((state) => state.allChats);
 
 
   //To create a new chat
-  const accessChats = (userId)=>{
-    //  const user_Id = JSON.stringify(userId)
-     dispatch(accessChat(userId))
-     dispatch({type : SEARCH_USER_RESET})
-     onClose()
-     setSearch('')
-}
+  const accessChats = (userId) => {
 
+    dispatch(accessChat(userId));
+    dispatch({ type: SEARCH_USER_RESET });
+    onClose();
+    setSearch("");
+  };
+
+  //SHOW ALL USERS:-
+
+  // useEffect(()=>{
+  //   if(search == ""){
+  //     dispatch(allUsers())
+  //   }
+  // },[])
+
+  useEffect(()=>{
+    if(search == ""){
+      setSearchResultUsers(getAllUsers)
+      dispatch({ type: SEARCH_USER_RESET });
+    }
+  },[search])
+  const {users : getAllUsers} = useSelector((state)=> state.getAllUsers)
+  useEffect(()=>{
+    if(getAllUsers.length > 0 ){
+      setSearchResultUsers(getAllUsers)
+    }
+  },[getAllUsers])
+  
 
   //search a user
-  const handleSearch = (e)=>{
-    if(e.target.value !== " "){
-      setSearch(e.target.value)
-      dispatch(searchUser(search))
+  const handleSearch = (e) => {
+    if (e.target.value !== " ") {
+      setSearch(e.target.value);
+      dispatch(searchUser(search));
     }
-  }
+  };
 
-  const {loading:searchLoading , users:searchedUsers} = useSelector((state)=> state.searchUser)
+  const { loading: searchLoading, users: searchedUsers } = useSelector(
+    (state) => state.searchUser
+  );
+
+  useEffect(()=>{
+    if(searchedUsers.length > 0){
+      setSearchResultUsers(searchedUsers)
+    }
+  
+  },[searchedUsers])
+  
+  console.log("searchResultUsers",searchResultUsers)
   return (
     <>
-      <Box
-      bgColor='#F4F7FB'
-        display="flex"
-        w='100%'
-        h='100%'
-        flexDir="column"
-      >
+      <Box bgColor="#F4F7FB" display="flex" w="100%" h="100%" flexDir="column">
         <Box display="flex" justifyContent="space-between">
           <Text
             fontFamily="Public Sans"
             textColor="#3f414D"
-            ml={{lg:5 , base : '4vw'}}
+            ml={{ lg: 5, base: "4vw" }}
             fontWeight={600}
             fontSize="23px"
-            w='100%'
-            mt={{lg:9,base:'6vw'}}
+            w="100%"
+            mt={{ lg: 9, base: "6vw" }}
           >
             Chats
           </Text>
           <Box
-  display={{ lg: 'block', base: 'none' }}
-  w={{ lg: '80vh' }}
-  pr='1vh'
-  mr={{ lg: '2vh', base: '5vw' }}
-  mt={{ lg: '5vh', base: '6vw' }}
-  overflow="hidden"
->
-  <Button
-    onClick={onOpen}
-    colorScheme="blue"
-    variant="outline"
-    w="100%" 
-    whiteSpace="nowrap" // Prevent text from wrapping
-  >
-    <HStack>
-      <Icon as={UilSearch} />
-      <Text>Search your Friends</Text>
-    </HStack>
-  </Button>
-</Box>
+            display={{ lg: "block", base: "none" }}
+            w={{ lg: "80vh" }}
+            pr="1vh"
+            mr={{ lg: "2vh", base: "5vw" }}
+            mt={{ lg: "5vh", base: "6vw" }}
+            overflow="hidden"
+          >
+            <Button
+              onClick={onOpen}
+              colorScheme="blue"
+              variant="outline"
+              w="100%"
+              whiteSpace="nowrap" // Prevent text from wrapping
+            >
+              <HStack>
+                <Icon as={UilSearch} />
+                <Text>Search your Friends</Text>
+              </HStack>
+            </Button>
+          </Box>
 
-          <IconButton 
-             mt='6vw' mr='3vw' p='1vw' onClick={onOpen} display={{lg:'none',base:'block'}}><UilSearch /></IconButton>
+          <IconButton
+            mt="6vw"
+            mr="3vw"
+            p="1vw"
+            onClick={onOpen}
+            display={{ lg: "none", base: "block" }}
+          >
+            <UilSearch />
+          </IconButton>
           <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
             <DrawerOverlay />
             <DrawerContent>
@@ -137,9 +175,9 @@ const MyChatsTabs = ({isActive, selectedChat, setSelectedChat }) => {
                     </Icon>
                   </InputLeftElement>
                   <Input
-                  value={search}
-                  onChange = {handleSearch}
-                    _hover={{ borderColor: 'transparent', boxShadow: 'none' }}
+                    value={search}
+                    onChange={handleSearch}
+                    _hover={{ borderColor: "transparent", boxShadow: "none" }}
                     focusBorderColor="transparent"
                     focusShadow="none"
                     type="tel"
@@ -150,12 +188,23 @@ const MyChatsTabs = ({isActive, selectedChat, setSelectedChat }) => {
                   />
                 </InputGroup>
                 {/* To display the searched users */}
-                <Stack spacing={4} direction="column" maxH="100%" overflowY="auto">
-                  {searchLoading ? <ChatLoading /> :
-                    searchedUsers.map((search)=> (
-                      <SearchUserProfile handleFunction = {()=>accessChats(search._id)} search = {search} />
+                <Stack
+                  spacing={4}
+                  direction="column"
+                  maxH="100%"
+                  overflowY="auto"
+                >
+                  {searchLoading ? (
+                    <ChatLoading />
+                  ) : (
+                    // searchedUsers.map((search) => (
+                    searchResultUsers.map((search) => (
+                      <SearchUserProfile
+                        handleFunction={() => accessChats(search._id)}
+                        search={search}
+                      />
                     ))
-                  }
+                  )}
                 </Stack>
               </DrawerBody>
             </DrawerContent>
@@ -165,9 +214,9 @@ const MyChatsTabs = ({isActive, selectedChat, setSelectedChat }) => {
           borderRadius="sm"
           p={2}
           bgColor="#E6EBF5"
-          ml={{lg:2,base:'2vw'}}
+          ml={{ lg: 2, base: "2vw" }}
           mt={8}
-          w='95%'
+          w="95%"
           mb={5}
         >
           <InputLeftElement pointerEvents="none">
@@ -176,7 +225,7 @@ const MyChatsTabs = ({isActive, selectedChat, setSelectedChat }) => {
             </Icon>
           </InputLeftElement>
           <Input
-            _hover={{ borderColor: 'transparent', boxShadow: 'none' }}
+            _hover={{ borderColor: "transparent", boxShadow: "none" }}
             focusBorderColor="transparent"
             focusShadow="none"
             type="tel"
@@ -311,26 +360,71 @@ const MyChatsTabs = ({isActive, selectedChat, setSelectedChat }) => {
           </Text>
 
           {/* <Stack mt={5} bg="#F4F7FB" h="53vh" overflowY="auto"> */}
-          <Stack mt={5} h="53vh" overflowY="auto">
-            {allChats
-              ? allChats
-                  .filter((c) => !c.isGroupChat)
-                  .map((chat) => (
-                    <RecentChats
-                      selectedChat={selectedChat}
-                      setSelectedChat={setSelectedChat}
-                      user={user}
-                      isActive={isActive}
-                      chat={chat}
-                      key={chat._id}
-                    />
-                  ))
-              : 'No Chats to Show'}
+          <Stack    mt={5} h="68vh" overflowY="auto">
+            { allChats && allChats
+                .filter((c) => !c.isGroupChat).length > 0 ? (
+              allChats
+                .filter((c) => !c.isGroupChat)
+                .map((chat) => (
+                  <RecentChats
+                    selectedChat={selectedChat}
+                    setSelectedChat={setSelectedChat}
+                    user={user}
+                    isActive={isActive}
+                    chat={chat}
+                    key={chat._id}
+                  />
+                ))
+            ) : (
+              <Box w="100%"  h="100%">
+                <Box
+                  p={3}
+                  display="flex"
+                  flexDirection={{base:'column',sm:'row',lg:"column"}}
+                  alignItems={{base:'center',md:'none'}}
+                  w="100%"
+                  h={{base:'100vw',sm:'50vw',lg:"20vw"}}
+                >
+                  <Image src={RecentChatImg} w={{base:'70%',md:'50%',lg:"100%"}} h={{base:'100%',sm:'80%',lg:"100%"}}></Image>
+                  <Box  display='flex' flexDirection='column'>
+                  <Text mt="1.5vw" fontFamily="Nunito Sans" fontWeight={500}>
+                    New here? No worries! 🌟 You're just two steps away from
+                    making your first study buddy. 👫✨
+                  </Text>
+                  <Text
+                    fontFamily="Nunito Sans"
+                    fontWeight={400}
+                    mt="1.5vw"
+                    ml="1vw"
+                  >
+                    <Text as="span" fontWeight={700}>
+                      Step 1:{" "}
+                    </Text>
+                    Hit the search bar, find friends who share your interests.
+                    📚
+                  </Text>
+                  <Text
+                    fontFamily="Nunito Sans"
+                    fontWeight={400}
+                    mt="1.5vw"
+                    ml="1vw"
+                  >
+                    <Text as="span" fontWeight={700}>
+                      Step 2:{" "}
+                    </Text>{" "}
+                    Say 'Hi' and kick off a study chat. 🚀 Let the learning
+                    adventures begin! 🌈{" "}
+                  </Text>
+                  </Box>
+                  
+                </Box>
+              </Box>
+            )}
           </Stack>
         </Box>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default MyChatsTabs
+export default MyChatsTabs;

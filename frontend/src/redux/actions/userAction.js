@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_RESET, LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_REQUEST, LOGOUT_RESET, LOGOUT_SUCCESS, REGISTER_FAIL, REGISTER_LOGIN, REGISTER_REQUEST, REGISTER_SUCCESS } from '../actionType'
+import { ALL_USERS_FAIL, ALL_USERS_REQUEST, ALL_USERS_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_RESET, LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_REQUEST, LOGOUT_RESET, LOGOUT_SUCCESS, REGISTER_FAIL, REGISTER_LOGIN, REGISTER_REQUEST, REGISTER_SUCCESS } from '../actionType'
 
 export const registerUser = (formData) =>async(dispatch)=>{
    try {
@@ -63,6 +63,28 @@ export const loginUser = (email,password) =>async(dispatch)=>{
     } catch (error) {
         dispatch({
          type : LOGOUT_FAIL,
+         payload:error.response.message.data
+        })
+    }
+ }
+
+
+
+ //Get all users
+ export const allUsers = () =>async(dispatch)=>{
+    try {
+     dispatch({
+         type: ALL_USERS_REQUEST
+      })
+      const {data} = await axios.get("api/v1/allUsers")
+ 
+      dispatch({
+          type : ALL_USERS_SUCCESS,
+          payload : data.users
+      })
+    } catch (error) {
+        dispatch({
+         type : ALL_USERS_FAIL,
          payload:error.response.message.data
         })
     }

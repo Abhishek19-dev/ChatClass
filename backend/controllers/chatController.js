@@ -2,6 +2,8 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/ErrorHandler");
 const Chat = require('../models/chatModel');
 const User = require("../models/userModel");
+const shortUUID = require('short-uuid');
+
 
 
 //if chat exists open it OR if chat does not exists create it with user
@@ -73,7 +75,7 @@ exports.fetchAllChats = catchAsyncError(async(req,res,next)=>{
 
 //create group chats:-
 exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
-    var {users,chatName,groupDescription} = req.body
+    var {users,chatName,groupDescription , isPublicGroupChat} = req.body
     // console.log("users",users)
     // console.log("chatName",chatName)
     if(!req.body.users || !req.body.chatName)
@@ -84,11 +86,21 @@ exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
     if(users.length < 2){
         return (next(new ErrorHandler("More than two people are required to form a group chat ",400)))
     }
+    if(isPublicGroupChat){
+        //for invite code
+        const translator = shortUUID()
+       var inviteId = translator.new(5)
+       console.log("invite id",inviteId) 
+    }
     users.push(req.user)
     const groupChat = await Chat.create({
         chatName : chatName,
         users : users,
         isGroupChat : true,
+        groupChatDetails : {
+            isPublicGroupChat : true,
+            groupInviteId : inviteId,
+        },
         groupDescription : groupDescription,
         groupAdmin : req.user
     })
@@ -150,5 +162,145 @@ exports.removeFromGroup = catchAsyncError(async(req,res,next)=>{
         success : true,
         message : "User Removed Successfully",
         removedMember
+    })
+})
+
+
+
+//search a group 
+exports.searchGroup = catchAsyncError(async(req,res,next)=>{
+
+    const {groupInviteId} = req.body
+    console.log(groupInviteId)
+
+    const chat = await Chat.findOne({"groupChatDetails.groupInviteId" : groupInviteId}).populate("users" ,"-password").populate("groupAdmin" , "-password")
+
+    if(!chat){
+        return (next(new ErrorHandler("No group Chat found ",400)))
+    }
+    res.status(200).json({
+        success:true,
+        chat
+    })
+})
+
+//Join a public group chat
+// exports.joinGroupChat = catchAsyncError(async(req,res,next)=>{
+//     const {groupId} = req.body
+//     console.log("groupChatId",groupId)
+//     // const groupChatId = JSON.parse(req.body.groupChatId)
+//     const chat = await Chat.findOne({"_id":groupId}).populate("users" ,"-password").populate("groupAdmin" , "-password")
+//     let alreadyPresent = false
+
+//     // if (chat.users.includes(req.user.id)) {
+//     //     return next(new ErrorHandler("You are already part of this chat", 400));
+//     // }
+
+//     if(chat){
+//          chat.users.map((user)=>{
+//             console.log("user.id and req.user.id",user.id,req.user.id)
+//             if(user.id === req.user.id){
+//                 alreadyPresent = true
+//             }
+//          })
+//          if(alreadyPresent){
+//             return(next (new ErrorHandler("Already Present in group")))
+//          }
+//          if(!alreadyPresent){
+//             chat.users.push(req.user)
+//             // console.log("chat.users",chat.users)
+//          }
+//     }
+ 
+
+//     if(!chat){
+//         return (next (new ErrorHandler("Not added to group",400)))
+//     }
+//    await chat.save()
+//     res.status(400).json({
+//         success:true,
+//         chat : chat
+//     })
+// })
+// exports.joinGroupChat = catchAsyncError(async(req,res,next)=>{
+//     const {groupId} = req.body
+//     console.log("groupChatId",groupId)
+//     // const groupChatId = JSON.parse(req.body.groupChatId)
+//     const chat = await Chat.findOne({"_id":groupId}).populate("users" ,"-password").populate("groupAdmin" , "-password")
+//     let alreadyPresent = false
+
+//     // if (chat.users.includes(req.user.id)) {
+//     //     return next(new ErrorHandler("You are already part of this chat", 400));
+//     // }
+
+//     if(chat){
+//          chat.users.map((user)=>{
+//             console.log("user.id and req.user.id",user.id,req.user.id)
+//             if(user.id === req.user.id){
+//                 alreadyPresent = true
+//             }
+//          })
+//          if(alreadyPresent){
+//             return(next (new ErrorHandler("Already Present in group")))
+//          }
+//          if(!alreadyPresent){
+//             chat.users.push(req.user)
+//             // console.log("chat.users",chat.users)
+//          }
+//     }
+ 
+
+//     if(!chat){
+//         return (next (new ErrorHandler("Not added to group",400)))
+//     }
+//    await chat.save()
+//     res.status(400).json({
+//         success:true,
+//         chat : chat
+//     })
+// })
+
+//Leave a group :-
+exports.leaveAGroup = catchAsyncError(async(req,res,next)=>{
+    const {groupId} = req.body
+    console.log("group Id",groupId)
+    const groupChat = await Chat.findOne({"_id":groupId}).populate("users" ,"-password").populate("groupAdmin" , "-password")
+    if(!groupChat){
+        return (next (new ErrorHandler("No group Chat Found",400)))
+    }
+    console.log("req user id",req.user.id)
+    if(groupChat){
+         if(groupChat.groupAdmin.id === req.user.id){
+            const newUsers = [...groupChat.users]
+           const added= newUsers.filter((user)=> user.id !== req.user.id)
+          groupChat.users = added
+           groupChat.groupAdmin = groupChat.users[0]
+         }
+         else {
+            const newUsers = groupChat.users.filter((user)=> user.id === req.user.id)
+            groupChat.users = newUsers
+          }
+    }
+    await groupChat.save()
+    res.status(201).json({
+        success:true,
+        groupChat : groupChat
+    })
+
+})
+
+
+//Join a Group Chat
+exports.joinGroup = catchAsyncError(async(req,res,next)=>{
+    const {groupId , userId} = req.body
+    const newGroup = await Chat.findByIdAndUpdate(groupId , {
+        $push :{users : userId}
+    },{
+        new : true
+    }).populate("users","-password").populate("groupAdmin","-password")
+    res.status(200).json({
+        success : true,
+        message : "Chat joined SuccessFully",
+        newGroup 
     })
 })

@@ -6,3 +6,5 @@ JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and s
 1:-  middleware banaya:-
 2:-  npm i jsonwebtoken
 3:-  
+
+npm i short-uuid for genrating invitation code

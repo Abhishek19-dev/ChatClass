@@ -14,7 +14,7 @@ import { UilEye } from '@iconscout/react-unicons'
 const SearchUserProfile = ({search , handleFunction}) => {
     console.log("Searched",search)
   return (
-    <Box display="flex" alignItems="center" bg='#F4F7FB'>
+    <Box mt='2vh' display="flex" justifyContent='space-between' alignItems="center" bg='#F4F7FB'>
       <Box
         display="flex"
         flexDirection="row"
@@ -23,7 +23,7 @@ const SearchUserProfile = ({search , handleFunction}) => {
         <Avatar size="md" name= {search && search.name} src= {search.avatar.url}>
           <AvatarBadge boxSize="0.8em" bg="#2BB47D" />
         </Avatar>
-        <Text ml={4} fontFamily="Public Sans" fontWeight={500}>
+        <Text   ml={4} fontFamily="Public Sans" fontWeight={500}>
           {search.name}
         </Text>
       </Box>
