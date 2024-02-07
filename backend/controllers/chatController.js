@@ -89,8 +89,7 @@ exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
     if(isPublicGroupChat){
         //for invite code
         const translator = shortUUID()
-       var inviteId = translator.new(5)
-       console.log("invite id",inviteId) 
+        var inviteId = '#' + translator.new().slice(0, 4); 
     }
     users.push(req.user)
     const groupChat = await Chat.create({
@@ -98,8 +97,8 @@ exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
         users : users,
         isGroupChat : true,
         groupChatDetails : {
-            isPublicGroupChat : true,
-            groupInviteId : inviteId,
+            isPublicGroupChat : isPublicGroupChat,
+            groupInviteId : isPublicGroupChat ? inviteId : "Public",
         },
         groupDescription : groupDescription,
         groupAdmin : req.user
@@ -303,4 +302,37 @@ exports.joinGroup = catchAsyncError(async(req,res,next)=>{
         message : "Chat joined SuccessFully",
         newGroup 
     })
+})
+
+
+//Get All Group Chat of a person
+exports.getAllGroup = catchAsyncError(async(req,res,next)=>{
+    const {userId} = req.body
+    const chat = Chat.find({})
+
+})
+
+//all chats of that particular user
+exports.fetchProfileGroupChat = catchAsyncError(async(req,res,next)=>{
+    // console.log("req-user",req.user.id)
+    const {id} = req.body
+    var allChats = await Chat.find({users : {$elemMatch : {$eq:id}}}).populate("users","-password").populate("groupAdmin","-password").populate("latestMessage").sort({updatedAt:-1})
+    allChats = await User.populate(allChats,{
+        path : "latestMessage.sender",
+        select : "name pic email"
+    })
+
+    // console.log(allChats)
+    if(allChats.length == 0)
+    {
+        return (next(new ErrorHandler("No chats Yet",402)))
+    }
+    if(allChats.length > 0){
+        var groupPublicChat = allChats.filter((chat)=> chat.isGroupChat == true && chat.groupChatDetails.isPublicGroupChat == true)
+    }
+    res.status(200).json({
+        success:true,
+        groupPublicChat
+    })
+
 })

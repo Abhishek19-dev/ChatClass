@@ -21,111 +21,115 @@ import {
   useBoolean,
   useBreakpointValue,
   useDisclosure,
-} from '@chakra-ui/react'
-import React, { useEffect, useMemo, useState } from 'react'
-import { UilSearch } from '@iconscout/react-unicons'
-import { UilPaperclip } from '@iconscout/react-unicons'
-import { UilMessage } from '@iconscout/react-unicons'
-import SingleChatNew from './SingleChatNew.jsx/SingleChatNew'
-import { useDispatch, useSelector } from 'react-redux'
+} from "@chakra-ui/react";
+import React, { useEffect, useMemo, useState } from "react";
+import { UilSearch } from "@iconscout/react-unicons";
+import { UilPaperclip } from "@iconscout/react-unicons";
+import { UilMessage } from "@iconscout/react-unicons";
+import SingleChatNew from "./SingleChatNew.jsx/SingleChatNew";
+import { useDispatch, useSelector } from "react-redux";
 import {
   allMessagesAction,
   sendMessageAction,
-} from '../../redux/actions/messageAction'
-import { returnSender } from './SideBarTabs/RecentChatsUtils'
-import ScrollableFeed from 'react-scrollable-feed'
-import noMessageImg from '../../animations/noMessages.jpg'
-import { UilAngleLeft } from '@iconscout/react-unicons'
+} from "../../redux/actions/messageAction";
+import { returnSender } from "./SideBarTabs/RecentChatsUtils";
+import ScrollableFeed from "react-scrollable-feed";
+import noMessageImg from "../../animations/noMessages.jpg";
+import { UilAngleLeft } from "@iconscout/react-unicons";
 
-import io from 'socket.io-client'
-import ScrollContainer from './SingleChatNew.jsx/ScrollContainer'
-import { getAllChat } from '../../redux/actions/chatAction'
-import GroupDescriptionModal from './SideBarTabs/GroupDescriptionModal'
+import io from "socket.io-client";
+import ScrollContainer from "./SingleChatNew.jsx/ScrollContainer";
+import { getAllChat } from "../../redux/actions/chatAction";
+import GroupDescriptionModal from "./SideBarTabs/GroupDescriptionModal";
+import ProfileChatModal from "./SideBarTabs/ProfileChatModal";
 
 // /Declaratiion for socket.io
-const ENDPOINT = 'http://localhost:8050'
-var socket, selectedChatCompare
+const ENDPOINT = "http://localhost:8050";
+var socket, selectedChatCompare;
 
 const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
-  const [socketConnected, setSocketConnected] = useState(false)
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [socketConnected, setSocketConnected] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const {
     messages: receivedMessages,
     isReceived,
     loading: messageLoading,
-  } = useSelector((state) => state.allMessages)
-  const [messages, setMessages] = useState([])
-  const [newMessage, setNewMessage] = useState('')
-  const [isEditing, setIsEditing] = useBoolean()
+  } = useSelector((state) => state.allMessages);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [isEditing, setIsEditing] = useBoolean();
+  console.log("selected Chat inside aroudnd", selectedChat);
 
   //Socket.io connection
   useEffect(() => {
-    socket = io(ENDPOINT)
-    socket.on('connected', () => setSocketConnected(true))
-    socket.emit('setup', user)
-  }, [])
+    socket = io(ENDPOINT);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.emit("setup", user);
+  }, []);
 
   //to join room and all messages action dispatch
   useEffect(() => {
     if (selectedChat && socket) {
-      dispatch(allMessagesAction(selectedChat))
-      socket.emit('join chat', selectedChat._id)
-      selectedChatCompare = selectedChat //to implement wheter to give notifications or not
+      dispatch(allMessagesAction(selectedChat));
+      socket.emit("join chat", selectedChat._id);
+      selectedChatCompare = selectedChat; //to implement wheter to give notifications or not
     } else {
-      return
+      return;
     }
-  }, [selectedChat])
+  }, [selectedChat]);
 
   useEffect(() => {
     if (receivedMessages.length > 0) {
-      setMessages(receivedMessages)
+      setMessages(receivedMessages);
     } else {
-      setMessages('')
+      setMessages("");
     }
-  }, [receivedMessages])
+  }, [receivedMessages]);
 
   const sendMessage = async (event) => {
     if (socket) {
       dispatch(
-        sendMessageAction(newMessage, selectedChat, socket, setNewMessage),
-      )
+        sendMessageAction(newMessage, selectedChat, socket, setNewMessage)
+      );
       // if(selectedChat){
-        setSelectedChat((prevSelectedChat) => ({
-          ...prevSelectedChat,
-          latestMessage: {
-            ...prevSelectedChat.latestMessage,
-            content: newMessage,
-          },
-        }));
-         dispatch(getAllChat(selectedChat,setSelectedChat))
-        console.log("new messages",newMessage)
-    // }
-    setNewMessage('')
-  }
-  }
+      setSelectedChat((prevSelectedChat) => ({
+        ...prevSelectedChat,
+        latestMessage: {
+          ...prevSelectedChat.latestMessage,
+          content: newMessage,
+        },
+      }));
+      dispatch(getAllChat(selectedChat, setSelectedChat));
+      console.log("new messages", newMessage);
+      // }
+      setNewMessage("");
+    }
+  };
   //Send Messages:-
   const typingHandler = (e) => {
-    setNewMessage(e.target.value)
-  }
+    setNewMessage(e.target.value);
+  };
 
   useEffect(() => {
-    socket.on('message received', (newMessageReceived) => {
-      console.log('messages before', messages)
-      console.log('new message received', newMessageReceived.message)
-      console.log('new message received contentntntn', newMessageReceived.message.content)
+    socket.on("message received", (newMessageReceived) => {
+      console.log("messages before", messages);
+      console.log("new message received", newMessageReceived.message);
+      console.log(
+        "new message received contentntntn",
+        newMessageReceived.message.content
+      );
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageReceived.message.chat._id
       ) {
         //Give notification
       } else {
-        setMessages([...messages, newMessageReceived.message])
-        if(newMessageReceived){
-          if(selectedChat){
+        setMessages([...messages, newMessageReceived.message]);
+        if (newMessageReceived) {
+          if (selectedChat) {
             setSelectedChat((prevSelectedChat) => ({
               ...prevSelectedChat,
               latestMessage: {
@@ -133,7 +137,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                 content: newMessageReceived.message.content,
               },
             }));
-            dispatch(getAllChat(selectedChat,setSelectedChat))
+            dispatch(getAllChat(selectedChat, setSelectedChat));
           }
         }
         // selectedChat.latestMessage.content = newMessageReceived.content
@@ -144,69 +148,69 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
 
         // setMessages([...messages, ...newMessagesHereNow]);
       }
-      console.log('final messages', messages)
-    })
+      console.log("final messages", messages);
+    });
     // }, [messages])
-  }, [messages])
+  }, [messages]);
 
   const {
     isSent,
     message: sentMessage,
     loading: sentMessageLoading,
-  } = useSelector((state) => state.sendMessage)
+  } = useSelector((state) => state.sendMessage);
   useEffect(() => {
     if (isSent) {
-      setMessages([...messages, sentMessage])
+      setMessages([...messages, sentMessage]);
     }
-  }, [isSent])
+  }, [isSent]);
 
   return (
     <>
       {!selectedChat ? (
         <Box
           // maxWidth="100%"
-          w={{ lg: `calc(100% - 500px)`, base: '100%' }}
-          pt='4vw'
+          w={{ lg: `calc(100% - 500px)`, base: "100%" }}
+          pt="4vw"
           h="100vh"
-          display={{ lg: 'flex', base: 'none' }}
+          display={{ lg: "flex", base: "none" }}
           flexDirection="column"
           alignItems="center"
         >
           <Image src={noMessageImg} alt="image" boxSize="70vh"></Image>
-          <Text mt='1vh' fontFamily="Public Sans" fontSize="2.5vw">
+          <Text mt="1vh" fontFamily="Public Sans" fontSize="2.5vw">
             No Chats selected yet ! Please select any chat
           </Text>
         </Box>
       ) : (
         <Box
-          w={{ lg: `calc(100% - 500px)`, base: '100%' }}
+          w={{ lg: `calc(100% - 500px)`, base: "100%" }}
           h="100%"
           order={{ base: 1, lg: 0 }}
-          display={{ lg: 'flex', base: selectedChat ? 'block' : 'none' }}
+          display={{ lg: "flex", base: selectedChat ? "block" : "none" }}
           flexDirection="column"
           overflowY="hidden"
         >
           <Box
-            w={{ lg: 'full', base: '100%' }}
+            w={{ lg: "full", base: "100%" }}
             // h={{ base: '18vw', sm: '10vw', md: '7vw', lg: '4vw' }}
-            h={{ base: '18vw', sm: '10vw', md: '9vw', lg: '12vh' }}
+            h={{ base: "18vw", sm: "10vw", md: "9vw", lg: "12vh" }}
             display="flex"
-            pl={{ lg: '2vw', base: '3vw' }}
+            pl={{ lg: "2vw", base: "3vw" }}
             justifyContent="space-between"
             alignItems="center"
           >
             <Box
-              maxWidth={{lg:'54vw' , base : '85vw' , md:'60vw'}}
+              maxWidth={{ lg: "54vw", base: "85vw", md: "60vw" }}
               display="flex"
               // bg='green'
               // justifyContent="space-between"
               alignItems="center"
             >
               <IconButton
-                display={{ lg: 'none', base: 'block' }}
+                display={{ lg: "none", base: "block" }}
                 onClick={() => setSelectedChat(null)}
                 color="black"
-                _hover={{bgColor:'white'}}
+                _hover={{ bgColor: "white" }}
                 bgColor="white"
                 aria-label="Search database"
                 icon={<UilAngleLeft />}
@@ -219,47 +223,56 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                     ? selectedChat.isGroupChat
                       ? selectedChat.chatName
                       : returnSender(selectedChat, user).name
-                    : 'Guest User'
+                    : "Guest User"
                 }
                 src={
                   selectedChat
                     ? selectedChat.isGroupChat
                       ? selectedChat.chatName
                       : returnSender(selectedChat, user).name
-                    : ''
+                    : ""
                 }
-              ></Avatar>{' '}
-              <Box  display='flex' flexDir='column'    maxWidth={{lg:'92%' , base:'70%' ,md:'80%'}}>
-              <Text
-                mr={3}
-                fontFamily="Public Sans"
-                fontSize={{lg:"1rem" , md:'2vh'}}
-                fontWeight={600}
-                textColor="black"
+              ></Avatar>{" "}
+              <Box
+                display="flex"
+                flexDir="column"
+                maxWidth={{ lg: "92%", base: "70%", md: "80%" }}
               >
-                {selectedChat &&
-                  (selectedChat.isGroupChat
-                    ? selectedChat.chatName
-                    : returnSender(selectedChat, user).name)}
-              </Text>
-              <Text fontFamily="Public Sans"
-                fontSize={{lg:"2vh" , base : '1.5vh'}}
-                fontWeight={300}
-                textColor="A9A9A9"
-                maxWidth='100%'
-                // w='100%'
-                whiteSpace="nowrap"    // Set white-space to nowrap
-                overflow="hidden"      // Hide overflow
-                textOverflow="ellipsis" // Display ellipsis for overflow
-              >
-             { selectedChat.isGroupChat && 
-              selectedChat && selectedChat.users.map((u , index)=>(
-                index === selectedChat.users.length - 1 ? 
-                user._id !== u._id ? `${u.name}` : `You` :
-                user._id !== u._id ? `${u.name} , ` : `You , `
-              ))
-             }
-              </Text>
+                <Text
+                  mr={3}
+                  fontFamily="Public Sans"
+                  fontSize={{ lg: "1rem", md: "2vh" }}
+                  fontWeight={600}
+                  textColor="black"
+                >
+                  {selectedChat &&
+                    (selectedChat.isGroupChat
+                      ? selectedChat.chatName
+                      : returnSender(selectedChat, user).name)}
+                </Text>
+                <Text
+                  fontFamily="Public Sans"
+                  fontSize={{ lg: "2vh", base: "1.5vh" }}
+                  fontWeight={300}
+                  textColor="A9A9A9"
+                  maxWidth="100%"
+                  // w='100%'
+                  whiteSpace="nowrap" // Set white-space to nowrap
+                  overflow="hidden" // Hide overflow
+                  textOverflow="ellipsis" // Display ellipsis for overflow
+                >
+                  {selectedChat.isGroupChat &&
+                    selectedChat &&
+                    selectedChat.users.map((u, index) =>
+                      index === selectedChat.users.length - 1
+                        ? user._id !== u._id
+                          ? `${u.name}`
+                          : `You`
+                        : user._id !== u._id
+                        ? `${u.name} , `
+                        : `You , `
+                    )}
+                </Text>
               </Box>
               {/* {
                 selectedChat && !selectedChat.isGroupChat &&  <Box
@@ -276,7 +289,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
               } */}
             </Box>
             <Box
-              w={{lg:"7vw" , base : '12vw' , sm:'16vw'}}
+              w={{ lg: "7vw", base: "12vw", sm: "16vw" }}
               display="flex"
               justifyContent="space-around"
               alignItems="center"
@@ -302,10 +315,22 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                 </PopoverContent>
               </Popover> */}
               {/* for displaying group chat */}
-              <GroupDescriptionModal setSelectedChat={setSelectedChat} selectedChat={selectedChat} user={user} />
+              {selectedChat && !selectedChat.isGroupChat ? (
+                <ProfileChatModal
+                  setSelectedChat={setSelectedChat}
+                  selectedChat={selectedChat}
+                  user={user}
+                />
+              ) : (
+                <GroupDescriptionModal
+                  setSelectedChat={setSelectedChat}
+                  selectedChat={selectedChat}
+                  user={user}
+                />
+              )}
             </Box>
           </Box>
-          <Divider w='100%' mb='1vh' bgColor='#E6E7EA'></Divider>
+          <Divider w="100%" mb="1vh" bgColor="#E6E7EA"></Divider>
 
           {/* From here chat box begins */}
           <Box
@@ -317,66 +342,71 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
             w="100%"
             // h="100%"
             // h={{ lg: `calc(100% - 4vw)`, base: '100%' }}
-            h={{ lg: `calc(100% - 12vh)`, base: '100%' }}
-            maxHeight='90vh'
+            h={{ lg: `calc(100% - 12vh)`, base: "100%" }}
+            maxHeight="90vh"
             borderRadius="lg"
             overflowY="hidden"
             // overflowY="scroll"
           >
-            <Box   mb='1vh' display='flex' h='100%'   flexDir='column' overflowY='scroll'>
-              <SingleChatNew messages={messages} user={user}/>
-
-            </Box>
-            <Divider w='100%' mb='1vh' bgColor='#E6E7EA'></Divider>
             <Box
-            // mt='1vw'
-            display="flex"
-            alignItems="center"
-            w="100%"
-            mb='1vw'
-            // mt='-10vw'
-            // h={{ base: '15vw', sm: '10vw', lg: '5vw' }}
-            justifyContent="space-between"
-          > 
-            <InputGroup
-              borderRadius="sm"
-              p={1.5}
-              bgColor="#E6EBF5"
-              ml={5}
-              // mt={8}
-              // mb={5}
-              width="85%"
+              mb="1vh"
+              display="flex"
+              h="100%"
+              flexDir="column"
+              overflowY="scroll"
             >
-              <Input
-                value={newMessage}
-                onChange={typingHandler}
-                _hover={{ borderColor: 'transparent', boxShadow: 'none' }}
-                focusBorderColor="transparent"
-                focusShadow="none"
-                type="tel"
-                fontFamily="Public Sans"
-                color="black"
-                fontWeight={500}
-                placeholder="Enter a Messsage"
-              />
-            </InputGroup>
-            <IconButton mr="2vw" ml="2vw" mt="0.5rem">
-              <UilPaperclip />
-            </IconButton>
-            <IconButton
-              isLoading={sentMessageLoading}
-              onClick={sendMessage}
-              mr="4vw"
-              mt={2}
+              <SingleChatNew messages={messages} user={user} />
+            </Box>
+            <Divider w="100%" mb="1vh" bgColor="#E6E7EA"></Divider>
+            <Box
+              // mt='1vw'
+              display="flex"
+              alignItems="center"
+              w="100%"
+              mb="1vw"
+              // mt='-10vw'
+              // h={{ base: '15vw', sm: '10vw', lg: '5vw' }}
+              justifyContent="space-between"
             >
-              <UilMessage />
-            </IconButton>
-          </Box>
+              <InputGroup
+                borderRadius="sm"
+                p={1.5}
+                bgColor="#E6EBF5"
+                ml={5}
+                // mt={8}
+                // mb={5}
+                width="85%"
+              >
+                <Input
+                  value={newMessage}
+                  onChange={typingHandler}
+                  _hover={{ borderColor: "transparent", boxShadow: "none" }}
+                  focusBorderColor="transparent"
+                  focusShadow="none"
+                  type="tel"
+                  fontFamily="Public Sans"
+                  color="black"
+                  fontWeight={500}
+                  placeholder="Enter a Messsage"
+                />
+              </InputGroup>
+              <IconButton mr="2vw" ml="2vw" mt="0.5rem">
+                <UilPaperclip />
+              </IconButton>
+              <IconButton
+                isLoading={sentMessageLoading}
+                onClick={sendMessage}
+                mr="4vw"
+                mt={2}
+              >
+                <UilMessage />
+              </IconButton>
+            </Box>
           </Box>
         </Box>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ChatBoxNew
+export default ChatBoxNew;

@@ -46,7 +46,7 @@ const GroupChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
     console.log("GrounpInviteId", groupInviteId);
   };
   const { allChats , loading:allChatsLoading } = useSelector((state) => state.allChats);
-  const {loading : joinLoading , isJoined} = useSelector((state)=> state.joinAGroup)
+  const {loading : joinLoading , isJoined:searchGroupJoin} = useSelector((state)=> state.joinAGroup)
   const {
     loading: searchLoading,
     group ,
@@ -54,23 +54,20 @@ const GroupChatsTabs = ({ user, isActive, selectedChat, setSelectedChat }) => {
   } = useSelector((state) => state.searchGroup);
 
   const handleJoinGroup = () => {
-    // const { _id } = group;
-    // dispatch(JoinGroup(_id));
+    
     dispatch(joinGroup(group,user))
   };
   
-  // if(allChats){
-  //   setSelectedChat(allChats[0])
-  // }
+  
  
   useEffect(()=>{
-    if(isJoined){
+    if(searchGroupJoin){
       dispatch({
         type : SEARCH_A_GROUP_RESET
       })
       setGroupInviteId("")
     }
-  })
+  },[searchGroupJoin])
   
   return (
     <>

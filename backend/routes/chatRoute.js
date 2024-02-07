@@ -1,6 +1,6 @@
 const express = require('express')
 const { isAuthenticatedUser } = require('../middleware/authMiddleWare')
-const { accessChats, fetchAllChats, createGroupChat, renameGroup, addToGroup, removeFromGroup, searchGroup, joinGroupChat, leaveAGroup, joinGroup} = require('../controllers/chatController')
+const { accessChats, fetchAllChats, createGroupChat, renameGroup, addToGroup, removeFromGroup, searchGroup, joinGroupChat, leaveAGroup, joinGroup, fetchProfileGroupChat} = require('../controllers/chatController')
 
 
 const router = express.Router()
@@ -15,5 +15,6 @@ router.post("/searchGroup",isAuthenticatedUser,searchGroup)
 // router.post("/joinGroup",isAuthenticatedUser,joinGroupChat)
 router.put("/joinGroup",isAuthenticatedUser,joinGroup)
 router.put("/leaveGroup",isAuthenticatedUser,leaveAGroup)
+router.post("/publicGroupChatUser",isAuthenticatedUser,fetchProfileGroupChat)
 
 exports.router = router 

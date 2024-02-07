@@ -1,4 +1,4 @@
-import { ACCESS_CHAT_FAIL, ACCESS_CHAT_REQUEST, ACCESS_CHAT_SUCCESS, ADD_USER_TO_GROUP_FAIL, ADD_USER_TO_GROUP_REQUEST, ADD_USER_TO_GROUP_RESET, ADD_USER_TO_GROUP_SUCCESS, ALL_CHATS_OF_USER_FAIL, ALL_CHATS_OF_USER_REQUEST, ALL_CHATS_OF_USER_SUCCESS, CREATE_A_GROUP_CHAT_FAIL, CREATE_A_GROUP_CHAT_REQUEST, CREATE_A_GROUP_CHAT_RESET, CREATE_A_GROUP_CHAT_SUCCESS, DELETE_FROM_GROUP_FAIL, DELETE_FROM_GROUP_REQUEST, DELETE_FROM_GROUP_SUCCESS, JOIN_A_GROUP_FAIL, JOIN_A_GROUP_REQUEST, JOIN_A_GROUP_SUCCESS, RENAME_CHAT_FAIL, RENAME_CHAT_REQUEST, RENAME_CHAT_RESET, RENAME_CHAT_SUCCESS, SEARCH_A_GROUP_FAIL, SEARCH_A_GROUP_REQUEST, SEARCH_A_GROUP_RESET, SEARCH_A_GROUP_SUCCESS, SEARCH_USER_FAIL, SEARCH_USER_REQUEST, SEARCH_USER_RESET, SEARCH_USER_SUCCESS } from "../actionType"
+import { ACCESS_CHAT_FAIL, ACCESS_CHAT_REQUEST, ACCESS_CHAT_SUCCESS, ADD_USER_TO_GROUP_FAIL, ADD_USER_TO_GROUP_REQUEST, ADD_USER_TO_GROUP_RESET, ADD_USER_TO_GROUP_SUCCESS, ALL_CHATS_OF_USER_FAIL, ALL_CHATS_OF_USER_REQUEST, ALL_CHATS_OF_USER_SUCCESS, CREATE_A_GROUP_CHAT_FAIL, CREATE_A_GROUP_CHAT_REQUEST, CREATE_A_GROUP_CHAT_RESET, CREATE_A_GROUP_CHAT_SUCCESS, DELETE_FROM_GROUP_FAIL, DELETE_FROM_GROUP_REQUEST, DELETE_FROM_GROUP_SUCCESS, GET_ALL_PUBLIC_CHAT_USER_FAIL, GET_ALL_PUBLIC_CHAT_USER_REQUEST, GET_ALL_PUBLIC_CHAT_USER_SUCCESS, JOIN_A_GROUP_FAIL, JOIN_A_GROUP_REQUEST, JOIN_A_GROUP_SUCCESS, RENAME_CHAT_FAIL, RENAME_CHAT_REQUEST, RENAME_CHAT_RESET, RENAME_CHAT_SUCCESS, SEARCH_A_GROUP_FAIL, SEARCH_A_GROUP_REQUEST, SEARCH_A_GROUP_RESET, SEARCH_A_GROUP_SUCCESS, SEARCH_USER_FAIL, SEARCH_USER_REQUEST, SEARCH_USER_RESET, SEARCH_USER_SUCCESS } from "../actionType"
 
 
 
@@ -319,6 +319,41 @@ export const joinAGroup = (state = {
                     ...state,
                     loading:false,
                     isJoined : false,
+                    error:payload
+                }  
+
+                default:
+                    return {...state} 
+    }
+}
+
+
+
+//Get all group Chat of a user
+export const getPublicGroupUserReducer = (state = {
+    loading : false,
+    isPublicGroup : false,
+    groupPublicChat:[]
+},action) =>{
+    const {type , payload} = action
+    switch(type){
+        case GET_ALL_PUBLIC_CHAT_USER_REQUEST:
+            return{
+                ...state,
+                loading:true
+            }
+        case GET_ALL_PUBLIC_CHAT_USER_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+               isPublicGroup:true,
+               groupPublicChat: payload.groupPublicChat
+            }    
+            case GET_ALL_PUBLIC_CHAT_USER_FAIL:
+                return{
+                    ...state,
+                    loading:false,
+                    isPublicGroup:true,
                     error:payload
                 }  
 

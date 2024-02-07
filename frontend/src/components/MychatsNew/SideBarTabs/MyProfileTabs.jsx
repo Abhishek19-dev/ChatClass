@@ -1,4 +1,4 @@
- import { Avatar, Box, Divider, Heading, Icon, Image, Text } from '@chakra-ui/react';
+import { Avatar, Box, Divider, Heading, Icon, Image, Text } from '@chakra-ui/react';
 import React from 'react'; 
 import {HiDotsVertical} from 'react-icons/hi'
 import {

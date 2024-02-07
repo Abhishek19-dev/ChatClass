@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -23,85 +23,87 @@ import {
   InputGroup,
   InputLeftElement,
   useToast,
-} from '@chakra-ui/react'
-import { UilEye } from '@iconscout/react-unicons'
+  Icon,
+} from "@chakra-ui/react";
+import { UilEye } from "@iconscout/react-unicons";
 import {
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-} from '@chakra-ui/react'
-import { UilPlus } from '@iconscout/react-unicons'
-import { UilLinkAdd } from '@iconscout/react-unicons'
+} from "@chakra-ui/react";
+import { UilPlus } from "@iconscout/react-unicons";
+import { UilLinkAdd } from "@iconscout/react-unicons";
 import {
-    GroupChatAddSearchedUsers,
+  GroupChatAddSearchedUsers,
   GroupChatDescriptionSideDrawer,
   GroupChatEditSlide,
   GroupDescriptionModalUtils,
-} from './GroupChatUtils'
-import { SearchIcon } from '@chakra-ui/icons'
-import { UilPen } from '@iconscout/react-unicons'
-import { UilArrowLeft } from '@iconscout/react-unicons'
-import { UilSearch } from '@iconscout/react-unicons'
-import { useDispatch, useSelector } from 'react-redux'
-import { searchUser } from '../../../redux/actions/chatAction'
-import ChatLoading from '../../Features/ChatLoading'
-import { SEARCH_USER_RESET } from '../../../redux/actionType'
+} from "./GroupChatUtils";
+import { SearchIcon } from "@chakra-ui/icons";
+import { UilPen } from "@iconscout/react-unicons";
+import { UilArrowLeft } from "@iconscout/react-unicons";
+import { UilSearch } from "@iconscout/react-unicons";
+import { useDispatch, useSelector } from "react-redux";
+import { searchUser } from "../../../redux/actions/chatAction";
+import ChatLoading from "../../Features/ChatLoading";
+import { SEARCH_USER_RESET } from "../../../redux/actionType";
 
-const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [showDialogBox, setShowDialogBox] = useState(false)
-  const [showEdit, setShowEdit] = useState(false)
-  const [showAddParticipants, setShowAddParticipants] = useState(false)
-  const [addUserSearch , setAddUserSearch] = useState(" ")
-  const toast = useToast()
+const GroupDescriptionModal = ({ selectedChat, user, setSelectedChat }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [showDialogBox, setShowDialogBox] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showAddParticipants, setShowAddParticipants] = useState(false);
+  const [addUserSearch, setAddUserSearch] = useState(" ");
+  const toast = useToast();
 
   const handleEyeButton = () => {
-    onOpen()
-    setShowEdit(false)
-    setShowAddParticipants(false)
-  }
+    onOpen();
+    setShowEdit(false);
+    setShowAddParticipants(false);
+  };
   const handleEditButton = () => {
-    setShowDialogBox(true)
-    setShowAddParticipants(false)
-    setShowEdit(true)
-  }
+    setShowDialogBox(true);
+    setShowAddParticipants(false);
+    setShowEdit(true);
+  };
   const handleAddParticipantButton = () => {
-    if(user._id === selectedChat.groupAdmin._id){
-        setShowDialogBox(true)
-        setShowAddParticipants(true)
-        setShowEdit(false)
+    if (user._id === selectedChat.groupAdmin._id) {
+      setShowDialogBox(true);
+      setShowAddParticipants(true);
+      setShowEdit(false);
+    } else {
+      toast({
+        title: `Only Admin Can Add Participants`,
+        status: "warning",
+        position: "top",
+        isClosable: true,
+      });
     }
-    else{
-        toast({
-            title: `Only Admin Can Add Participants`,
-            status: 'warning',
-            position:'top',
-            isClosable: true,
-          })
-    }
-  }
+  };
 
-  const handleBackButton = ()=>{
-    setShowDialogBox(false)
+  const handleBackButton = () => {
+    setShowDialogBox(false);
     dispatch({
-        type : SEARCH_USER_RESET
-    })
-  }
+      type: SEARCH_USER_RESET,
+    });
+  };
 
-  //handle search user dispatch 
-  const dispatch = useDispatch()
-  const handleAddParticipantsGroupSearch = (e) =>{
-        setAddUserSearch(e.target.value)
-        dispatch(searchUser(addUserSearch))
-  }
-  const {loading:addUsersearchLoading , users:AddUserSearched} = useSelector((state)=> state.searchUser)
-   useEffect(()=>{
-    if(!showDialogBox){
-        setAddUserSearch(" ")
+  //handle search user dispatch
+  const dispatch = useDispatch();
+  const handleAddParticipantsGroupSearch = (e) => {
+    setAddUserSearch(e.target.value);
+    dispatch(searchUser(addUserSearch));
+  };
+  const { loading: addUsersearchLoading, users: AddUserSearched } = useSelector(
+    (state) => state.searchUser
+  );
+  useEffect(() => {
+    if (!showDialogBox) {
+      setAddUserSearch(" ");
     }
-   },[showDialogBox])
+  }, [showDialogBox]);
 
   //  console.log("selected Chat inside",selectedChat)
   return (
@@ -119,9 +121,9 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
         {!showDialogBox ? (
           <ModalContent
             bg="#E6EBF5"
-            w={{base:'90%',md:'100%'}}
-            h={{ md: '80%', base: '85%' }}
-            maxHeight={{ md: '100%', base: '85%' }}
+            w={{ base: "90%", md: "100%" }}
+            h={{ md: "80%", base: "85%" }}
+            maxHeight={{ md: "100%", base: "85%" }}
             overflowY="scroll"
           >
             <Box
@@ -143,16 +145,16 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
             </Box>
             <ModalHeader>
               <Box
-                mt={{ lg: '3vw' }}
+                mt={{ lg: "3vw" }}
                 display="flex"
                 flexDir="column"
                 alignItems="center"
-                h={{ lg: '10vw' }}
+                h={{ lg: "10vw" }}
               >
                 <Avatar
                   size="lg"
-                  name= {selectedChat.isGroupChat && selectedChat.chatName}
-                //   src="https://bit.ly/dan-abramov"
+                  name={selectedChat.isGroupChat && selectedChat.chatName}
+                  //   src="https://bit.ly/dan-abramov"
                 />
                 <Text
                   fontFamily="Public Sans"
@@ -169,7 +171,7 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
                   fontWeight={400}
                   textColor="black"
                 >
-                 {`Group : ${selectedChat.users.length} Participants`}
+                  {`Group : ${selectedChat.users.length} Participants`}
                 </Text>
               </Box>
             </ModalHeader>
@@ -189,7 +191,7 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
                         borderColor="lightgray"
                         borderRadius="sm"
                       >
-                        <AccordionButton bg="white" _hover={{ bg: 'white' }}>
+                        <AccordionButton bg="white" _hover={{ bg: "white" }}>
                           <Box
                             ml="1vw"
                             fontWeight={600}
@@ -198,7 +200,7 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
                             flex="1"
                             textAlign="left"
                           >
-                           Group Description
+                            Group Description
                           </Box>
                           <AccordionIcon />
                         </AccordionButton>
@@ -209,9 +211,9 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
                           fontWeight={400}
                           pb={4}
                         >
-                         {
-                            selectedChat.groupDescription ? selectedChat.groupDescription : "No Description !"
-                         }
+                          {selectedChat.groupDescription
+                            ? selectedChat.groupDescription
+                            : "No Description !"}
                         </AccordionPanel>
                       </Box>
                     </AccordionItem>
@@ -261,7 +263,7 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
                       Add Participants
                     </Button>
                     <Divider bg="grey" h="0.1vw"></Divider>
-                    <Button
+                    {/* <Button
                       leftIcon={<UilLinkAdd />}
                       colorScheme="transparent"
                       variant="none"
@@ -271,7 +273,25 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
                       my="0.5vw"
                     >
                       Invite Code : <span  style={{ color: 'grey' , marginLeft:'0.5vw' }}>{selectedChat ? selectedChat.groupChatDetails.groupInviteId : "Private Group"}</span>
-                    </Button>
+                    </Button> */}
+                    <Box mx={{base:'4vw',md:'1vw'}}  my="0.5vw" display='flex' alignItems='center' flexDirection='row'>
+                      <Icon color='#144996'> <UilLinkAdd /> </Icon>
+                    <Text
+                    ml={{base:'4vw',md:'1vw'}} 
+                      fontFamily="Public Sans"
+                      fontWeight={400}
+                      textColor="#144996"
+                    >
+                      Invite Code :{" "}
+                      <span style={{ color: "grey", marginLeft: "0.5vw" }}>
+                        {selectedChat
+                          ? selectedChat.groupChatDetails.groupInviteId
+                          : "Private Group"}
+                      </span>
+                    </Text>
+                    </Box>
+                    
+
                     <Divider bg="grey" h="0.1vw"></Divider>
                     <Stack
                       my="0.5vw"
@@ -280,11 +300,15 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
                       direction="column"
                       spacing={2}
                     >
-                        {
-                            selectedChat.users && selectedChat.users.map((u)=>
-                            <GroupDescriptionModalUtils setSelectedChat={setSelectedChat}  user={user} u={u} selectedChat={selectedChat} />
-                            )
-                        }
+                      {selectedChat.users &&
+                        selectedChat.users.map((u) => (
+                          <GroupDescriptionModalUtils
+                            setSelectedChat={setSelectedChat}
+                            user={user}
+                            u={u}
+                            selectedChat={selectedChat}
+                          />
+                        ))}
                     </Stack>
                   </Box>
                 </Box>
@@ -294,8 +318,8 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
         ) : showAddParticipants && !showEdit ? (
           <ModalContent
             bg="#E6EBF5"
-            h={{ lg: '40vw', base: '100%' }}
-            maxHeight={{ lg: '50vw', base: '100%' }}
+            h={{ lg: "40vw", base: "100%" }}
+            maxHeight={{ lg: "50vw", base: "100%" }}
             // transition="transform 0.3s ease-in-out"
             // transform={showEdit ? 'translateY(0%)' : 'translateY(100%)'}
             overflowY="scroll"
@@ -323,28 +347,39 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
             <ModalBody display="flex" flexDirection="column">
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <UilSearch color='#8C8C8C' />
+                  <UilSearch color="#8C8C8C" />
                 </InputLeftElement>
-                <Input value={addUserSearch} onChange = {handleAddParticipantsGroupSearch} bg='white' color='blue' type="text" placeholder="Search your friend by name" />
+                <Input
+                  value={addUserSearch}
+                  onChange={handleAddParticipantsGroupSearch}
+                  bg="white"
+                  color="blue"
+                  type="text"
+                  placeholder="Search your friend by name"
+                />
               </InputGroup>
-              {
-                addUsersearchLoading ? <ChatLoading /> : <Stack mt='2vh' direction='column' spacing='3'>
-                    {
-                        AddUserSearched.map((u)=>{
-                            return(
-                                <GroupChatAddSearchedUsers u={u} setSelectedChat={setSelectedChat} selectedChat={selectedChat} />
-                            )
-                        })
-                    }
-              </Stack>
-              }
+              {addUsersearchLoading ? (
+                <ChatLoading />
+              ) : (
+                <Stack mt="2vh" direction="column" spacing="3">
+                  {AddUserSearched.map((u) => {
+                    return (
+                      <GroupChatAddSearchedUsers
+                        u={u}
+                        setSelectedChat={setSelectedChat}
+                        selectedChat={selectedChat}
+                      />
+                    );
+                  })}
+                </Stack>
+              )}
             </ModalBody>
           </ModalContent>
         ) : (
           <ModalContent
             bg="#E6EBF5"
-            h={{ lg: '40vw', base: '100%' }}
-            maxHeight={{ lg: '50vw', base: '100%' }}
+            h={{ lg: "40vw", base: "100%" }}
+            maxHeight={{ lg: "50vw", base: "100%" }}
             // transition="transform 0.3s ease-in-out"
             // transform={showEdit ? 'translateY(0%)' : 'translateY(100%)'}
             overflowY="scroll"
@@ -373,7 +408,7 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
                 leftIcon={<UilPen />}
                 mr="0.5vw"
               >
-                Done{' '}
+                Done{" "}
               </Button>
             </Box>
             <Divider bg="grey" w="full" h="0.1vw"></Divider>
@@ -404,7 +439,7 @@ const GroupDescriptionModal = ({ selectedChat, user , setSelectedChat }) => {
         )}
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default GroupDescriptionModal
+export default GroupDescriptionModal;

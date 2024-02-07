@@ -68,6 +68,9 @@ const GroupChatModalNew = () => {
     );
   };
 
+
+  console.log("isPublicGroupChat hehehe",isPublicGroupChat)
+
   const handleGroup = (userToAdd) => {
     if (selectedUserArray.includes(userToAdd)) {
       toast({
