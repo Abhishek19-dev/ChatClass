@@ -1,7 +1,7 @@
 import {legacy_createStore as createStore , combineReducers , applyMiddleware} from "redux"
 import thunk from "redux-thunk"
 import {composeWithDevTools} from "redux-devtools-extension" 
-import { allUsersReducer, loginReducer, logoutReducer, registerReducer } from "./reducers/userReducer"
+import { allUsersReducer, editDescriptionReducer, editProfileReducer, getAllDetailsReducer, loginReducer, logoutReducer, registerReducer } from "./reducers/userReducer"
 import { accessChatReducer, addUserGroupReducer, allChatUserReducer, createAGroupChatReducer,getPublicGroupUserReducer,joinAGroup,removeUserGroupReducer,renameChatReducer, searchAGroup, searchUserReducer } from "./reducers/chatReducer"
 import { allMessagesReducer, sendMessagesReducer,  } from "./reducers/messageReducer"
 
@@ -21,7 +21,10 @@ const reducer = combineReducers({
   searchGroup : searchAGroup,
   joinAGroup : joinAGroup,
   getAllUsers : allUsersReducer,
-  getPublicGroupUser : getPublicGroupUserReducer
+  getPublicGroupUser : getPublicGroupUserReducer,
+  editDescription : editDescriptionReducer,
+  getUserDetails : getAllDetailsReducer,
+  editProfile:editProfileReducer
 })
 
 let intitalState = {}

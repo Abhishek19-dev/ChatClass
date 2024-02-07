@@ -10,16 +10,46 @@ import {
   Divider,
   Heading,
   Icon,
+  IconButton,
+  Input,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { UilUser } from "@iconscout/react-unicons";
 import { UilEditAlt } from "@iconscout/react-unicons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { editDescription, editUserProfile } from "../../../redux/actions/userAction";
 
 const SettingsTabs = ({user , selectedChat, setSelectedChat}) => {
-  // const user = useSelector((state) => state.loginUser);
-  console.log("setting", user);
+
+
+  const {userDetails} = useSelector((state)=> state.getUserDetails)
+
+  
+  
+  const [des , setDes] = useState(userDetails.description)
+  const [userEmail , setUserEmail] = useState(userDetails.email)
+  const [userLocation , setUserLocation] = useState(userDetails.Location)
+
+  const [desEdit , setDesEdit] = useState(false)
+  const [profileEdit , setprofileEdit] = useState(false)
+  const dispatch = useDispatch()
+
+ 
+
+  const handleEditDescription = ()=>{
+    dispatch(editDescription(des))
+    setDesEdit(false)
+  }
+
+  const handleEditProfile = ()=>{
+    dispatch(editUserProfile(userEmail,userLocation))
+    setprofileEdit(false)
+  }
+
+  const {loading : editDescriptionLoading , editUser} = useSelector((state)=> state.editDescription)
+  const {loading : editProfileLoading} = useSelector((state)=> state.editProfile)
+
   return (
     <>
       <Box
@@ -57,18 +87,22 @@ const SettingsTabs = ({user , selectedChat, setSelectedChat}) => {
               fontFamily="Public Sans"
               fontWeight="bold"
             >
-              {user && user.name}
+              {userDetails && userDetails.name}
             </Text>
             <Box mt={2} ml={2} display="flex" alignItems="center"></Box>
           </Box>
           <Divider mt={6} />
         </Box>
 
-        <Box mt={8} fontFamily="Public Sans" textColor="#74788D" pl={6} pr={6}>
-          Experienced web developer with a passion for crafting engaging and
-          responsive websites. Proficient in front-end and back-end
-          technologies, I specialize in creating user-friendly digital
-          experiences.
+        <Box p={2}  w='100%' overflowY='auto' maxH={{base:'25vw',md:'8vw'}} display='flex' justifyContent='space-between' mt={8}  pl={6} pr={6}>
+          {
+            !desEdit ?  <Text  fontFamily="Public Sans" textColor="#74788D">
+            {userDetails && userDetails.description}
+            </Text> :  <Input value={des} onChange={(e)=> setDes(e.target.value)} pl='0.5rem' mr='0.5rem' defaultValue={userDetails && userDetails.description} color='black' size='fit-content' />
+            
+            } 
+
+        {!desEdit ? <IconButton onClick={()=> setDesEdit(true)}><UilEditAlt /></IconButton> : <Button _Loading={editDescriptionLoading} onClick={handleEditDescription}>Done</Button> } 
         </Box>
 
         <Box ml={5} mt={6} mr={5}>
@@ -110,23 +144,37 @@ const SettingsTabs = ({user , selectedChat, setSelectedChat}) => {
                         >
                           Name
                         </Text>
-                        <Button
+                       
+                       {
+                        !profileEdit ?  <Button
                           fontFamily="Public Sans"
                           fontWeight={500}
                           leftIcon={<UilEditAlt />}
                           bg="#EFF2F6"
                           textColor="#3F414D"
                           variant="solid"
+                          onClick={setprofileEdit}
                         >
                           Edit
+                        </Button> :  <Button
+                          fontFamily="Public Sans"
+                          fontWeight={500}
+                          bg="#EFF2F6"
+                          textColor="#3F414D"
+                          variant="solid"
+                          _loading={editProfileLoading}
+                          onClick={handleEditProfile}
+                        >
+                          Done
                         </Button>
+                       }
                       </Box>
                       <Text
                         fontFamily="Public Sans"
                         fontWeight="semibold"
                         textColor="#3F414D"
                       >
-                       {user && user.name}
+                       {userDetails && userDetails.name}
                       </Text>
                       <Text
                         fontFamily="Public Sans"
@@ -136,13 +184,25 @@ const SettingsTabs = ({user , selectedChat, setSelectedChat}) => {
                       >
                         Email
                       </Text>
-                      <Text
+                      {profileEdit ? (
+                        <Input
+                          value={userEmail}
+                          onChange={(e) => setUserEmail(e.target.value)}
+                          pl="0.5rem"
+                          mr="0.5rem"
+                          defaultValue={userDetails && userDetails.email}
+                          color="black"
+                          size="fit-content"
+                        />
+                      ) : (
+                        <Text
                         fontFamily="Public Sans"
                         fontWeight="semibold"
                         textColor="#3F414D"
-                      >
-                       {user && user.email}
-                      </Text>
+                        >
+                         {userDetails && userDetails.email}
+                        </Text>
+                      )}
                       <Text
                         fontFamily="Public Sans"
                         mt={5}
@@ -151,13 +211,25 @@ const SettingsTabs = ({user , selectedChat, setSelectedChat}) => {
                       >
                         Location
                       </Text>
-                      <Text
+                      {profileEdit ? (
+                        <Input
+                          value={userLocation}
+                          onChange={(e) => setUserLocation(e.target.value)}
+                          pl="0.5rem"
+                          mr="0.5rem"
+                          defaultValue={userDetails && userDetails.Location}
+                          color="black"
+                          size="fit-content"
+                        />
+                      ) : (
+                        <Text
                         fontFamily="Public Sans"
                         fontWeight="semibold"
                         textColor="#3F414D"
-                      >
-                        Tehri Garhwal ,Uk
-                      </Text>
+                        >
+                         {userDetails && userDetails.Location}
+                        </Text>
+                      )}
                     </Box>
                   </AccordionPanel>
                 </Box>

@@ -24,21 +24,18 @@ const userSchema = new Schema({
     },
     Location : {
         type:String,
-        default:"none"
+        default:"India"
     },
     password : {
         type:String,
         required:[true,"Please Enter Your Password"],
         minLength : [8,"Password should be minimum of 8 word"]
     },
-    // bio : {
-    //     type:String,
-    //     default : 'Hey There I am using ChatClass',
-    // },
-    // location : {
-    //     type : string , 
-    //     default : "India"
-    // },
+    description : {
+        type:String,
+        default : 'Hey There I am using ChatClass'
+    },
+   
     avatar:{
         public_id:{
             type :String,

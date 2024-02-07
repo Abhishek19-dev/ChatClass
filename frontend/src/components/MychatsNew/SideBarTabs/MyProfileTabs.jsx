@@ -11,6 +11,7 @@ import {
   import { UilUser } from '@iconscout/react-unicons'
 import { useSelector } from 'react-redux';
  const MyProfileTabs = ({user}) =>{
+  const {userDetails} = useSelector((state)=> state.getUserDetails)
 
 
 return (
@@ -30,25 +31,7 @@ return (
     display='flex'
     alignItems='center'
   >
-    {/* <Box
-      w='10px' 
-      h='10px' 
-      bg='green.500' 
-      borderRadius='full'
-      display='flex'
-      alignItems='center'
-      justifyContent='center'
-    >
-      <Box
-        w='2px' 
-        h='2px' 
-        bg='white' 
-        borderRadius='full'
-      />
-    </Box>
-    <Text ml={2} color='grey' fontFamily='Public Sans' fontWeight='bold'>
-      Active
-    </Text> */}
+   
   </Box>
   </Box>
    <Divider mt={6} />
@@ -56,7 +39,7 @@ return (
 
 
     <Box mt={8} fontFamily='Public Sans'  textColor='#74788D' pl={6} pr={6}>
-    Experienced web developer with a passion for crafting engaging and responsive websites. Proficient in front-end and back-end technologies, I specialize in creating user-friendly digital experiences.
+   {userDetails && userDetails.description}
     </Box>
 
 
@@ -79,9 +62,9 @@ return (
             <Text fontFamily='Public Sans' mt={3} mb={1} textColor='#74788D'>Name</Text>
          <Text fontFamily='Public Sans' fontWeight='semibold' textColor='#3F414D'>{user.name}</Text>
          <Text fontFamily='Public Sans' mt={5} mb={1} textColor='#74788D'>Email</Text>
-         <Text fontFamily='Public Sans' fontWeight='semibold' textColor='#3F414D'>{user.email}</Text>
+         <Text fontFamily='Public Sans' fontWeight='semibold' textColor='#3F414D'>{userDetails && userDetails.email}</Text>
          <Text fontFamily='Public Sans' mt={5} mb={1} textColor='#74788D'>Location</Text>
-         <Text fontFamily='Public Sans' fontWeight='semibold' textColor='#3F414D'>Tehri Garhwal ,Uk</Text>
+         <Text fontFamily='Public Sans' fontWeight='semibold' textColor='#3F414D'>{userDetails && userDetails.Location}</Text>
             </Box>
           </AccordionPanel>
         </Box>
