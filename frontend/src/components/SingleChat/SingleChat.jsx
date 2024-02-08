@@ -16,7 +16,7 @@ import io from "socket.io-client"
 
 
 //socket.io
-const ENDPOINT = "http://localhost:8050"
+const ENDPOINT = "https://chat-class-five.vercel.app/"
 var socket , selectedChatCompare;
  
  const SingleChat = ({selectedChat , setSelectedChat}) =>{
