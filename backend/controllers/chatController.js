@@ -119,6 +119,7 @@ exports.renameGroup = catchAsyncError(async(req,res,next)=>{
     if(!chatId || !newChatName){
         return(next(new ErrorHandler("Please Enter All fields",200)))
     }
+    console.log()
     var updatedGroupChat = await Chat.findByIdAndUpdate(chatId,{
         chatName:newChatName,
         groupDescription:newGroupDescription
