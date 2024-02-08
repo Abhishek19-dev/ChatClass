@@ -113,6 +113,31 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
     setNewMessage(e.target.value);
   };
 
+
+  const handleKeyDown = async (event) => {
+
+    if(event.key === "Enter"){
+      if (socket) {
+        dispatch(
+          sendMessageAction(newMessage, selectedChat, socket, setNewMessage)
+        );
+        // if(selectedChat){
+        setSelectedChat((prevSelectedChat) => ({
+          ...prevSelectedChat,
+          latestMessage: {
+            ...prevSelectedChat.latestMessage,
+            content: newMessage,
+          },
+        }));
+        dispatch(getAllChat(selectedChat, setSelectedChat));
+        console.log("new messages", newMessage);
+        // }
+        setNewMessage("");
+      }
+    }
+   
+  };
+
   useEffect(() => {
     socket.on("message received", (newMessageReceived) => {
       console.log("messages before", messages);
@@ -379,6 +404,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
               >
                 <Input
                   value={newMessage}
+                  onKeyDown={handleKeyDown}
                   onChange={typingHandler}
                   _hover={{ borderColor: "transparent", boxShadow: "none" }}
                   focusBorderColor="transparent"
@@ -389,9 +415,9 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                   placeholder="Enter a Messsage"
                 />
               </InputGroup>
-              <IconButton mr="2vw" ml="2vw" mt="0.5rem">
+              {/* <IconButton mr="2vw" ml="2vw" mt="0.5rem">
                 <UilPaperclip />
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 isLoading={sentMessageLoading}
                 onClick={sendMessage}

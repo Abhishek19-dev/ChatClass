@@ -60,6 +60,7 @@ import { useToast } from '@chakra-ui/react'
         if(isLoggedIn){
             // isLoggedInRef.current = true
             // isLoggedInRef.current = true
+            localStorage.setItem('user', JSON.stringify({ isLoggedIn: true }));
             navigate("/")
             toast({
                 title:"Login Successfully",

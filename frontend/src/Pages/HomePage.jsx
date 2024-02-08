@@ -20,17 +20,7 @@ import { loginUser } from '../redux/actions/userAction';
       dispatch(getAllChat())
   }
 
-  // const {isRegistered , user:RegisterUser} = useSelector((state)=> state.registerUser)
-  // console.log("registe uder",RegisterUser)
-  // const {email , password} = RegisterUser
-
-  // useEffect(()=>{
-  //   if(isRegistered){
-  //     dispatch(loginUser(email,password))
-  //   }
-
-  // },[isRegistered])
-// return <div><Link to = "/chats"><Button onClick={handleGetAllChats}>Chats</Button></Link></div>
+  
 return (
     <>
     <Box  w={{base:'100%',md:"100%"}}>

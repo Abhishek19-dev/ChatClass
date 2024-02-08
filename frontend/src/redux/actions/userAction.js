@@ -30,6 +30,7 @@ export const loginUser = (name,password) =>async(dispatch)=>{
       })
       const config = {headers:{"Content-type":"application/json"}}
       const {data} = await axios.post("/api/v1/user/login",{name,password},config)
+      console.log("data login of user",data)
       dispatch({
           type : LOGIN_SUCCESS,
           payload : data.user

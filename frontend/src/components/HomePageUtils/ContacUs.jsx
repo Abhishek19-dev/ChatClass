@@ -28,6 +28,7 @@ import { UilEnvelopeMinus } from "@iconscout/react-unicons";
 import { UilPhone } from "@iconscout/react-unicons";
 import { UilCommentAltDots } from "@iconscout/react-unicons";
 import { UilMessage } from "@iconscout/react-unicons";
+import { Link } from "react-router-dom";
 
 export default function ContactUs() {
   const { hasCopied, onCopy } = useClipboard("example@example.com");
@@ -66,10 +67,19 @@ export default function ContactUs() {
               pr='1vw'
               justifyContent='space-around'
             >
+                <Link to='https://github.com/Abhishek19-dev'>
                 <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsGithub size='sm' /></IconButton>
+                </Link>
+               
                 <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsInstagram size='sm' /></IconButton>
+
+                <Link to='https://www.linkedin.com/in/abhishekpadiyar12/'>
                 <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsLinkedin size='sm' /></IconButton>
+                </Link>
+                
+                <Link to='https://twitter.com/AbhishekPa16256'>
                 <IconButton color='green.500'  _hover={{bg:"#F7FAF3"}} w={{base:'10vw',md:'4vw'}} h={{base:'10vw',md:'4vw'}} p='1vw' border='1px solid transparent' borderRadius='full'><BsTwitter size='sm' /></IconButton>
+                </Link>
                
             </Box>
             <Stack   order={{base:'1',md:'2'}} bg='#F7FAF3' border='1px solid transparent' borderRadius='lg' spacing='2vw' p={{base:'3',md:'5'}}  w={{base:'90vw',md:"40vw"}} h={{base:'95vw',md:"38vw"}}>
