@@ -21,3 +21,13 @@ return (
 };
  
 export default ChatLoading
+
+
+
+export const OneChatLoading = () =>{
+    return (
+        <Stack>
+            <Skeleton height='45px'/>
+        </Stack>
+    )
+    };

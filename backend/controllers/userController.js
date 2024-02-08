@@ -43,13 +43,13 @@ exports.registerUser =  catchAsyncError(async(req,res,next)=>{
 
 //Login a User :-
 exports.LoginUser = catchAsyncError(async(req,res,next)=>{
-    const {email,password} = req.body
+    const {name,password} = req.body
 
-    if(!email && !password)
+    if(!name && !password)
     {
-        return (next(new ErrorHandler("Enter email and Password")))
+        return (next(new ErrorHandler("Enter name and Password")))
     }
-    const user = await User.findOne({"email":email}).select("+password")
+    const user = await User.findOne({"name":name}).select("+password")
     
 
     if(!user){
@@ -58,7 +58,7 @@ exports.LoginUser = catchAsyncError(async(req,res,next)=>{
     const isPasswordMatched = await user.comparePassword(password)
     if(!isPasswordMatched)
     {
-        return(next(new ErrorHandler("Invalid Email And Password",400)))
+        return(next(new ErrorHandler("Invalid name And Password",400)))
     }
     if(user){
         user.isOnline = true
@@ -82,7 +82,9 @@ exports.LogoutUser = catchAsyncError(async(req,res,next)=>{
 
 //Get All Users:-
 exports.getAllUsers = catchAsyncError(async(req,res,next)=>{
+    // const usersArray = await User.find()
     const users = await User.find()
+    // const users = usersArray.filter((user)=> user._id != req.user.id)
     res.status(200).json({
         success:true,
         users : users

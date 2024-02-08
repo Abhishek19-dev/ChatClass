@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { ALL_USERS_FAIL, ALL_USERS_REQUEST, ALL_USERS_SUCCESS, EDIT_DESCRIPTION_FAIL, EDIT_DESCRIPTION_REQUEST, EDIT_DESCRIPTION_SUCCESS, EDIT_USER_PROFILE_FAIL, EDIT_USER_PROFILE_REQUEST, EDIT_USER_PROFILE_SUCCESS, GET_ALL_PUBLIC_CHAT_USER_FAIL, GET_USER_DETAILS_REQUEST, GET_USER_DETAILS_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_RESET, LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_REQUEST, LOGOUT_RESET, LOGOUT_SUCCESS, REGISTER_FAIL, REGISTER_LOGIN, REGISTER_REQUEST, REGISTER_SUCCESS } from '../actionType'
 
-export const registerUser = (formData) =>async(dispatch)=>{
+export const registerUser = (formData , name , password) =>async(dispatch)=>{
+    console.log("form data of register user",formData)
    try {
     dispatch({
         type: REGISTER_REQUEST
@@ -13,6 +14,7 @@ export const registerUser = (formData) =>async(dispatch)=>{
          type : REGISTER_SUCCESS,
          payload : data.user
      })
+     dispatch(loginUser(name,password))
    } catch (error) {
        dispatch({
         type : REGISTER_FAIL,
@@ -21,13 +23,13 @@ export const registerUser = (formData) =>async(dispatch)=>{
    }
 }
 
-export const loginUser = (email,password) =>async(dispatch)=>{
+export const loginUser = (name,password) =>async(dispatch)=>{
     try {
      dispatch({
          type: LOGIN_REQUEST
       })
       const config = {headers:{"Content-type":"application/json"}}
-      const {data} = await axios.post("/api/v1/user/login",{email,password},config)
+      const {data} = await axios.post("/api/v1/user/login",{name,password},config)
       dispatch({
           type : LOGIN_SUCCESS,
           payload : data.user
@@ -78,7 +80,7 @@ export const loginUser = (email,password) =>async(dispatch)=>{
          type: ALL_USERS_REQUEST
       })
       const {data} = await axios.get("api/v1/allUsers")
- 
+       console.log("data for all users",data)
       dispatch({
           type : ALL_USERS_SUCCESS,
           payload : data.users

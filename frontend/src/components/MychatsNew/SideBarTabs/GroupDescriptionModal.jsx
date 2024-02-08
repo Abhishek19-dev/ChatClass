@@ -46,13 +46,15 @@ import { UilPen } from "@iconscout/react-unicons";
 import { UilArrowLeft } from "@iconscout/react-unicons";
 import { UilSearch } from "@iconscout/react-unicons";
 import { useDispatch, useSelector } from "react-redux";
-import { searchUser } from "../../../redux/actions/chatAction";
+import { renameChat, searchUser } from "../../../redux/actions/chatAction";
 import ChatLoading from "../../Features/ChatLoading";
 import { SEARCH_USER_RESET } from "../../../redux/actionType";
 
 const GroupDescriptionModal = ({ selectedChat, user, setSelectedChat }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showDialogBox, setShowDialogBox] = useState(false);
+  const [newChatName, setNewChatName] = useState(selectedChat.chatName);
+  const [newGroupDescription, setNewGroupDescription] = useState(selectedChat.groupDescription);
   const [showEdit, setShowEdit] = useState(false);
   const [showAddParticipants, setShowAddParticipants] = useState(false);
   const [addUserSearch, setAddUserSearch] = useState(" ");
@@ -90,10 +92,26 @@ const GroupDescriptionModal = ({ selectedChat, user, setSelectedChat }) => {
     });
   };
 
+
+  const handleEditDescriptionButton = ()=>{
+    if (user._id === selectedChat.groupAdmin._id){
+      onOpen()
+      dispatch(renameChat(newChatName,newGroupDescription))
+    }
+    else{
+      toast({
+        title: `Only Admin is allowed Edit Group`,
+        status: "warning",
+        position: "top",
+        isClosable: true,
+      });
+    }
+  }
   //handle search user dispatch
   const dispatch = useDispatch();
   const handleAddParticipantsGroupSearch = (e) => {
     setAddUserSearch(e.target.value);
+    console.log("AddUserSearch",addUserSearch)
     dispatch(searchUser(addUserSearch));
   };
   const { loading: addUsersearchLoading, users: AddUserSearched } = useSelector(
@@ -318,8 +336,9 @@ const GroupDescriptionModal = ({ selectedChat, user, setSelectedChat }) => {
         ) : showAddParticipants && !showEdit ? (
           <ModalContent
             bg="#E6EBF5"
-            h={{ lg: "40vw", base: "100%" }}
-            maxHeight={{ lg: "50vw", base: "100%" }}
+            w={{ md: "100%", base: "90%" }}
+            h={{ lg: "40vw", base: "80%" }}
+            maxHeight={{ lg: "50vw", base: "80%" }}
             // transition="transform 0.3s ease-in-out"
             // transform={showEdit ? 'translateY(0%)' : 'translateY(100%)'}
             overflowY="scroll"
@@ -335,7 +354,7 @@ const GroupDescriptionModal = ({ selectedChat, user, setSelectedChat }) => {
               </IconButton>
               <Text
                 fontFamily="Public Sans"
-                fontSize="1.2vw"
+                fontSize={{base:'5vw',md:"1.2vw"}}
                 textColor="black"
                 fontWeight={600}
                 ml="8vh"
@@ -344,7 +363,7 @@ const GroupDescriptionModal = ({ selectedChat, user, setSelectedChat }) => {
               </Text>
             </Box>
             <Divider bg="grey" w="full" h="0.1vw"></Divider>
-            <ModalBody display="flex" flexDirection="column">
+            <ModalBody  display="flex" flexDirection="column">
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <UilSearch color="#8C8C8C" />
@@ -378,7 +397,8 @@ const GroupDescriptionModal = ({ selectedChat, user, setSelectedChat }) => {
         ) : (
           <ModalContent
             bg="#E6EBF5"
-            h={{ lg: "40vw", base: "100%" }}
+           w={{ lg: "100%", base: "80%" }}
+            h={{ lg: "40vw", base: "80%" }}
             maxHeight={{ lg: "50vw", base: "100%" }}
             // transition="transform 0.3s ease-in-out"
             // transform={showEdit ? 'translateY(0%)' : 'translateY(100%)'}
@@ -395,17 +415,18 @@ const GroupDescriptionModal = ({ selectedChat, user, setSelectedChat }) => {
               </IconButton>
               <Text
                 fontFamily="Public Sans"
-                fontSize="1.2vw"
+                fontSize="1rem"
                 textColor="black"
                 fontWeight={600}
               >
                 Edit Group
               </Text>
               <Button
-                onClick={onOpen}
+                onClick={handleEditDescriptionButton}
                 textColor="#144996"
                 fontFamily="Public Sans"
                 leftIcon={<UilPen />}
+                m={2}
                 mr="0.5vw"
               >
                 Done{" "}
@@ -417,7 +438,7 @@ const GroupDescriptionModal = ({ selectedChat, user, setSelectedChat }) => {
                 <FormLabel fontFamily="Public Sans" fontWeight={500}>
                   Group Name
                 </FormLabel>
-                <Input bg="white" outline="black" type="text" />
+                <Input value={newChatName} onChange={(e)=> setNewChatName(e.target.value)} bg="white" outline="black" type="text" />
                 <FormLabel mt="1vw" fontFamily="Public Sans" fontWeight={500}>
                   Group Description
                 </FormLabel>
@@ -428,8 +449,9 @@ const GroupDescriptionModal = ({ selectedChat, user, setSelectedChat }) => {
                   outline="black"
                   type="text"
                   resize="none"
+                  value={newGroupDescription} onChange={(e)=> setNewGroupDescription(e.target.value)}
                   verticalAlign="top"
-                  h="15vw"
+                  h={{base:'18rem',md:"15vw"}}
                   maxHeight="25vw"
                   overflowY="scroll"
                 />

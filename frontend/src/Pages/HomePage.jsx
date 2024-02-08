@@ -1,14 +1,15 @@
  import { Box, Button, HStack, Text } from '@chakra-ui/react';
-import React from 'react'; 
+import React, { useEffect } from 'react'; 
 import { Link } from 'react-router-dom';
 import NavBar from '../components/HomePageUtils/Navbar';
 import FirstSection from '../components/HomePageUtils/FirstSection';
 import { getAllChat } from '../redux/actions/chatAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GroupSection from '../components/HomePageUtils/GroupSection';
 import WhyChatClass from '../components/HomePageUtils/WhyChatClass';
 import Footer from '../components/HomePageUtils/Footer';
 import ContactUs from '../components/HomePageUtils/ContacUs';
+import { loginUser } from '../redux/actions/userAction';
 
 
  
@@ -18,6 +19,17 @@ import ContactUs from '../components/HomePageUtils/ContacUs';
   const handleGetAllChats = ()=>{
       dispatch(getAllChat())
   }
+
+  // const {isRegistered , user:RegisterUser} = useSelector((state)=> state.registerUser)
+  // console.log("registe uder",RegisterUser)
+  // const {email , password} = RegisterUser
+
+  // useEffect(()=>{
+  //   if(isRegistered){
+  //     dispatch(loginUser(email,password))
+  //   }
+
+  // },[isRegistered])
 // return <div><Link to = "/chats"><Button onClick={handleGetAllChats}>Chats</Button></Link></div>
 return (
     <>

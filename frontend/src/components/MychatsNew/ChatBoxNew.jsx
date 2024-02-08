@@ -61,7 +61,7 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isEditing, setIsEditing] = useBoolean();
-  console.log("selected Chat inside aroudnd", selectedChat);
+  // console.log("selected Chat inside aroudnd", selectedChat);
 
   //Socket.io connection
   useEffect(() => {
@@ -383,7 +383,6 @@ const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
                   _hover={{ borderColor: "transparent", boxShadow: "none" }}
                   focusBorderColor="transparent"
                   focusShadow="none"
-                  type="tel"
                   fontFamily="Public Sans"
                   color="black"
                   fontWeight={500}

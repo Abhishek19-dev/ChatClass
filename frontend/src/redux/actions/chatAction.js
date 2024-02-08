@@ -92,14 +92,14 @@ export const searchUser = (search) =>async(dispatch)=>{
 
 
  //RENAME A CHAT:-
- export const renameChat = (selectedChat , newChatName) =>async(dispatch)=>{
+ export const renameChat = (selectedChat , newChatName,newGroupDescription) =>async(dispatch)=>{
 
     try {
      dispatch({
          type: RENAME_CHAT_REQUEST
       })
       const config = {headers:{"Content-type":"application/json"}}
-      const {data} = await axios.put("/api/v1/renameGroup",{chatId : selectedChat._id , newChatName},config)
+      const {data} = await axios.put("/api/v1/renameGroup",{chatId : selectedChat._id , newChatName ,newGroupDescription},config)
       dispatch({
           type : RENAME_CHAT_SUCCESS,
           payload : data.updatedGroupChat

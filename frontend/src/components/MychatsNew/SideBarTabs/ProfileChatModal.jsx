@@ -33,7 +33,7 @@ const ProfileChatModal = ({ selectedChat, user, setSelectedChat }) => {
   const { allChats } = useSelector((state) => state.allChats);
   const dispatch = useDispatch()
 
-//   const groupPublicChat = allChats.filter((chat)=> chat.isGroupChat == true && chat.groupChatDetails.isPublicGroupChat == true)
+
 const {loading :groupPublicLoading , isPublicGroup , groupPublicChat} = useSelector((state)=> state.getPublicGroupUser)
 
 
@@ -115,9 +115,9 @@ const {loading :groupPublicLoading , isPublicGroup , groupPublicChat} = useSelec
             <Box w="100%" h="90%" overflowY="auto">
               <Stack mt={{base:"4vw",md:"1vw"}} direction='column' spacing='1vw'>
                 {
-                   groupPublicLoading ?  <ChatLoading /> :groupPublicChat.length > 0 ? groupPublicChat.map((group)=>
+                   groupPublicLoading ?  <ChatLoading /> : groupPublicChat.length > 0 ? (groupPublicChat.map((group)=>
                    <ProfileChatUtils group={group} user={user} />
-               ) : "No Groups Joined!" 
+               )) : (isPublicGroup ? <Text fontFamily='Nunito Sans' mt='4rem' fontSize='3rem' ml='4rem' fontWeight={400}>No Groups Joined!</Text> :"") 
                 }
               </Stack>
             </Box>

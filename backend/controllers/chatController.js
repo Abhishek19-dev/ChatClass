@@ -115,12 +115,13 @@ exports.createGroupChat = catchAsyncError(async(req,res,next)=>{
 
 //Rename a group:-
 exports.renameGroup = catchAsyncError(async(req,res,next)=>{
-    const {chatId , newChatName} = req.body
+    const {chatId , newChatName , newGroupDescription} = req.body
     if(!chatId || !newChatName){
         return(next(new ErrorHandler("Please Enter All fields",200)))
     }
     var updatedGroupChat = await Chat.findByIdAndUpdate(chatId,{
-        chatName:newChatName
+        chatName:newChatName,
+        groupDescription:newGroupDescription
     },{
         new : true //isko isiliye krte hai taaki humei new valure dikhe
     }).populate("users","-password").populate("groupAdmin","-password")

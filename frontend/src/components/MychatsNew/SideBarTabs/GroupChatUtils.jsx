@@ -224,8 +224,8 @@ export const GroupChatAddSearchedUsers = ({u,selectedChat , setSelectedChat}) =>
     }
     // console.log("already pressetn",alreadyPresent)
     const {loading : addUserLoading , isAdded , newMember} = useSelector((state)=> state.addUserGroup)
-    console.log("user added : ",isAdded)
-    console.log("new Member : ",newMember)
+    // console.log("user added : ",isAdded)
+    // console.log("new Member : ",newMember)
     useEffect(()=>{
         if(isAdded){
             setSelectedChat(newMember)
@@ -259,7 +259,7 @@ export const GroupChatAddSearchedUsers = ({u,selectedChat , setSelectedChat}) =>
           </Text>
         </Box>
         {
-           alreadyPresent ? <Text fontFamily='Public Sans' fontWeight={400} color='grey' fontSize='0.8vw'>Already Present</Text> :  <IconButton onClick={handleAddUsersToGroupButton} variant="none">
+           alreadyPresent ? <Text fontFamily='Public Sans' fontWeight={400} color='grey' fontSize='0.8rem'>Already Present</Text> :  <IconButton onClick={handleAddUsersToGroupButton} variant="none">
            <UilPlus />
          </IconButton>
         }

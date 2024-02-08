@@ -90,13 +90,13 @@ import { useToast } from '@chakra-ui/react'
          formData.append("confirmPassword",confirmPassword)
          formData.append('file', new Blob([avatar.buffer]), avatar.file.name);
          
-         console.log("name",name)
-         console.log("email",email)
-         console.log("password",password)
-         console.log("confirmPassword",confirmPassword)
-         console.log("avatar",avatar)
+        //  console.log("name",name)
+        //  console.log("email",email)
+        //  console.log("password",password)
+        //  console.log("confirmPassword",confirmPassword)
+        //  console.log("avatar",avatar)
          
-       dispatch(registerUser(formData))
+       dispatch(registerUser(formData,name,password))
     
     }
 

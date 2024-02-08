@@ -31,7 +31,7 @@ import {
 } from "../../../redux/actions/chatAction";
 import { RecentChats, returnSender } from "./RecentChatsUtils";
 import SearchUserProfile from "./SearchUserProfile";
-import ChatLoading from "../../Features/ChatLoading";
+import ChatLoading, { OneChatLoading } from "../../Features/ChatLoading";
 import { SEARCH_USER_RESET } from "../../../redux/actionType";
 import RecentChatImg from "../../../images/recentChats.png";
 import { allUsers } from "../../../redux/actions/userAction";
@@ -50,7 +50,7 @@ const MyChatsTabs = ({ isActive, selectedChat, setSelectedChat }) => {
     dispatch(getAllChat(selectedChat, setSelectedChat));
   }, [user._id]);
 
-  const { allChats } = useSelector((state) => state.allChats);
+  const { loading :allChatsLoading ,  allChats } = useSelector((state) => state.allChats);
 
 
   //To create a new chat
@@ -62,13 +62,7 @@ const MyChatsTabs = ({ isActive, selectedChat, setSelectedChat }) => {
     setSearch("");
   };
 
-  //SHOW ALL USERS:-
-
-  // useEffect(()=>{
-  //   if(search == ""){
-  //     dispatch(allUsers())
-  //   }
-  // },[])
+  
 
   useEffect(()=>{
     if(search == ""){
@@ -79,7 +73,8 @@ const MyChatsTabs = ({ isActive, selectedChat, setSelectedChat }) => {
   const {users : getAllUsers} = useSelector((state)=> state.getAllUsers)
   useEffect(()=>{
     if(getAllUsers.length > 0 ){
-      setSearchResultUsers(getAllUsers)
+      const getAllExceptUsers = getAllUsers.filter((u)=> u._id != user._id)
+      setSearchResultUsers(getAllExceptUsers)
     }
   },[getAllUsers])
   
@@ -103,7 +98,7 @@ const MyChatsTabs = ({ isActive, selectedChat, setSelectedChat }) => {
   
   },[searchedUsers])
   
-  console.log("searchResultUsers",searchResultUsers)
+
   return (
     <>
       <Box bgColor="#F4F7FB" display="flex" w="100%" h="100%" flexDir="column">
@@ -236,117 +231,6 @@ const MyChatsTabs = ({ isActive, selectedChat, setSelectedChat }) => {
           />
         </InputGroup>
 
-        {/* <Stack  mb={8} mt={10} ml={4} direction="row" spacing={7}>
-          <Box
-            position="relative"
-            w={{base:"18vw" , lg:'5rem' , md:'20vw'}}
-            h="4rem"
-            borderRadius="md"
-            bgColor="#E6EBF5"
-          >
-            <Avatar
-              position="absolute"
-              left={{base:"3vw",lg:'18px',md:'7vw'}}
-              top="-23px"
-              size="md"
-              name="Kent Dodds"
-              src="https://bit.ly/kent-c-dodds"
-            >
-              {<AvatarBadge boxSize="0.8em" bg="#2BB47D" />
-            </Avatar>{' '}
-            <Text
-              pt={8}
-              pl={{lg:3 , base : '2vw' , md:'5vw'}}
-              fontFamily="Public Sans"
-              fontSize={{lg:"13px",base:'13px',md:'20px'}}
-              fontWeight={700}
-            >
-              Abhishek
-            </Text>
-          </Box>
-
-         <Box
-            position="relative"
-            w={{base:"18vw" , lg:'5rem' , md:'20vw'}}
-            h="4rem"
-            borderRadius="md"
-            bgColor="#E6EBF5"
-          >
-            <Avatar
-              position="absolute"
-              left={{base:"3vw",lg:'18px',md:'7vw'}}
-              top="-23px"
-              size="md"
-              name="Kent Dodds"
-              src="https://bit.ly/kent-c-dodds"
-            >
-              <AvatarBadge boxSize="0.8em" bg="#2BB47D" />
-            </Avatar>{' '}
-            <Text
-              pt={8}
-              pl={{lg:3 , base : '2vw' , md:'5vw'}}
-              fontFamily="Public Sans"
-              fontSize={{lg:"13px",base:'13px',md:'20px'}}
-              fontWeight={700}
-            >
-              Abhishek
-            </Text>
-          </Box>
-          <Box
-            position="relative"
-            w={{base:"18vw" , lg:'5rem' , md:'20vw'}}
-            h="4rem"
-            borderRadius="md"
-            bgColor="#E6EBF5"
-          >
-            <Avatar
-              position="absolute"
-              left={{base:"3vw",lg:'18px',md:'7vw'}}
-              top="-23px"
-              size="md"
-              name="Kent Dodds"
-              src="https://bit.ly/kent-c-dodds"
-            >
-              <AvatarBadge boxSize="0.8em" bg="#2BB47D" />
-            </Avatar>{' '}
-            <Text
-              pt={8}
-              pl={{lg:3 , base : '2vw' , md:'5vw'}}
-              fontFamily="Public Sans"
-              fontSize={{lg:"13px",base:'13px',md:'20px'}}
-              fontWeight={700}
-            >
-              Abhishek
-            </Text>
-          </Box>
-          <Box
-            position="relative"
-            w={{base:"18vw" , lg:'5rem' , md:'20vw'}}
-            h="4rem"
-            borderRadius="md"
-            bgColor="#E6EBF5"
-          >
-            <Avatar
-              position="absolute"
-              left={{base:"3vw",lg:'18px',md:'7vw'}}
-              top="-23px"
-              size="md"
-              name="Kent Dodds"
-              src="https://bit.ly/kent-c-dodds"
-            >
-              <AvatarBadge boxSize="0.8em" bg="#2BB47D" />
-            </Avatar>{' '}
-            <Text
-              pt={8}
-              pl={{lg:3 , base : '2vw' , md:'5vw'}}
-              fontFamily="Public Sans"
-              fontSize={{lg:"13px",base:'13px',md:'20px'}}
-              fontWeight={700}
-            >
-              Abhishek
-            </Text>
-          </Box>
-        </Stack> */}
 
         <Box>
           <Text
@@ -359,9 +243,8 @@ const MyChatsTabs = ({ isActive, selectedChat, setSelectedChat }) => {
             Recent
           </Text>
 
-          {/* <Stack mt={5} bg="#F4F7FB" h="53vh" overflowY="auto"> */}
           <Stack    mt={5} h="68vh" overflowY="auto">
-            { allChats && allChats
+            {allChatsLoading ? <ChatLoading /> :  allChats && allChats
                 .filter((c) => !c.isGroupChat).length > 0 ? (
               allChats
                 .filter((c) => !c.isGroupChat)
@@ -375,7 +258,8 @@ const MyChatsTabs = ({ isActive, selectedChat, setSelectedChat }) => {
                     key={chat._id}
                   />
                 ))
-            ) : (
+            ) 
+            : (
               <Box w="100%"  h="100%">
                 <Box
                   p={3}
