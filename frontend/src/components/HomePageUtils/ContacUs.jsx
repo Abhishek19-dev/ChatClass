@@ -102,7 +102,7 @@ export default function ContactUs() {
               <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
                 <FormLabel fontFamily='Nunito' fontWeight={500}>Message</FormLabel>
                 <InputGroup>
-                <Textarea placeholder="Your Message" h={{base:'20vw',md:'15vw'}}   />
+                <Textarea fontFamily='Nunito' placeholder="Your Messages" h={{base:'20vw',md:'15vw'}}   />
                 </InputGroup>
               </FormControl>
              <Button p={4} w='8rem' ml={{base:'44vw',md:'28vw'}}  fontFamily='Nunito' fontWeight={600} leftIcon={<UilMessage />}>Send</Button>
