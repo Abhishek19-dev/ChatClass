@@ -47,20 +47,24 @@ const server = app.listen(port , ()=>{
 const io = require('socket.io')(server , {
   pingTimeout : 60000,  //amount of time it will wait before off in ms
   cors :{ //it stands for cross origin errror
-      //  origin : "http://localhost:3000"
-       origin : "https://chat-class-five.vercel.app/"
+       origin : "http://localhost:3000"
+      //  origin : "https://chat-class-five.vercel.app/"
   }
 })
 
+
+// io.origins((origin, callback) => {
+//   if (["https://chat-class-five.vercel.app"].includes(origin)) {
+//     callback(null, true);
+//   } else {
+//     callback(new Error("Not allowed by CORS"));
+//   }
+// });
+
+
 io.on("connection",(socket)=>{
   console.log("connected to socket.io")
-  io.origins((origin, callback) => {
-    if (["https://chat-class-five.vercel.app"].includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  });
+  
 
   socket.on('setup',(userData)=>{  //socket.io setup kiya aur uske baad frontend se koi data aaega servaer mei aur ek naya room mei join ho jaaega
        socket.join(userData._id)
