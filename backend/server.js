@@ -47,19 +47,12 @@ const server = app.listen(port , ()=>{
 const io = require('socket.io')(server , {
   pingTimeout : 60000,  //amount of time it will wait before off in ms
   cors :{ //it stands for cross origin errror
-       origin : "http://localhost:3000",
+      //  origin : "http://localhost:3000",
+       origin : "*",
        methods: ["GET", "POST"],
   }
 })
 
-
-// io.origins((origin, callback) => {
-//   if (["https://chat-class-five.vercel.app"].includes(origin)) {
-//     callback(null, true);
-//   } else {
-//     callback(new Error("Not allowed by CORS"));
-//   }
-// });
 
 
 io.on("connection",(socket)=>{
