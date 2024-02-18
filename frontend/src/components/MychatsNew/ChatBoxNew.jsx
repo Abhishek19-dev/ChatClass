@@ -45,7 +45,7 @@ import ProfileChatModal from "./SideBarTabs/ProfileChatModal";
 
 // /Declaratiion for socket.io
 // const ENDPOINT = "http://localhost:8050";
-const ENDPOINT = "https://chat-class-lemon.vercel.app";
+const ENDPOINT = "https://chat-class-lemon.vercel.app/";
 var socket, selectedChatCompare;
 
 const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
