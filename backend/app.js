@@ -14,7 +14,11 @@ app.use(express.json())
 //middleware:-
 
 
-app.use(cors());
+app.use(cors({
+    origin:["http://localhost:3000"],
+    methods:["POST","GET"],
+    credentials:true
+}));
 
 //middleware should be used above routes inports
 app.use(cookieParser())
