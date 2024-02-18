@@ -132,6 +132,33 @@ export default function ContactUs() {
               </FormControl>
 
               <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Email</FormLabel>
+                <InputGroup>
+                <InputLeftElement><UilEnvelopeMinus /></InputLeftElement>
+                <Input fontFamily='Nunito' fontWeight={500} type="email"  placeholder="Your Email" />
+                </InputGroup>
+              </FormControl>
+
+
+              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Email</FormLabel>
+                <InputGroup>
+                <InputLeftElement><UilEnvelopeMinus /></InputLeftElement>
+                <Input fontFamily='Nunito' fontWeight={500} type="email"  placeholder="Your Email" />
+                </InputGroup>
+              </FormControl>
+
+
+              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Email</FormLabel>
+                <InputGroup>
+                <InputLeftElement><UilEnvelopeMinus /></InputLeftElement>
+                <Input fontFamily='Nunito' fontWeight={500} type="email"  placeholder="Your Email" />
+                </InputGroup>
+              </FormControl>
+
+
+              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
                 <FormLabel fontFamily='Nunito' fontWeight={500}>Messages</FormLabel>
                 <InputGroup>
                 <Textarea fontFamily='Nunito' placeholder="Your Messages" h={{base:'20vw',md:'15vw'}}   />
