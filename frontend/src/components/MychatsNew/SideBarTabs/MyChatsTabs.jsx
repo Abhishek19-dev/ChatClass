@@ -244,7 +244,8 @@ const MyChatsTabs = ({ isActive, selectedChat, setSelectedChat }) => {
           </Text>
 
           <Stack    mt={5} h="68vh" overflowY="auto">
-            {allChatsLoading ? <ChatLoading /> :  allChats && allChats
+            {/* {allChatsLoading ? <ChatLoading /> :  allChats && allChats */}
+            {allChats && allChats
                 .filter((c) => !c.isGroupChat).length > 0 ? (
               allChats
                 .filter((c) => !c.isGroupChat)

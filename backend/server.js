@@ -47,7 +47,9 @@ const server = app.listen(port , ()=>{
 const io = require('socket.io')(server , {
   pingTimeout : 60000,  //amount of time it will wait before off in ms
   cors :{ //it stands for cross origin errror
-       origin : "https://chat-class-six.vercel.app"
+      //  origin : "https://chat-class-six.vercel.app"
+       origin : "http://localhost:3000",
+       methods: ["GET", "POST"],
       //  origin : "https://chat-class-five.vercel.app/"
   }
 })
