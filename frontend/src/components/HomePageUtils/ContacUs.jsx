@@ -92,6 +92,38 @@ export default function ContactUs() {
               </FormControl>
 
               <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Name</FormLabel>
+                <InputGroup>
+                <InputLeftElement><UilUser /></InputLeftElement>
+                <Input fontFamily='Nunito' fontWeight={500}  placeholder="Your Name" />
+                </InputGroup>
+              </FormControl>
+
+              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Name</FormLabel>
+                <InputGroup>
+                <InputLeftElement><UilUser /></InputLeftElement>
+                <Input fontFamily='Nunito' fontWeight={500}  placeholder="Your Name" />
+                </InputGroup>
+              </FormControl>
+
+              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Name</FormLabel>
+                <InputGroup>
+                <InputLeftElement><UilUser /></InputLeftElement>
+                <Input fontFamily='Nunito' fontWeight={500}  placeholder="Your Name" />
+                </InputGroup>
+              </FormControl>
+
+              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Name</FormLabel>
+                <InputGroup>
+                <InputLeftElement><UilUser /></InputLeftElement>
+                <Input fontFamily='Nunito' fontWeight={500}  placeholder="Your Name" />
+                </InputGroup>
+              </FormControl>
+
+              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
                 <FormLabel fontFamily='Nunito' fontWeight={500}>Email</FormLabel>
                 <InputGroup>
                 <InputLeftElement><UilEnvelopeMinus /></InputLeftElement>
