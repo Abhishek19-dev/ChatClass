@@ -15,7 +15,7 @@ app.use(express.json())
 
 
 app.use(cors({
-    origin:["https://chat-class-two.vercel.app"],
+    origin:["http://localhost:3000"],
     methods:["POST","GET"],
     credentials:true
 }));
