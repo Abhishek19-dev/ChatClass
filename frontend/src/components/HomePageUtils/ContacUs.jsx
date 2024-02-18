@@ -100,7 +100,7 @@ export default function ContactUs() {
               </FormControl>
 
               <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
-                <FormLabel fontFamily='Nunito' fontWeight={500}>Messages</FormLabel>
+                <FormLabel fontFamily='Nunito' fontWeight={500}>Mess</FormLabel>
                 <InputGroup>
                 <Textarea fontFamily='Nunito' placeholder="Your Messages" h={{base:'20vw',md:'15vw'}}   />
                 </InputGroup>
