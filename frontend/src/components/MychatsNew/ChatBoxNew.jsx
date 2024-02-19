@@ -44,8 +44,7 @@ import GroupDescriptionModal from "./SideBarTabs/GroupDescriptionModal";
 import ProfileChatModal from "./SideBarTabs/ProfileChatModal";
 
 // /Declaratiion for socket.io
-// const ENDPOINT = "http://localhost:8050";
-const ENDPOINT = "https://chat-class-jade.vercel.app";
+const ENDPOINT = "http://localhost:8050";
 var socket, selectedChatCompare;
 
 const ChatBoxNew = ({ selectedChat, user, setSelectedChat }) => {
