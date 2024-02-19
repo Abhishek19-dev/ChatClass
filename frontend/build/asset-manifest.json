@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.7235ce89.css",
-    "main.js": "/static/js/main.458f106a.js",
+    "main.js": "/static/js/main.43ce04f7.js",
     "static/media/studyClassImg.jpg": "/static/media/studyClassImg.b3a26f646f02907abb68.jpg",
     "static/media/noMessages.jpg": "/static/media/noMessages.7e1ca706e69ab623fec6.jpg",
     "static/media/study-literature.png": "/static/media/study-literature.a1ea7af18a941e4bbf54.png",
@@ -19,10 +19,10 @@
     "static/media/notification bell.png": "/static/media/notification bell.9f4c4a8b0fed594c3772.png",
     "index.html": "/index.html",
     "main.7235ce89.css.map": "/static/css/main.7235ce89.css.map",
-    "main.458f106a.js.map": "/static/js/main.458f106a.js.map"
+    "main.43ce04f7.js.map": "/static/js/main.43ce04f7.js.map"
   },
   "entrypoints": [
     "static/css/main.7235ce89.css",
-    "static/js/main.458f106a.js"
+    "static/js/main.43ce04f7.js"
   ]
 }
