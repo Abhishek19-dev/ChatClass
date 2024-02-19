@@ -83,6 +83,7 @@ export default function ContactUs() {
                
             </Box>
             <Stack   order={{base:'1',md:'2'}} bg='#F7FAF3' border='1px solid transparent' borderRadius='lg' spacing='2vw' p={{base:'3',md:'5'}}  w={{base:'90vw',md:"40vw"}} h={{base:'95vw',md:"38vw"}}>
+              
               <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
                 <FormLabel fontFamily='Nunito' fontWeight={500}>Name</FormLabel>
                 <InputGroup>
@@ -99,29 +100,6 @@ export default function ContactUs() {
                 </InputGroup>
               </FormControl>
 
-              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
-                <FormLabel fontFamily='Nunito' fontWeight={500}>Email</FormLabel>
-                <InputGroup>
-                <InputLeftElement><UilEnvelopeMinus /></InputLeftElement>
-                <Input fontFamily='Nunito' fontWeight={500} type="email"  placeholder="Your Email" />
-                </InputGroup>
-              </FormControl>
-
-              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
-                <FormLabel fontFamily='Nunito' fontWeight={500}>Email</FormLabel>
-                <InputGroup>
-                <InputLeftElement><UilEnvelopeMinus /></InputLeftElement>
-                <Input fontFamily='Nunito' fontWeight={500} type="email"  placeholder="Your Email" />
-                </InputGroup>
-              </FormControl>
-
-              <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
-                <FormLabel fontFamily='Nunito' fontWeight={500}>Email</FormLabel>
-                <InputGroup>
-                <InputLeftElement><UilEnvelopeMinus /></InputLeftElement>
-                <Input fontFamily='Nunito' fontWeight={500} type="email"  placeholder="Your Email" />
-                </InputGroup>
-              </FormControl>
 
               <FormControl mt={{base:'3vw', md:'0vw'}} isRequired>
                 <FormLabel fontFamily='Nunito' fontWeight={500}>Messages</FormLabel>
